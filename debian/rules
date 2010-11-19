@@ -1,0 +1,18 @@
+#!/usr/bin/make -f
+# -*- mode: Makefile; coding: utf-8 -*-
+
+include /usr/share/cdbs/1/rules/debhelper.mk
+include /usr/share/ruby-pkg-tools/1/class/ruby-setup-rb.mk
+
+EXTLIB_RUBY=$(DEB_DESTDIR)/$(DEB_RUBY_ARCHDIR)
+
+install/booh:: 
+	# Move ruby/ver/arch/libadds.so to ruby/ver/arch/booh/libadds.so
+	# CDBS does not use the ext/ Makefile install
+	-mkdir $(EXTLIB_RUBY)/booh
+	mv -f $(EXTLIB_RUBY)/libadds.so $(EXTLIB_RUBY)/booh
+	
+	dh_installchangelogs ChangeLog
+	dh_install desktop/*.png  usr/share/pixmaps/
+	dh_install desktop/*.desktop usr/share/applications/
+	dh_install booh.bash-completion etc/bash_completion.d/

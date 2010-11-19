@@ -1,0 +1,11 @@
+booh (0.9.3-ppa2~natty1) natty; urgency=low
+
+  * Fix library paths and install desktop files 
+
+ -- Benoit Dien <benoit.dien@gmail.com>  Fri, 19 Nov 2010 21:57:49 +0100
+
+booh (0.9.3-ppa1~natty1) natty; urgency=low
+
+  * Initial release for PPA
+
+ -- Benoit Dien <benoit.dien@gmail.com>  Tue, 16 Nov 2010 23:24:52 +0100

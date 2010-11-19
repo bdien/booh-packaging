@@ -1,0 +1,39 @@
+Source: booh
+Section: graphics
+Priority: extra
+Maintainer: Benoit Dien <benoit.dien@gmail.com>
+Build-Depends: cdbs, debhelper (>= 7), ruby-pkg-tools, ruby-gnome2-dev, libgtk2.0-dev (>= 2.8), ruby1.8-dev (>= 1.8.7), libgettext-ruby1.8, libgtk2-ruby (>= 0.18), libglib2-ruby, ruby-gnome2, ruby-gnome2-dev, libexiv2-dev
+Standards-Version: 3.9.1
+Homepage: http://www.booh.org/
+
+Package: booh
+Architecture: any
+Depends: ruby1.8, imagemagick, exif, mplayer, libgettext-ruby1.8, libgtk2-ruby (>= 0.12), ${shlibs:Depends}, ${misc:Depends}
+Recommends: ffmpeg
+Description: Best static Web-Album generator or your money back, Humerus.
+ Booh is a static Web-Album generator. It's a program that takes one or several
+ series of photos and videos, and automatically build static web pages to browse
+ them, creating thumbnails etc (you should see the results). It's comparable to
+ bins, for example. There are already tons of such programs available, however,
+ none satisfied me so far because I want all of these features:
+ .
+    * automatic rotation of portrait images thanks to information read
+      in .jpg file (EXIF)
+    * immediate display of images (preloading in browser) -
+      waiting a couple of seconds between each image is very frustrating
+    * keep position of "next/previous" hyperlinks in browser between images
+    * video support (including thumbnailing)
+    * clever use of the whole space of a typical browser window (definitely
+      not good to scroll to see the bottom of portrait images - or, opposedly,
+      using only 1/4 of the screen area for a landscape image seems a poor use
+      of space)
+    * themability
+    * sub-albums support
+    * remember end-user preferred size of thumbnails accross sub-albums
+    * multi-processor support for thumbnails generation
+    * smooth integration of panoramic images in thumbnails pages
+    * a GUI both easy to use for newbies, and very powerful so that power users
+      can input captions, rotate, reorder and remove images FAST (extensive use
+      of keyboard shortcuts and mouse gestures)
+ .
+Homepage: http://booh.org
