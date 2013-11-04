@@ -3,7 +3,7 @@ Section: graphics
 Priority: extra
 Maintainer: Benoit Dien <benoit.dien@gmail.com>
 Build-Depends: cdbs, debhelper (>= 7), ruby-pkg-tools, ruby-gnome2-dev, libgtk2.0-dev (>= 2.8), ruby1.8-dev (>= 1.8.7), libgettext-ruby1.8, libgtk2-ruby (>= 0.18), libglib2-ruby, ruby-gnome2, ruby-gnome2-dev, libexiv2-dev
-Standards-Version: 3.9.1
+Standards-Version: 3.9.3
 Homepage: http://www.booh.org/
 
 Package: booh
