@@ -1,0 +1,13 @@
+> Here's my ideal workflow: When captioning photos, some hotkey (ctrl+t for
+> Text, whatever) would open up a dialog that's just a large text area. I
+> could type as much as I want, and then hit 'OK' (or press ctrl+enter) to
+> close. When generating the album, these blocks of text would appear on the
+> individual image pages, below the image itself (it wouldn't show up on the
+> thumbnail pages...or maybe you could have some icon to indicate there was
+> more text to be read for the image).
+>
+> Most of the time, captions are fine, but maybe I want to tell a little story
+> about what happened in a particular photo, and that doesn't look very nice
+> as a caption
+
+properly detect ' in source directory names

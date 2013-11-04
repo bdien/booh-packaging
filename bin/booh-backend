@@ -1,0 +1,1650 @@
+#! /usr/bin/ruby
+#
+#                         *  BOOH  *
+#
+# A.k.a 'Best web-album Of the world, Or your money back, Humerus'.
+#
+# The acronyn sucks, however this is a tribute to Dragon Ball by
+# Akira Toriyama, where the last enemy beaten by heroes of Dragon
+# Ball is named "Boo". But there was already a free software project
+# called Boo, so this one will be it "Booh". Or whatever.
+#
+#
+# Copyright (c) 2004-2010 Guillaume Cottenceau <http://zarb.org/~gc/resource/gc_mail.png>
+#
+# This software may be freely redistributed under the terms of the GNU
+# public license version 2.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program; if not, write to the Free Software
+# Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA
+
+require 'getoptlong'
+begin
+    #- new style (ruby-locale separated package)
+    require 'locale'
+rescue LoadError
+    #- old style (locale stuff in ruby-gettext package)
+    require 'gettext/locale'
+end
+require 'gettext'
+include GetText
+require 'booh/rexml/document'
+include REXML
+
+require 'booh/booh-lib'
+require 'booh/html-merges'
+
+#- bind text domain as soon as possible because some _() functions are called early to build data structures
+bindtextdomain("booh")
+#- save locale for restoring for multi languages
+$default_locale = Locale.get
+
+#- options
+$options = [
+    [ '--help',          '-h', GetoptLong::NO_ARGUMENT, _("Get help message") ],
+    [ '--version',       '-V', GetoptLong::NO_ARGUMENT, _("Print version and exit") ],
+
+    [ '--source',        '-s', GetoptLong::REQUIRED_ARGUMENT, _("Directory which contains original photos/videos as files or subdirs") ],
+    [ '--destination',   '-d', GetoptLong::REQUIRED_ARGUMENT, _("Directory which will contain the web-album; if it already exits, then all existing files and directories inside it will be removed!") ],
+
+    [ '--theme',         '-t', GetoptLong::REQUIRED_ARGUMENT, _("Select HTML theme to use") ],
+    [ '--config',        '-C', GetoptLong::REQUIRED_ARGUMENT, _("File containing config listing photos and videos within directories with captions") ],
+    [ '--config-skel',   '-k', GetoptLong::REQUIRED_ARGUMENT, _("Filename where the script will output a config skeleton") ],
+    [ '--merge-config',  '-M', GetoptLong::REQUIRED_ARGUMENT, _("File containing config listing, where to merge new/removed photos/videos from --source, and change theme info") ],
+    [ '--merge-config-onedir',  '-O', GetoptLong::REQUIRED_ARGUMENT, _("File containing config listing, for merging the subdir specified with --dir") ],
+    [ '--merge-config-subdirs', '-U', GetoptLong::REQUIRED_ARGUMENT, _("File containing config listing, for merging the new subdirs down the subdir specified with --dir") ],
+    [ '--dir',           '-D', GetoptLong::REQUIRED_ARGUMENT, _("Directory for merge with --merge-config-onedir or --merge-config-subdirs") ],
+    [ '--use-config',    '-u', GetoptLong::REQUIRED_ARGUMENT, _("File containing config listing, where to change theme info") ],
+    [ '--force',         '-f', GetoptLong::NO_ARGUMENT, _("Force generation of album even if the GUI marked some directories as already generated") ],
+
+    [ '--sizes',         '-S', GetoptLong::REQUIRED_ARGUMENT, _("Specify the list of images sizes to use instead of all specified in the theme (this is a comma-separated list)") ],
+    [ '--multi-languages', '-L', GetoptLong::REQUIRED_ARGUMENT, _("Specify the list of languages to support (uses Apache MultiViews); this is a comma-separated list of supported languages, with last element used as the fallback language; for example: 'fr,eo,en,en'; supported languages: %s") % SUPPORTED_LANGUAGES.join(', ') ],
+    [ '--thumbnails-per-row', '-T', GetoptLong::REQUIRED_ARGUMENT, _("Specify the amount of thumbnails per row in the thumbnails page (if applicable in theme)") ],
+    [ '--thumbnails-per-page', '-p', GetoptLong::REQUIRED_ARGUMENT, _("Specify the amount of thumbnails per page in the thumbnails page, after which split occurs") ],
+    [ '--optimize-for-32', '-o', GetoptLong::NO_ARGUMENT, _("Resize images with optimized sizes for 3/2 aspect ratio rather than 4/3 (typical aspect ratio of photos from point-and-shoot cameras - also called compact cameras - is 4/3, whereas photos from SLR cameras - also called reflex cameras - is 3/2)") ],
+    [ '--transcode-videos', '-r', GetoptLong::REQUIRED_ARGUMENT, _("Transcode videos with given external program; %f is the placeholder for the input video, %o for the output video; before the external program, the output video extension should be given followed by a colon") ],
+    [ '--flv-generator', '-F', GetoptLong::REQUIRED_ARGUMENT, _("Use embedded flash player for videos (flowplayer) and use this .flv generator (%f is the placeholder for the input video, %o for the output video)") ],
+    [ '--index-link',    '-l', GetoptLong::REQUIRED_ARGUMENT, _("Specify the HTML markup to use on the bottom of pages for a small link returning to wherever you see fit in your website (or somewhere else)") ],
+    [ '--addthis', '-a', GetoptLong::NO_ARGUMENT, _("Include the 'addthis' bookmarking and sharing button") ],
+    [ '--made-with',     '-n', GetoptLong::REQUIRED_ARGUMENT, _("Specify the HTML markup to use on the bottom of pages for a small 'made with' message") ],
+    [ '--quote-html',    '-q', GetoptLong::NO_ARGUMENT, _("Quote HTML markup in captions") ],
+    [ '--comments-format','-c', GetoptLong::REQUIRED_ARGUMENT, _("Specify comments format to use for images instead of only filename when creating new albums; use ImageMagick's format") ],
+
+    [ '--mproc',         '-m', GetoptLong::REQUIRED_ARGUMENT, _("Specify the number of processors for multi-processors machines") ],
+
+    [ '--for-gui',       '-g', GetoptLong::NO_ARGUMENT,       _("Do the minimum work to be able to see the album under the GUI (don't generate all thumbnails)") ],
+
+    [ '--verbose-level', '-v', GetoptLong::REQUIRED_ARGUMENT, _("Set max verbosity level (0: errors, 1: warnings, 2: important messages, 3: other messages)") ],
+    [ '--info-pipe',     '-i', GetoptLong::REQUIRED_ARGUMENT, _("Name a file where to write information about what's going on (used by the GUI)") ],
+]
+
+#- default values for some globals 
+$switches = []
+$stdout.sync = true
+$no_identify = false
+$ignore_videos = false
+$forgui = false
+$hardlinks_ok = true
+
+def usage
+    puts _("Usage: %s [OPTION]...") % File.basename($0)
+    $options.each { |ary|
+        printf " %3s, %-18s %s\n", ary[1], ary[0], ary[3]
+    }
+end
+
+def handle_options
+    parser = GetoptLong.new
+    parser.set_options(*$options.collect { |ary| ary[0..2] })
+    begin
+        parser.each_option do |name, arg|
+            case name
+            when '--help'
+                usage
+                exit(0)
+
+            when '--version'
+                puts _("Booh version %s
+
+Copyright (c) 2005-2010 Guillaume Cottenceau.
+This is free software; see the source for copying conditions.  There is NO
+warranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.") % $VERSION
+
+                exit(0)
+
+            when '--source'
+                $source = File.expand_path(arg.sub(%r|/$|, ''))
+                if !File.directory?($source)
+                    die _("Argument to --source must be a directory")
+                end
+            when '--destination'
+                $dest = File.expand_path(arg.sub(%r|/$|, ''))
+                if File.exists?($dest) && !File.directory?($dest)
+                    die _("If --destination exists, it must be a directory")
+                end
+                if $dest != make_dest_filename($dest)
+                    die _("Sorry, destination directory can't contain non simple alphanumeric characters.")
+                end
+#            when '--clean'
+#                system("rm -rf #{$dest}")
+
+            when '--theme'
+                $theme = arg
+            when '--config'
+                arg = File.expand_path(arg)
+                if File.readable?(arg)
+                    $xmldoc = REXML::Document.new File.new(arg)
+                    $mode = 'use_config'
+                else
+                    die _('Config file does not exist or is unreadable.')
+                end
+            when '--config-skel'
+                arg = File.expand_path(arg)
+                if File.exists?(arg)
+                    if File.directory?(arg)
+                        die _("Config skeleton file (%s) already exists and is a directory! Please change the filename.") % arg
+                    else
+                        msg 1, _("Config skeleton file already exists, backuping to %s.backup") % arg
+                        File.rename(arg, "#{arg}.backup")
+                    end
+                end
+                $config_writeto = arg
+                $mode = 'gen_config'
+            when '--merge-config'
+                arg = File.expand_path(arg)
+                if File.readable?(arg)
+                    msg 2, _("Merge config notice: backuping current config file to %s.backup") % arg
+                    $xmldoc = REXML::Document.new File.new(arg)
+                    File.rename(arg, "#{arg}.backup")
+                    $config_writeto = arg
+                    $mode = 'merge_config'
+                else
+                    die _('Config file does not exist or is unreadable.')
+                end
+            when '--merge-config-onedir'
+                arg = File.expand_path(arg)
+                if File.readable?(arg)
+                    msg 2, _("Merge config notice: backuping current config file to %s.backup") % arg
+                    $xmldoc = REXML::Document.new File.new(arg)
+                    File.rename(arg, "#{arg}.backup")
+                    $config_writeto = arg
+                    $mode = 'merge_config_onedir'
+                else
+                    die _('Config file does not exist or is unreadable.')
+                end
+            when '--merge-config-subdirs'
+                arg = File.expand_path(arg)
+                if File.readable?(arg)
+                    msg 2, _("Merge config notice: backuping current config file to %s.backup") % arg
+                    $xmldoc = REXML::Document.new File.new(arg)
+                    File.rename(arg, "#{arg}.backup")
+                    $config_writeto = arg
+                    $mode = 'merge_config_subdirs'
+                else
+                    die _('Config file does not exist or is unreadable.')
+                end
+            when '--dir'
+                arg = File.expand_path(arg)
+                if !File.readable?(arg)
+                    die _('Specified directory to merge with --dir is not readable')
+                else
+                    $onedir = arg
+                end
+            when '--use-config'
+                arg = File.expand_path(arg)
+                if File.readable?(arg)
+                    msg 2, _("Use config notice: backuping current config file to %s.backup") % arg
+                    $xmldoc = REXML::Document.new File.new(arg)
+                    File.rename(arg, "#{arg}.backup")
+                    $config_writeto = arg
+                    $mode = 'use_config_changetheme'
+                else
+                    die _('Config file does not exist or is unreadable.')
+                end
+
+            when '--sizes'
+                $limit_sizes = arg
+
+            when '--multi-languages'
+                parts = arg.split(',')
+                if parts.size == 0 || parts.find_all { |e| ! SUPPORTED_LANGUAGES.include?(e.strip) }.size > 0
+                    die _("--multi-languages: argument must be a comma-separated list of supported languages, with last element used as the fallback language; for example: 'fr,eo,en,en'; supported languages: %s") % SUPPORTED_LANGUAGES.join(', ')
+                end
+                $multi_languages = [ parts[0..-2], parts[-1] ]
+
+            when '--thumbnails-per-row'
+                $N_per_row = arg
+
+            when '--thumbnails-per-page'
+                $N_per_page = arg
+
+            when '--optimize-for-32'
+                $optimize_for_32 = true
+
+            when '--transcode-videos'
+                parts = arg.split(':', 2)
+                if parts.size != 2 || parts[0] =~ / / || arg !~ /%f/ || arg !~ /%o/
+                    die _("--transcode-videos: argument must be the external program for transcoding, and contain %f for the input video, %o for the output video, and before the external program, the output video extension should be given followed by a colon")
+                end
+                $transcode_videos = arg
+
+            when '--flv-generator'
+                if arg !~ /%f/ || arg !~ /%o/
+                    die _("--flv-generator: argument must contain %f for the input video and %o for the output video")
+                end
+                $flv_generator = arg
+
+            when '--made-with'
+                $madewith = arg
+
+            when '--index-link'
+                $indexlink = arg
+
+            when '--addthis'
+                $addthis = true
+
+            when '--quote-html'
+                $quote_html = true
+
+            when '--comments-format'
+                $commentsformat = arg
+
+            when '--force'
+                $force = true
+
+            when '--mproc'
+                $mproc = arg.to_i
+                $pids = []
+
+            when '--for-gui'
+                $forgui = true
+
+            when '--verbose-level'
+                $verbose_level = arg.to_i
+
+            when '--info-pipe'
+                $info_pipe = File.open(arg, File::WRONLY)
+                $info_pipe.sync = true
+            end
+        end
+    rescue
+        puts $!
+        usage
+        exit(1)
+    end
+
+    if !$source && $xmldoc
+        $source = from_utf8($xmldoc.root.attributes['source']).sub(%r|/$|, '')
+        $dest = from_utf8($xmldoc.root.attributes['destination']).sub(%r|/$|, '')
+        $theme ||= $xmldoc.root.attributes['theme']
+        $limit_sizes ||= $xmldoc.root.attributes['limit-sizes']
+        if $mode == 'use_config' || $mode =~ /^merge_config/
+            $optimize_for_32 = !$xmldoc.root.attributes['optimize-for-32'].nil?
+            $N_per_row = $xmldoc.root.attributes['thumbnails-per-row']
+            languages = $xmldoc.root.attributes['multi-languages']
+            if languages
+                languages = languages.split(',')
+                $multi_languages = [ languages[0..-2], languages[-1] ]
+            end
+            $N_per_page = $xmldoc.root.attributes['thumbnails-per-page']
+            $madewith = $xmldoc.root.attributes['made-with']
+            $indexlink = $xmldoc.root.attributes['index-link']
+            $addthis = !$xmldoc.root.attributes['addthis'].nil?
+            $quote_html = !$xmldoc.root.attributes['quote-html'].nil?
+        end
+    end
+
+    if $mode == 'merge_config_onedir' && !$onedir
+        die _("Missing --dir for --merge-config-onedir")
+    end
+    if $mode == 'merge_config_subdirs' && !$onedir
+        die _("Missing --dir for --merge-config-subdirs")
+    end
+
+    if !$source
+        usage
+        exit(0)
+    end
+    if !$dest
+        die _("Missing --destination parameter.")
+    end
+    if !$theme
+        $theme = 'simple'
+    end
+
+    select_theme($theme, $limit_sizes, $optimize_for_32, $N_per_row)
+
+    if !$xmldoc
+        $xmldoc = Document.new "<booh/>"
+        $xmldoc << XMLDecl.new(XMLDecl::DEFAULT_VERSION, $CURRENT_CHARSET)
+        $xmldoc.root.add_attribute('version', $VERSION)
+        $xmldoc.root.add_attribute('source', $source)
+        $xmldoc.root.add_attribute('destination', $dest)
+        $xmldoc.root.add_attribute('theme', $theme)
+        if $limit_sizes
+            $xmldoc.root.add_attribute('limit-sizes', $limit_sizes)
+        end
+        if $multi_languages
+            $xmldoc.root.add_attribute('multi-languages', $multi_languages[0].join(',') + ',' + $multi_languages[1])
+        end
+        if $optimize_for_32
+            $xmldoc.root.add_attribute('optimize-for-32', 'true')
+        end
+        if $N_per_row
+            $xmldoc.root.add_attribute('thumbnails-per-row', $N_per_row)
+        end
+        if $N_per_page
+            $xmldoc.root.add_attribute('thumbnails-per-page', $N_per_page)
+        end
+        if $madewith
+            $xmldoc.root.add_attribute('made-with', $madewith)
+        end
+        if $indexlink
+            $xmldoc.root.add_attribute('index-link', $indexlink)
+        end
+        if $addthis
+            $xmldoc.root.add_attribute('addthis', 'true')
+        end
+        if $quote_html
+            $xmldoc.root.add_attribute('quote-html', 'true')
+        end
+        $mode = 'gen_config'
+    end
+
+    if $mode == 'merge_config' || $mode == 'use_config_changetheme'
+        $xmldoc.root.add_attribute('theme', $theme)
+        $xmldoc.root.add_attribute('version', $VERSION)
+        if $limit_sizes
+            $xmldoc.root.add_attribute('limit-sizes', $limit_sizes)
+        else
+            $xmldoc.root.delete_attribute('limit-sizes')
+        end
+        if $multi_languages
+            $xmldoc.root.add_attribute('multi-languages', $multi_languages[0].join(',') + ',' + $multi_languages[1])
+        else
+            $xmldoc.root.delete_attribute('multi-languages')
+        end
+
+        if $optimize_for_32
+            $xmldoc.root.add_attribute('optimize-for-32', 'true')
+        else
+            $xmldoc.root.delete_attribute('optimize-for-32')
+        end
+        if $N_per_row
+            $xmldoc.root.add_attribute('thumbnails-per-row', $N_per_row)
+        else
+            $xmldoc.root.delete_attribute('thumbnails-per-row')
+        end
+        if $N_per_page
+            $xmldoc.root.add_attribute('thumbnails-per-page', $N_per_page)
+        else
+            $xmldoc.root.delete_attribute('thumbnails-per-page')
+        end
+        if $madewith
+            $xmldoc.root.add_attribute('made-with', $madewith)
+        else
+            $xmldoc.root.delete_attribute('made-with')
+        end
+        if $indexlink
+            $xmldoc.root.add_attribute('index-link', $indexlink)
+        else
+            $xmldoc.root.delete_attribute('index-link')
+        end
+        if $addthis
+            $xmldoc.root.add_attribute('addthis', 'true')
+        else
+            $xmldoc.root.delete_attribute('addthis')
+        end
+        if $quote_html
+            $xmldoc.root.add_attribute('quote-html', 'true')
+        else
+            $xmldoc.root.delete_attribute('quote-html')
+        end
+    end
+
+    if $transcode_videos
+        $xmldoc.root.add_attribute('transcode-videos', $transcode_videos)
+    else
+        $xmldoc.root.delete_attribute('transcode-videos')
+    end
+
+    if $flv_generator
+        $xmldoc.root.add_attribute('flv-generator', $flv_generator)
+    else
+        $xmldoc.root.delete_attribute('flv-generator')
+    end
+
+    if $madewith
+        $madewith = $madewith.gsub('%booh', '"http://booh.org/"')
+    end
+    if $multi_languages
+        $htmlsuffix = ''
+    else
+        $htmlsuffix = '.html'
+    end
+end
+
+def read_config
+    $config = {}
+end
+
+def write_config
+end
+
+def info(value)
+    if $info_pipe
+        $info_pipe.puts(value)
+    end
+end
+
+def die(value)
+    if $info_pipe
+        $info_pipe.puts("die: " + value)
+    end
+    die_ value
+end
+
+def check_installation
+    if !system("which convert >/dev/null 2>/dev/null")
+        die _("The program 'convert' is needed. Please install it. 
+It is generally available with the 'ImageMagick' software package.")
+    end
+    if !system("which identify >/dev/null 2>/dev/null")
+        msg 1, _("the program 'identify' is needed to get images sizes and EXIF data. Please install it.
+It is generally available with the 'ImageMagick' software package.")
+        $no_identify = true
+    end
+    missing = %w(mplayer).delete_if { |prg| system("which #{prg} >/dev/null 2>/dev/null") }
+    if missing != []
+        msg 1, _("the following program(s) are needed to handle videos: '%s'. Videos will be ignored.") % missing.join(', ')
+        $ignore_videos = true
+    end
+end
+
+def replace_line(surround, keyword, line)
+    begin
+        contents = eval "$#{keyword}"
+        line.sub!(/#{surround}#{keyword}#{surround}/, contents)
+    rescue TypeError
+        die _("No '%s' found for substitution") % keyword
+    end
+end
+
+def build_html_skeletons
+    $html_images     = File.open("#{$themedir}/skeleton_image.html").readlines
+    $html_thumbnails = File.open("#{$themedir}/skeleton_thumbnails.html").readlines
+    $html_index      = File.open("#{$themedir}/skeleton_index.html").readlines
+    for line in $html_images + $html_thumbnails + $html_index
+        while line =~ /~~~(\w+)~~~/
+            replace_line('~~~', $1, line)
+        end
+    end
+end
+
+def find_caption_value(xmldir, filename)
+    if cap = xmldir.elements["*[@filename='#{utf8(filename)}']"].attributes['caption']
+        return cap
+    else
+        return nil
+    end
+end
+
+def quote_caption(input, *for_attribute)
+    if $quote_html
+        return input.gsub('<', '&lt;').gsub('>', '&gt;').gsub('"', '&quot;').gsub("'", '&#39;').gsub("\n", '<br/>')
+    elsif for_attribute[0]
+        return input.gsub('"', '&quot;').gsub("\n", '<br/>')
+    else
+        return input.gsub("\n", '<br/>')
+    end
+end
+
+#- stolen from CVSspam
+def urlencode(text)
+  text.sub(/[^a-zA-Z0-9\-,.*_\/]/) do
+    "%#{sprintf('%2X', $&[0])}"
+  end
+end
+
+def all_images_sizes
+    return $limit_sizes =~ /original/ ? $images_size + [ { 'name' => 'original' } ] : $images_size
+end
+
+def html_reload_to_thumbnails
+    html_reload_to_thumbnails = $preferred_size_reloader.clone
+    html_reload_to_thumbnails.gsub!(/~~theme~~/, $theme)
+    html_reload_to_thumbnails.gsub!(/~~default_size~~/, size2js($default_size['name']))
+    html_reload_to_thumbnails.gsub!(/~~htmlsuffix~~/, $htmlsuffix)
+    html_reload_to_thumbnails.gsub!(/~~all_sizes~~/, all_images_sizes.collect { |s| "\"#{size2js(s['name'])}\"" }.join(', '))
+    size_auto_chooser = '';
+    all_images_sizes.find_all { |s| s.has_key?('optimizedforwidth') }.
+                     sort { |a,b| b['optimizedforwidth'].to_i <=> a['optimizedforwidth'].to_i }.
+                     each { |s| size_auto_chooser += "if (w + 50 > #{s['optimizedforwidth']}) { return 'thumbnails-#{size2js(s['name'])}-0#{$htmlsuffix}'; }\n" }
+    html_reload_to_thumbnails.gsub!(/~~size_auto_chooser~~/, size_auto_chooser)
+    return html_reload_to_thumbnails
+end
+
+def discover_iterations(iterations, line)
+    if line =~ /~~iterate(\d)_open(_max(\d+|N))?~~/
+        for iter in iterations.values
+            if iter['open']
+                iter['open'] = false
+                iter['close_wait'] = $1.to_i
+            end
+        end
+        max = $3 == 'N' ? ($N_per_row || $default_N) : $3
+        iterations[$1.to_i] = { 'open' => true, 'max' => max, 'opening' => '', 'closing' => '' }
+        if $1.to_i == 1
+            line.sub!(/.*/, '~~thumbnails~~')
+        else
+            line.sub!(/.*/, '')
+        end
+    elsif line =~ /~~iterate(\d)_close~~/
+        iterations[$1.to_i]['open']  = false;
+        iterations[$1.to_i]['close'] = true;
+        line.sub!(/.*/, '')
+    else
+        for iter in iterations.values
+            if iter['open']
+                iter['opening'] += line
+                line.sub!(/.*/, '')
+            end
+            if !iter['close'] && iter['close_wait'] && iterations[iter['close_wait']]['close']
+                iter['closing'] += line
+                line.sub!(/.*/, '')
+            end
+        end
+    end
+end
+
+def reset_iterations(iterations)
+    for iter in iterations.values
+        iter['value'] = 0
+    end
+end
+
+def run_iterations(iterations, amount)
+    html = ''
+    should_rerun = false
+    for level in iterations.keys.sort
+        if iterations[level]['value'] == 0
+            html += iterations[level]['opening']
+        elsif level == iterations.keys.max
+            if !iterations[level]['max'] || iterations[level]['max'] && iterations[level]['value'] + amount <= iterations[level]['max'].to_i
+                html += iterations[level]['opening']
+            else
+                should_rerun = true
+            end
+        end
+        iterations[level]['value'] += amount
+        if iterations[level]['max'] && iterations[level]['value'] > iterations[level]['max'].to_i
+            iterations[level]['value'] = 0
+            iterations[level-1]['value'] = 0
+            html += iterations[level-1]['closing']
+        end
+    end
+    if should_rerun
+        return html + run_iterations(iterations, amount)
+    else
+        return html
+    end
+end
+
+def close_iterations(iterations)
+    html = ''
+    for level in iterations.keys.sort.reverse
+        html += iterations[level]['closing']
+    end
+    return html
+end
+
+def img_element(fullpath, caption)
+    if size = get_image_size(fullpath)
+        sizespec = 'width="' + size[:x].to_s + '" height="' + size[:y].to_s + '"'
+    else
+        sizespec = ''
+    end
+    return '<img src="' + File.basename(fullpath) + '" ' + sizespec + ' alt="' + quote_caption(caption, true) + '"/>'
+end
+
+def size2js(name)
+    return name.gsub(/-/, '')
+end
+
+def substitute_html_sizes(html, sizeobj, type, suffix)
+    sizestrings = []
+    if $images_size.length > 1 || (type == 'image' && $limit_sizes =~ /original/)
+        for sizeobj2 in $images_size
+            sizejs = size2js(sizeobj2['name'])
+            sizen = defer_translation(sizename(sizeobj2['name'], false))
+            if sizeobj != sizeobj2
+                if type == 'thumbnails'
+                    sizestrings << '<a href="thumbnails-' + sizejs + suffix + $htmlsuffix + '" onclick="set_preferred_size(\'' + sizejs + '\')">' + sizen + '</a>'
+                else
+                    sizestrings << '<a id="link' + sizejs + '" onclick="set_preferred_size(\'' + sizejs + '\')">' + sizen + '</a>'
+                end
+            else
+                sizestrings << sizen
+            end
+        end
+        if type == 'image' && $limit_sizes =~ /original/
+            sizestrings << '<a id="linkoriginal" target="newframe">' + defer_translation(sizename('original', false)) + '</a>'
+        end
+    end
+    html.sub!(/~~sizes~~(.+)~~/) { sizestrings.join($1) }
+end
+
+def substitute_navigation(html, xmldir)
+    if xmldir.parent.name == 'dir'
+        nav = ''
+        path = '..'
+        parent = xmldir.parent
+        while parent.name == 'dir'
+            parentcaption = parent.attributes['subdirs-caption'] || File.basename(parent.attributes['path'])
+            nav = "<a href=\"#{path}/index#{$htmlsuffix}\">#{parentcaption}</a> #{defer_translation(N_(" > "))} #{nav}"
+            path += '/..'
+            parent = parent.parent
+        end
+        html.gsub!(/~~ifnavigation\?~~(.+?)~~fi~~/) { $1 }
+        html.gsub!(/~~navigation~~/, nav + (xmldir.attributes['subdirs-caption'] || File.basename(xmldir.attributes['path'])))
+    else
+        html.gsub!(/~~ifnavigation\?~~(.+?)~~fi~~/, '')
+    end
+end
+
+def substitute_addthis(html)
+    html.gsub!(/~~addthis~~/, $addthis ? '<a class="addthis_button" href="http://www.addthis.com/bookmark.php?v=250"><img src="http://s7.addthis.com/static/btn/v2/lg-share-en.gif" width="125" height="16" alt="' + defer_translation(N_("Bookmark and Share")) + '" style="border:0"/></a><script type="text/javascript" src="http://s7.addthis.com/js/250/addthis_widget.js"></script>' : '')
+end
+
+def substitute_pathtobase(html, xmldir)
+    path = ''
+    location = xmldir
+    while location.parent.name == 'dir'
+        path = '../' + path
+        location = location.parent
+    end
+    html.gsub!(/~~pathtobase~~/, path)
+end
+
+def xmldir2destdir(xmldir)
+    return make_dest_filename(from_utf8(File.basename(xmldir.attributes['path'])))
+end
+
+def find_previous_album(xmldir)
+    relative_pos = ''
+    begin
+        #- move to previous dir element if exists
+        if prevelem = xmldir.previous_element_byname_notattr('dir', 'deleted')
+            xmldir = prevelem
+            relative_pos += '../' + xmldir2destdir(xmldir) + '/'
+            child = nil
+            #- after having moved to previous dir, we need to go down last subdir until the last one
+            while child = xmldir.elements['dir']
+                while nextchild = child.next_element_byname_notattr('dir', 'deleted')
+                    child = nextchild
+                end
+                relative_pos += xmldir2destdir(child) + '/'
+                xmldir = child
+            end
+        else
+            #- previous dir doesn't exist, move to previous dir element if exists
+            xmldir = xmldir.parent
+            if xmldir.name == 'dir' && !xmldir.attributes['deleted']
+                relative_pos += '../'
+            else
+                return nil
+            end
+        end
+    end while !xmldir.child_byname_notattr('image', 'deleted') && !xmldir.child_byname_notattr('video', 'deleted')
+    return File.reduce_path(relative_pos)
+end
+
+def find_next_album(xmldir)
+    relative_pos = ''
+    begin
+        #- first child dir element (catches when initial xmldir has both thumbnails and subdirs)
+        if firstchild = xmldir.child_byname_notattr('dir', 'deleted')
+            xmldir = firstchild
+            relative_pos += xmldir2destdir(xmldir) + '/'
+        #- next brother
+        elsif nextbro = xmldir.next_element_byname_notattr('dir', 'deleted')
+            xmldir = nextbro
+            relative_pos += '../' + xmldir2destdir(xmldir) + '/'
+        else
+            #- go up until we have a next brother or we are finished
+            begin
+                xmldir = xmldir.parent
+                relative_pos += '../'
+            end while xmldir && !xmldir.next_element_byname_notattr('dir', 'deleted')
+            if xmldir
+                xmldir = xmldir.next_element_byname('dir')
+                relative_pos += '../' + xmldir2destdir(xmldir) + '/'
+            else
+                return nil
+            end
+        end
+    end while !xmldir.child_byname_notattr('image', 'deleted') && !xmldir.child_byname_notattr('video', 'deleted')
+    return File.reduce_path(relative_pos)
+end
+
+def find_translation_for_file(file, msg)
+    if $multi_languages
+        if file =~ /\.(\w\w)\.html$/
+            bindtextdomain("booh", { :locale => "#{$1}.UTF-8" })
+            retval = _(msg)
+            Locale.set_current($default_locale)
+            return retval
+        else
+            die "Internal error: cannot find multi language suffix of file '#{file}'"
+        end
+    else
+        return utf8(_(msg))
+    end
+end
+
+def sub_previous_next_album(file, previous_album, next_album, html, previous_album_msg, next_album_msg)
+    if previous_album
+        html.gsub!(/~~previous_album~~/, '<a href="' + previous_album + 'thumbnails' + $htmlsuffix + '">' + previous_album_msg + '</a>')
+        html.gsub!(/~~ifprevious_album\?~~(.+?)~~fi~~/) { $1 }
+    else
+        html.gsub!(/~~previous_album~~/, '')
+        html.gsub!(/~~ifprevious_album\?~~(.+?)~~fi~~/, '')
+    end
+    if next_album
+        html.gsub!(/~~next_album~~/, '<a href="' + next_album + 'thumbnails' + $htmlsuffix + '">' + next_album_msg + '</a>')
+        html.gsub!(/~~ifnext_album\?~~(.+?)~~fi~~/) { $1 }
+    else
+        html.gsub!(/~~next_album~~/, '')
+        html.gsub!(/~~ifnext_album\?~~(.+?)~~fi~~/, '')
+    end
+    return html
+end
+
+def save_html(html, base_filename)
+    if html.class == Array
+        html = html.join('')
+    end
+    if $multi_languages
+        for language in ($multi_languages[0] + [ $multi_languages[1] ]).uniq
+            bindtextdomain("booh", { :locale => "#{language}.UTF-8" })
+            ios = File.open("#{base_filename}.#{language}.html", "w")
+            ios.write(html.gsub(/@@(.*?)@@/) { _($1) })
+            ios.close
+            Locale.set_current($default_locale)
+        end
+    else
+        ios = File.open("#{base_filename}.html", "w")
+        ios.write(html.gsub(/@@(.*?)@@/) { utf8(_($1)) })
+        ios.close
+    end
+end
+
+def apply_hook(name, content, *params)
+    if $hooks.nil?
+        return content
+    end
+    hook = $hooks[name]
+    if hook.nil?
+        return content
+    else
+        return hook.call(content, *params)
+    end
+end
+
+def walk_source_dir
+
+    #- preprocess the path->dir, rexml is very slow with that; we seem to improve speed by 7%
+    optxpath = {}
+    $xmldoc.elements.each('//dir') { |elem|
+        optxpath[elem.attributes['path']] = elem
+    }
+
+    examined_dirs = nil
+    if $mode == 'merge_config_onedir'
+        examined_dirs = [ $onedir ]
+    elsif $mode == 'merge_config_subdirs'
+        examined_dirs = `find '#{$onedir}' -type d -follow`.sort.collect { |v| v.chomp }.delete_if { |v| optxpath.has_key?(utf8(v)) }
+    else
+        examined_dirs = `find '#{$source}' -type d -follow`.sort.collect { |v| v.chomp }
+        if $mode == 'merge_config'
+            $xmldoc.elements.each('//dir') { |elem|
+                if ! examined_dirs.include?(elem.attributes['path'])
+                    msg 2, _("Merging config: removing directory %s from config, isn't on filesystem anymore") % elem.attributes['path']
+                    elem.remove
+                end
+            }
+        end
+    end
+    info("directories: #{examined_dirs.length}, sizes: #{$images_size.length}")
+
+    examined_dirs.each { |dir|
+        if dir =~ /'/
+            die _("Source directory or sub-directories can't contain a single-quote character, sorry: %s") % dir
+        end
+        if $mode !~ /^use_config/
+            Dir.entries(dir).each { |file|
+                if file =~ /['"\[\]]/
+                    die _("Files can't contain any of the characters ', \", [ or ], sorry: %s") % "#{dir}/#{file}"
+                end
+            }
+        end
+    }
+
+    examined_dirs.each { |dir|
+        if File.basename(dir) =~ /^\./
+            msg 1, _("Ignoring directory %s, begins with a dot (indicating a hidden directory)") % dir
+            next
+        end
+
+        dest_dir = make_dest_filename(dir.sub(/^#{Regexp.quote($source)}/, $dest))
+
+        #- place xml document on proper node if exists, else create
+        xmldir = optxpath[utf8(dir)]
+        if $mode == 'use_config' || $mode == 'use_config_changetheme'
+            if !xmldir || (xmldir.attributes['already-generated'] && !$force) || xmldir.attributes['deleted']
+                info("walking: #{dir}|#{$source}, 0 elements")
+                if xmldir && xmldir.attributes['deleted']
+                    system("rm -rf '#{dest_dir}'")
+                end
+                next
+            end
+        else
+            if $mode == 'gen_config' || (($mode == 'merge_config' || $mode == 'merge_config_subdirs') && !xmldir)
+                #- add the <dir..> element if necessary
+                parent = File.dirname(dir)
+                xmldir = $xmldoc.elements["//dir[@path='#{utf8(parent)}']"]
+                if !xmldir
+                    xmldir = $xmldoc.root
+                end
+                #- need to remove the already-generated mark of the parent because of the sub-albums page containing now one more element
+                xmldir.delete_attribute('already-generated')
+                xmldir = optxpath[utf8(dir)] = xmldir.add_element('dir', { 'path' => utf8(dir) })
+            end
+        end
+        xmldir.delete_attribute('already-generated')
+
+        #- preprocess all the existing elements, rexml is slow with that
+        optelements = {}
+        xmldir.elements.each { |elem|
+            if filename = elem.attributes['filename']
+                optelements[elem.name + '|' + filename] = elem
+            end
+        }
+
+        #- read images/videos entries from config or from directories depending on mode
+        entries = []
+        if $mode == 'use_config' || $mode == 'use_config_changetheme'
+            msg 2, _("Handling %s from config list...") % dir
+            xmldir.elements.each { |element|
+                if %w(image video).include?(element.name) && !element.attributes['deleted']
+                    entries << from_utf8(element.attributes['filename'])
+                end
+            }
+        else
+            msg 2, _("Examining %s...") % dir
+            entries = Dir.entries(dir).sort
+            #- populate config in case of gen_config, add new files in case of merge_config
+            for file in entries
+                if file =~ /['"\[\]]/
+                    msg 1, _("Ignoring %s, contains one of forbidden characters: '\"[]") % "#{dir}/#{file}"
+                else
+                    type = entry2type(file)
+                    if type && ! optelements[type + '|' + utf8(file)]
+                        #- hack: don't run identify (which is slow) if format only contains default %t
+                        if $commentsformat && type == 'image' && $commentsformat != '%t'
+                            comment = utf8(`identify -format "#{$commentsformat}" '#{dir}/#{file}'`.chomp.sub(/\.$/, ''))
+                        else
+                            comment = utf8cut(file.sub(/\.[^\.]+$/, ''), 18)
+                        end
+                        optelements[type + '|' + utf8(file)] = xmldir.add_element(type, { "filename" => utf8(file), "caption" => comment })
+                    end
+                end
+            end
+            if $mode != 'gen_config'
+                #- cleanup removed files from config and reread entries from config to get proper ordering
+                entries = []
+                xmldir.elements.each { |element|
+                    fullpath = "#{dir}/#{from_utf8(element.attributes['filename'])}"
+                    if %w(image video).include?(element.name)
+                        if !File.readable?(fullpath)
+                            msg 1, _("Config merge: removing %s from config; use the backup file to retrieve caption info if this was a mistake") % fullpath
+                            xmldir.delete(element)
+                        elsif !element.attributes['deleted']
+                            entries << from_utf8(element.attributes['filename'])
+                        end
+                    end
+                }
+                #- if there is no more elements here, there is no album here anymore
+                if !xmldir.child_byname_notattr('image', 'deleted') && !xmldir.child_byname_notattr('video', 'deleted')
+                    xmldir.delete_attribute('thumbnails-caption')
+                    xmldir.delete_attribute('thumbnails-captionfile')
+                end
+            end
+        end
+        images = entries.find_all { |e| entry2type(e) == 'image' }
+        msg 3, _("\t%s photos") % images.length
+        videos = entries.find_all { |e| entry2type(e) == 'video' }
+        msg 3, _("\t%s videos") % videos.length
+        info("walking: #{dir}|#{$source}, #{images.length + videos.length} elements")
+
+        system("mkdir -p '#{dest_dir}'")
+
+        #- generate .htaccess file
+        if !$forgui
+            ios = File.open("#{dest_dir}/.htaccess", "w")
+            ios.write("AddCharset UTF-8 .html\n")
+            if auth_user_file = xmldir.attributes['password-protect']
+                msg 3, _("\tgenerating password protection file #{dest_dir}/.htaccess")
+                ios.write("AuthType Basic\nAuthName \"protected area\"\nAuthUserFile #{auth_user_file}\nrequire valid-user\n")
+            end
+            if $multi_languages
+                ios.write("Options +Multiviews\n")
+                ios.write("LanguagePriority #{$multi_languages[1]}\n")
+                ios.write("ForceLanguagePriority Prefer Fallback\n")
+                ios.write("DirectoryIndex index\n")
+            end
+            ios.close
+        end
+
+        #- pass through if there are no images and videos
+        if images.size == 0 && videos.size == 0
+            if !$forgui
+                #- cleanup old images/videos, especially if this directory contained images/videos previously.
+                if $mode != 'gen_config'
+                    rightful_images = [ '.htaccess' ]
+                    if xmldir.attributes['thumbnails-caption']
+                        rightful_images << 'thumbnails-thumbnail.jpg'
+                    end
+                    xmldir.elements.each('dir') { |child|
+                        if child.attributes['deleted']
+                            next
+                        end
+                        subdir = make_dest_filename(from_utf8(File.basename(child.attributes['path'])))
+                        rightful_images << "thumbnails-#{subdir}.jpg"
+                    }
+                    to_del = Dir.entries(dest_dir).find_all { |e| !File.directory?(File.join(dest_dir, e)) && !rightful_images.include?(e) }
+                    if to_del.size > 0
+                        File.delete(*to_del.collect { |e| File.join(dest_dir, e) })
+                    end
+                end
+                
+                #- copy any resource file that goes with the theme (css, images..)
+                themestuff = Dir.entries("#{$themedir}").
+                                 find_all { |e| !%w(. .. skeleton_image.html skeleton_thumbnails.html skeleton_index.html metadata root).include?(e) }
+                themestuff.each { |entry|
+                    if !File.exists?(File.join(dest_dir, entry))
+                        psys("cp '#{$themedir}/#{entry}' '#{dest_dir}'")
+                    end
+                }
+
+                #- copy any root-only resource file that goes with the theme (css, images..)
+                if xmldir.parent.name != 'dir'
+                    themestuff_root = Dir.entries("#{$themedir}/root").
+                                          find_all { |e| !%w(. ..).include?(e) }
+                    themestuff_root.each { |entry|
+                        if !File.exists?(File.join(dest_dir, entry))
+                            psys("cp '#{$themedir}/root/#{entry}' '#{dest_dir}'")
+                        end
+                    }
+                    #- copy flowplayer stuff if needed
+                    if $flv_generator
+                        psys("cp #{$FPATH}/flowplayer/flowplayer* '#{dest_dir}'")
+                    end
+                end
+            end
+            next
+        end
+
+        msg 2, _("Outputting in %s...") % dest_dir
+
+        #- populate data structure with sizes from theme
+        for sizeobj in $images_size
+            fullscreen_images ||= {}
+            fullscreen_images[sizeobj['name']] = []
+            thumbnail_images ||= {}
+            thumbnail_images[sizeobj['name']] = []
+            fullscreen_videos ||= {}
+            fullscreen_videos[sizeobj['name']] = []
+            thumbnail_videos ||= {}
+            thumbnail_videos[sizeobj['name']] = []
+        end
+        #- a special dummy size to keep 'references' to thumbnails in case of panorama, because the GUI will use the regular thumbnails
+        thumbnail_images['dont-delete-file-for-gui'] = []
+        if $limit_sizes =~ /original/
+            fullscreen_images['original'] = []
+            fullscreen_videos['original'] = []
+        end
+
+        images.size >= 1 and msg 3, _("\tcreating photos thumbnails...")
+
+        #- create thumbnails for images
+        images.each { |img|
+            info("processing element")
+            base_dest_img = dest_dir + '/' + make_dest_filename(img.sub(/\.[^\.]+$/, ''))
+            elem = optelements['image|' + utf8(img)]
+            if $forgui
+                thumbnail_dest_img = base_dest_img + "-#{$default_size['thumbnails']}.jpg"
+                gen_thumbnails_element("#{dir}/#{img}", elem, true, [ { 'filename' => thumbnail_dest_img, 'size' => $default_size['thumbnails'] } ])
+            else
+                todo = []
+                for sizeobj in $images_size
+                    size_fullscreen = sizeobj['fullscreen']
+                    size_thumbnails = sizeobj['thumbnails']
+                    fullscreen_dest_img = base_dest_img + "-#{size_fullscreen}.jpg"
+                    fullscreen_images[sizeobj['name']] << File.basename(fullscreen_dest_img)
+                    todo << { 'filename' => fullscreen_dest_img, 'size' => size_fullscreen }
+                    if pano = pano_amount(elem)
+                        thumbnail_images['dont-delete-file-for-gui'] << File.basename(base_dest_img + "-#{size_thumbnails}.jpg")
+                        size_thumbnails = size_thumbnails.sub(/(\d+)/) { ($1.to_i * pano).to_i }
+                    end
+                    thumbnail_dest_img = base_dest_img + "-#{size_thumbnails}.jpg"
+                    thumbnail_images[sizeobj['name']] << File.basename(thumbnail_dest_img)
+                    todo << { 'filename' => thumbnail_dest_img,  'size' => size_thumbnails }
+                end
+                gen_thumbnails_element("#{dir}/#{img}", elem, true, todo)
+                if $limit_sizes =~ /original/
+                    fullscreen_images['original'] << img
+                end
+                destimg = "#{dest_dir}/#{img}"
+                if $limit_sizes =~ /original/ && !File.exists?(destimg)
+                    if $hardlinks_ok
+                        if ! sys("ln '#{dir}/#{img}' '#{destimg}'")
+                            $hardlinks_ok = false
+                        end
+                    end
+                    if ! $hardlinks_ok
+                        psys("cp '#{dir}/#{img}' '#{destimg}'")
+                    end
+                end
+            end
+        }
+
+        videos.size >= 1 and msg 3, _("\tcreating videos thumbnails...")
+        transcoded_videos = {}
+        flv_videos = {}
+
+        #- create thumbnails for videos
+        videos.each { |video|
+            info("processing element")
+            base_dest_img = dest_dir + '/' + make_dest_filename(video.sub(/\.[^\.]+$/, ''))
+            elem = optelements['video|' + utf8(video)]
+            if $forgui
+                thumbnail_dest_img = base_dest_img + "-#{$default_size['thumbnails']}.jpg"
+                gen_thumbnails_element("#{dir}/#{video}", elem, true, [ { 'filename' => thumbnail_dest_img, 'size' => $default_size['thumbnails'] } ])
+            else
+                todo = []
+                for sizeobj in $images_size
+                    size_fullscreen = sizeobj['fullscreen']
+                    size_thumbnails = sizeobj['thumbnails']
+                    fullscreen_dest_img = base_dest_img + "-#{size_fullscreen}.jpg"
+                    fullscreen_videos[sizeobj['name']] << File.basename(fullscreen_dest_img)
+                    todo << { 'filename' => fullscreen_dest_img, 'size' => size_fullscreen }
+                    thumbnail_dest_img = base_dest_img + "-#{size_thumbnails}.jpg"
+                    thumbnail_videos[sizeobj['name']] << File.basename(thumbnail_dest_img)
+                    todo << { 'filename' => thumbnail_dest_img, 'size' => size_thumbnails }
+                end
+                gen_thumbnails_element("#{dir}/#{video}", elem, true, todo)
+
+                if $transcode_videos
+                    parts = $transcode_videos.split(':', 2)
+                    basedestvideo = video.sub(/\.\w+/, '') + '.' + parts[0]
+                    transcoded_videos[video] = basedestvideo
+                    destvideo = "#{dest_dir}/#{basedestvideo}"
+                    if ! File.exists?(destvideo)
+                        psys(parts[1].gsub(/%f/, "'#{dir}/#{video}'").gsub(/%o/, "'#{destvideo}'"))
+                    end
+
+                elsif $flv_generator
+                    basedestvideo = video.sub(/\.\w+/, '') + '.flv'
+                    flv_videos[video] = basedestvideo
+                    destvideo = "#{dest_dir}/#{basedestvideo}"
+                    if File.exists?(destvideo) && File.size(destvideo) == 0
+                        File.delete(destvideo)
+                    end
+                    if ! File.exists?(destvideo)
+                        psys($flv_generator.gsub(/%f/, "'#{dir}/#{video}'").gsub(/%o/, "'#{destvideo}'"))
+                    end
+
+                else
+                    destvideo = "#{dest_dir}/#{video}"
+                    if ! File.exists?(destvideo)
+                        if $hardlinks_ok
+                            if ! sys("ln '#{dir}/#{video}' '#{destvideo}'")
+                                $hardlinks_ok = false
+                            end
+                        end
+                        if ! $hardlinks_ok
+                            psys("cp '#{dir}/#{video}' '#{destvideo}'")
+                        end
+                    end
+                end
+            end
+        }
+
+        if !$forgui            
+            #- cleanup old images/videos (for when removing elements or sizes)
+            all_elements = fullscreen_images.collect { |e| e[1] }.flatten.
+                     concat(thumbnail_images.collect { |e| e[1] }.flatten).
+                     concat(fullscreen_videos.collect { |e| e[1] }.flatten).
+                     concat(thumbnail_videos.collect { |e| e[1] }.flatten).
+                     concat($transcode_videos ? transcoded_videos.values : $flv_generator ? flv_videos.values : videos).
+                     push('.htaccess')
+            to_del = Dir.entries(dest_dir).find_all { |e| !File.directory?(File.join(dest_dir, e)) && !all_elements.include?(e) && e !~ /^thumbnails-\w+\.jpg/ }
+            if to_del.size > 0
+                msg 3, _("\tcleaning up: #{to_del.join(', ')}")
+                File.delete(*to_del.collect { |e| File.join(dest_dir, e) })
+            end
+
+            #- copy any resource file that goes with the theme (css, images..)
+            themestuff = Dir.entries("#{$themedir}").
+                             find_all { |e| !%w(. .. skeleton_image.html skeleton_thumbnails.html skeleton_index.html metadata root).include?(e) }
+            themestuff.each { |entry|
+                if !File.exists?(File.join(dest_dir, entry))
+                    psys("cp '#{$themedir}/#{entry}' '#{dest_dir}'")
+                end
+            }
+            
+            #- copy any root-only resource file that goes with the theme (css, images..)
+            if xmldir.parent.name != 'dir'
+                themestuff_root = Dir.entries("#{$themedir}/root").
+                                      find_all { |e| !%w(. ..).include?(e) }
+                themestuff_root.each { |entry|
+                    if !File.exists?(File.join(dest_dir, entry))
+                        psys("cp '#{$themedir}/root/#{entry}' '#{dest_dir}'")
+                    end
+                }
+                #- copy flowplayer stuff if needed
+                if $flv_generator
+                    psys("cp #{$FPATH}/flowplayer/flowplayer* '#{dest_dir}'")
+                end
+            end
+            
+            msg 3, _("\tgenerating HTML pages...")
+            #- fixup max per page
+            if $N_per_page
+                $N_per_page = $N_per_page.to_i / ($N_per_row || $default_N).to_i * ($N_per_row || $default_N).to_i
+            end
+
+            #- generate thumbnails*.html (page with thumbnails)
+            element2thumbnailpage4js = []
+            for sizeobj in $images_size
+                info("processing size")
+                html = $html_thumbnails.collect { |l| l.clone }
+                iterations = {}
+                for i in html
+                    i.sub!(/~~title~~/, quote_caption(xmldir.attributes['thumbnails-caption'] || utf8(File.basename(dir))))
+                    i.sub!(/~~flowplayer_head_code~~/, ($flv_generator && videos.size > 0) ? '<script type="text/javascript" src="~~pathtobase~~flowplayer-3.2.2.min.js"></script>' : '')
+                    discover_iterations(iterations, i)
+                end
+                all_pages = []
+                html_thumbnails = ''
+                html_thumbnails_nojs = ''
+                counter = 0
+                pagecount = 0
+                reset_iterations(iterations)
+                #- preprocess the @filename->elem, rexml is very slow with that; we dramatically improve this part of the processing
+                optfilename = {}
+                xmldir.elements.each('image') { |elem|
+                    optfilename[elem.attributes['filename']] = elem
+                }
+                for file in entries
+                    type = images.include?(file) ? 'image' : videos.include?(file) ? 'video' : nil
+                    if type
+                        homogeinize_width = 100 / ($N_per_row || $default_N).to_i
+                        if type == 'image' && elem = optfilename[utf8(file)]
+                            if pano = pano_amount(elem)
+                                html_elem = run_iterations(iterations, pano)
+                                counter += count = pano.ceil
+                                html_elem.gsub!(/~~colspan~~/) { "colspan=\"#{count}\"" }
+                                homogeinize_width *= count
+                            else
+                                html_elem = run_iterations(iterations, 1)
+                                counter += 1
+                                html_elem.gsub!(/~~colspan~~/, '')
+                            end
+                        else 
+                            html_elem = run_iterations(iterations, 1)
+                            counter += 1
+                            html_elem.gsub!(/~~colspan~~/, '')
+                        end
+                        html_elem.gsub!(/~~homogeinize_width~~/) { "width=\"#{homogeinize_width}%\"" }
+                        if type == 'image'
+                            index = images.index(file)
+                            caption = find_caption_value(xmldir, images[index]) || utf8(images[index])
+                            html_elem.gsub!(/~~caption_iteration~~/, quote_caption(caption))
+                            html_elem.gsub!(/~~ifimage\?~~(.+?)~~fi~~/) { $1 }
+                            html_elem.gsub!(/~~ifvideo\?~~(.+?)~~fi~~/, '')
+                        elsif type == 'video'
+                            index = videos.index(file)
+                            caption = find_caption_value(xmldir, videos[index]) || utf8(videos[index])
+                            if File.exists?("#{dest_dir}/#{thumbnail_videos[sizeobj['name']][index]}")
+                                video_preview = '<div class="thumbnail_video">' + img_element("#{dest_dir}/#{thumbnail_videos[sizeobj['name']][index]}", caption) + '</div>'
+                            else
+                                video_preview = defer_translation(N_("(no preview)"))
+                            end
+                            if $flv_generator
+                                size = get_image_size("#{dest_dir}/#{thumbnail_videos[sizeobj['name']][index]}")
+                                if ! size
+                                    sizeobj['thumbnails'] =~ /(\d+)x(\d+)/
+                                    size = { :x => $1, :y => $2 }
+                                end
+                                sizespec = 'width:' + size[:x].to_s + 'px;height:' + (size[:y] + 24).to_s + 'px'
+                                image_iteration = '<a href="' + flv_videos[videos[index]] + '" style="display:block;' + sizespec + '"' +
+                                                  '   id="player' + index.to_s + '">' + video_preview +
+                                                  '<img src="~~pathtobase~~play_video.png" style="position:relative;top:-' + ((size[:y]+48)/2).to_s + 'px;border:0;background-color:transparent"/></a>' +
+                                                  '<script>flowplayer("player' + index.to_s + '", "~~pathtobase~~flowplayer-3.2.2.swf")</script>'
+                                html_elem.gsub!(/~~image_iteration~~/, apply_hook(:image_iteration, image_iteration, 'video'))
+                            else
+                                html_elem.gsub!(/~~image_iteration~~/,
+                                                '<a href="' + ( $transcode_videos ? transcoded_videos[videos[index]] : videos[index] ) + '">' +
+                                                    video_preview + '</a>')
+                            end
+                            html_elem.gsub!(/~~caption_iteration~~/, quote_caption(caption))
+                            html_elem.gsub!(/~~ifimage\?~~(.+?)~~fi~~/, '')
+                            html_elem.gsub!(/~~ifvideo\?~~(.+?)~~fi~~/) { $1 }
+                        end
+                        html_thumbnails += html_elem
+                        html_thumbnails_nojs += html_elem
+                        if type == 'image'
+                            img_preview = '<div class="thumbnail_image">' + img_element("#{dest_dir}/#{thumbnail_images[sizeobj['name']][index]}", caption) + '</div>'
+                            html_thumbnails.gsub!(/~~image_iteration~~/,
+                                                  '<a href="image-' + size2js(sizeobj['name']) + $htmlsuffix + '#current=' + fullscreen_images[sizeobj['name']][index] +
+                                                      '" name="' + fullscreen_images[sizeobj['name']][index] + '">' + img_preview + '</a>')
+                            html_thumbnails_nojs.gsub!(/~~image_iteration~~/, 
+                                                       '<a href="' + fullscreen_images[sizeobj['name']][index] + '" name="' + fullscreen_images[sizeobj['name']][index] + '">' +
+                                                       img_preview + '</a>')
+                        end
+                        #- remember in which thumbnails page is this element, for element->thumbnail link
+                        if sizeobj == $images_size[0]
+                            element2thumbnailpage4js << pagecount
+                        end
+
+                        if counter == $N_per_page
+                            html_thumbnails      += close_iterations(iterations)
+                            html_thumbnails_nojs += close_iterations(iterations)
+                            all_pages << [ html_thumbnails, html_thumbnails_nojs ]
+                            html_thumbnails = ''
+                            html_thumbnails_nojs = ''
+                            counter = 0
+                            reset_iterations(iterations)
+                            pagecount += 1
+                        end
+                    end
+                end
+                if counter > 0
+                    html_thumbnails      += close_iterations(iterations)
+                    html_thumbnails_nojs += close_iterations(iterations)
+                    all_pages << [ html_thumbnails, html_thumbnails_nojs ]
+                end
+                for i in html
+                    i.gsub!(/~~theme~~/, $theme)
+                    i.gsub!(/~~current_size~~/, sizeobj['name'])
+                    i.gsub!(/~~htmlsuffix~~/, $htmlsuffix)
+                    i.gsub!(/~~current_size_js~~/, size2js(sizeobj['name']))
+                    i.gsub!(/~~madewith~~/, $madewith || '')
+                    i.gsub!(/~~indexlink~~/, $indexlink || '')
+                    substitute_addthis(i)
+                    substitute_navigation(i, xmldir)
+                end
+                html_nojs = html.collect { |l| l.clone }
+                pagecount = 0
+                for page in all_pages
+                    html_thumbnails, html_thumbnails_nojs = page
+                    final_html = html.collect { |l| l.clone }
+                    mstuff = defer_translation(N_("Pages: ")) +
+                             (pagecount > 0 ? "<a href=\"thumbnails-#{size2js(sizeobj['name'])}%nojs-#{pagecount - 1}#{$htmlsuffix}\">" + defer_translation(N_("<- Previous")) + "</a> " : '') +
+                             all_pages.collect_with_index { |p,idx| page == p ? idx + 1 : "<a href=\"thumbnails-#{size2js(sizeobj['name'])}%nojs-#{idx}#{$htmlsuffix}\">#{idx + 1}</a>" }.join(', ') +
+                             (pagecount < all_pages.size - 1 ? " <a href=\"thumbnails-#{size2js(sizeobj['name'])}%nojs-#{pagecount + 1}#{$htmlsuffix}\">" + defer_translation(N_("Next ->")) + "</a> " : '')
+                    for i in final_html
+                        i.sub!(/~~run_slideshow~~/,
+                               entries.size <= 1 ? '' : '<a href="image-' + size2js(sizeobj['name']) + $htmlsuffix + '#run_slideshow=1">' + defer_translation(N_("Run slideshow!"))+'</a>')
+                        i.sub!(/~~thumbnails~~/, html_thumbnails)
+                        if all_pages.size == 1
+                            i.gsub!(/~~ifmultiplepages\?~~.*~~fi~~/, '')
+                        else
+                            i.gsub!(/~~ifmultiplepages\?~~(.+?)~~fi~~/) { $1 }
+                            i.gsub!(/~~multiplepagesstuff~~/, mstuff.gsub('%nojs', ''))
+                        end
+                        substitute_html_sizes(i, sizeobj, 'thumbnails', "-#{pagecount}")
+                        substitute_pathtobase(i, xmldir)
+                    end
+                    save_html(final_html, "#{dest_dir}/thumbnails-#{size2js(sizeobj['name'])}-#{pagecount}")
+                    final_html_nojs = html_nojs.collect { |l| l.clone }
+                    for i in final_html_nojs
+                        i.sub!(/~~run_slideshow~~/, defer_translation(N_("<i>Click on an image to view it larger</i>")))
+                        i.sub!(/~~thumbnails~~/, html_thumbnails_nojs)
+                        if all_pages.size == 1
+                            i.gsub!(/~~ifmultiplepages\?~~.*~~fi~~/, '')
+                        else
+                            i.gsub!(/~~ifmultiplepages\?~~(.+?)~~fi~~/) { $1 }
+                            i.gsub!(/~~multiplepagesstuff~~/, mstuff.gsub('%nojs', '-nojs'))
+                        end
+                        substitute_html_sizes(i, sizeobj, 'thumbnails', "-nojs-#{pagecount}")
+                        substitute_pathtobase(i, xmldir)
+                    end
+                    save_html(final_html_nojs, "#{dest_dir}/thumbnails-#{size2js(sizeobj['name'])}-nojs-#{pagecount}")
+                    pagecount += 1
+                end
+            end
+
+            info("finished processing sizes")
+
+            #- generate "main" thumbnails.html page that will reload to correct size thanks to cookie
+            save_html(html_reload_to_thumbnails, "#{dest_dir}/thumbnails")
+
+            #- generate image.html (page with fullscreen images)
+            captions4js = []
+            types4js = []
+            videos4js = []
+            for file in entries
+                type = images.include?(file) ? 'image' : videos.include?(file) ? 'video' : nil
+                if type
+                    caption = find_caption_value(xmldir, file)
+                    if caption
+                        captions4js << '"' + quote_caption(caption, true) + '"'
+                    else
+                        captions4js << '""'
+                    end
+                    types4js << '"' + type + '"'
+                    if type == 'video'
+                        index = videos.index(file)
+                        if $flv_generator
+                            videos4js << '"' + flv_videos[videos[index]] + '"'
+                        else
+                            videos4js << '"' + videos[index] + '"'
+                        end
+                    else
+                        videos4js << '""'
+                    end
+                end
+            end
+
+            for sizeobj in $images_size
+                elements4js = []
+                videoswidths4js = []
+                videosheights4js = []
+                for file in entries
+                    type = images.include?(file) ? 'image' : videos.include?(file) ? 'video' : nil
+                    if type
+                        if type == 'image'
+                            index = images.index(file)
+                            elements4js << '"' + fullscreen_images[sizeobj['name']][index] + '"'
+                            videoswidths4js << "''"
+                            videosheights4js << "''"
+                        else
+                            index = videos.index(file)
+                            elements4js << '"' + fullscreen_videos[sizeobj['name']][index] + '"'
+                            size = get_image_size("#{dest_dir}/#{fullscreen_videos[sizeobj['name']][index]}")
+                            videoswidths4js << size[:x].to_s
+                            videosheights4js << size[:y].to_s
+                        end
+                    end
+                end
+
+                html = $html_images.collect { |l| l.clone }
+                hiddenimages4remotes = '<span style="display:none">' + thumbnail_images[sizeobj['name']][0..4].collect { |e| "<img src=\"#{e}\"/>" }.join('') + '</span>'
+                otherelements4js = ''
+                othersizes = []
+                for sizeobj2 in all_images_sizes
+                    if sizeobj != sizeobj2
+                        oe4js = []
+                        for file in entries
+                            type = images.include?(file) ? 'image' : videos.include?(file) ? 'video' : nil
+                            if type
+                                if type == 'image'
+                                    index = images.index(file)
+                                    oe4js << '"' + fullscreen_images[sizeobj2['name']][index] + '"'
+                                elsif sizeobj2['name'] != 'original'
+                                    index = videos.index(file)
+                                    oe4js << '"' + fullscreen_videos[sizeobj2['name']][index] + '"'
+                                end
+                            end
+                        end
+                        otherelements4js += "var elements_#{size2js(sizeobj2['name'])} = new Array(" + oe4js.join(', ') + ");\n"
+                        othersizes << "\"#{size2js(sizeobj2['name'])}\""
+                    end
+                end
+                for i in html
+                    i.gsub!(/~~images~~/, elements4js.join(', '))
+                    i.gsub!(/~~types~~/, types4js.join(', '))
+                    i.gsub!(/~~videos~~/, videos4js.join(', '))
+                    i.gsub!(/~~videos_widths~~/, videoswidths4js.join(', '))
+                    i.gsub!(/~~videos_heights~~/, videosheights4js.join(', '))
+                    i.gsub!(/~~hidden_images_for_remotes~~/, hiddenimages4remotes)
+                    i.gsub!(/~~other_images~~/, otherelements4js)
+                    i.gsub!(/~~thumbnailspages~~/, element2thumbnailpage4js.collect { |e| "\"#{e}\"" }.join(', '))
+                    i.gsub!(/~~other_sizes~~/, othersizes.join(', '))
+                    i.gsub!(/~~captions~~/, captions4js.join(', '))
+                    i.gsub!(/~~title~~/, quote_caption(xmldir.attributes['thumbnails-caption'] || utf8(File.basename(dir))))
+                    if $flv_generator && videos.size > 0
+                        i.sub!(/~~flowplayer_head_code~~/, '<script type="text/javascript" src="~~pathtobase~~flowplayer-3.2.2.min.js"></script>')
+                        i.sub!(/~~flowplayer_active~~/, 'true')
+                    else
+                        i.sub!(/~~flowplayer_head_code~~/, '')
+                        i.sub!(/~~flowplayer_active~~/, 'false')
+                    end
+
+                    i.gsub!(/~~thumbnails~~/, '<a id="thumbnails">' + defer_translation(N_('return to thumbnails')) + '</a>')
+                    i.gsub!(/~~theme~~/, $theme)
+                    i.gsub!(/~~current_size~~/, size2js(sizeobj['name']))
+                    i.gsub!(/~~htmlsuffix~~/, $htmlsuffix)
+                    i.gsub!(/~~madewith~~/, $madewith || '')
+                    i.gsub!(/~~indexlink~~/, $indexlink || '')
+                    substitute_addthis(i)
+                    substitute_html_sizes(i, sizeobj, 'image', '')
+                    substitute_navigation(i, xmldir)
+                    substitute_pathtobase(i, xmldir)
+                end
+                save_html(html, "#{dest_dir}/image-#{size2js(sizeobj['name'])}")
+            end
+        end
+    }
+
+    msg 3, ''
+
+    #- add attributes to <dir..> elements needing so
+    if $mode != 'use_config'
+        msg 3, _("\tfixating configuration file...")
+        $xmldoc.elements.each('//dir') { |element|
+            path = captionpath = element.attributes['path']
+            descendant_element = nil
+            #- search if there is at least one image or video down that dir; use workarounds to rexml slowness
+            #- first, look down only one level, very fast
+            first_desc = nil
+            element.elements.each { |elem|
+                if first_desc.nil?
+                    first_desc = elem
+                end
+                if elem.name == 'image' || elem.name == 'video'
+                    descendant_element = elem
+                    break
+                end
+            }
+            if descendant_element.nil?
+                #- if there was nothing or only directory down one level, look down the first subdir
+                if ! first_desc.nil?
+                    first_desc.elements.each { |elem|
+                        if elem.name == 'image' || elem.name == 'video'
+                            descendant_element = elem
+                            break
+                        end
+                    }
+                end
+                if descendant_element.nil?
+                    #- if there was still nothing found, use complete albeit slow method
+                    descendant_element = element.elements['descendant::image'] || element.elements['descendant::video']
+                end
+            end
+            if !descendant_element
+                msg 3, _("\t\tremoving %s, no element in it") % path
+                element.remove  #- means we have a directory with nothing interesting in it
+            else
+                captionfile = "#{descendant_element.parent.attributes['path']}/#{descendant_element.attributes['filename']}"
+                basename = File.basename(path)
+                if element.elements['dir']
+                    if !element.attributes['subdirs-caption']
+                        element.add_attribute('subdirs-caption', basename)
+                    end
+                    if !element.attributes['subdirs-captionfile']
+                        element.add_attribute('subdirs-captionfile', captionfile)
+                    end
+                end
+                if element.child_byname_notattr('image', 'deleted') || element.child_byname_notattr('video', 'deleted')
+                    if !element.attributes['thumbnails-caption']
+                        element.add_attribute('thumbnails-caption', basename)
+                    end
+                    if !element.attributes['thumbnails-captionfile']
+                        element.add_attribute('thumbnails-captionfile', captionfile)
+                    end
+                end
+            end
+        }
+    end
+
+    #- write down to disk config if necessary
+    if $config_writeto
+        ios = File.open($config_writeto, "w")
+        $xmldoc.write(ios)
+        ios.close
+    end
+
+    if $forgui
+        msg 3, _("completed necessary stuff for GUI, exiting.")
+        return
+    end
+
+    #- second pass to create index.html files and previous/next links
+    info("creating index.html")
+    msg 3, _("\trescanning directories to generate all 'index.html' files...")
+
+    #- recompute the memoization because elements mights have been removed (the ones with no element in them)
+    optxpath = {}
+    $xmldoc.elements.each('//dir') { |elem|
+        optxpath[elem.attributes['path']] = elem
+    }
+
+    examined_dirs.each { |dir|
+        info("index.html: #{dir}|#{$source}")
+
+        xmldir = optxpath[utf8(dir)]
+        if !xmldir || (xmldir.attributes['already-generated'] && !$force) || xmldir.attributes['deleted']
+            next
+        end
+        dest_dir = make_dest_filename(dir.sub(/^#{Regexp.quote($source)}/, $dest))
+
+        previous_album = find_previous_album(xmldir)
+        next_album = find_next_album(xmldir)
+
+        if xmldir.elements['dir']
+            html = $html_index.collect { |l| l.clone }
+            iterations = {}
+            for i in html
+                caption = xmldir.attributes['subdirs-caption']
+                i.gsub!(/~~title~~/, quote_caption(caption))
+                substitute_navigation(i, xmldir)
+                substitute_pathtobase(i, xmldir)
+                discover_iterations(iterations, i)
+            end
+            
+            html_index = ''
+            reset_iterations(iterations)
+            
+            #- deal with "current" album (directs to "thumbnails" page)
+            if xmldir.attributes['thumbnails-caption']
+                thumbnail = "#{dest_dir}/thumbnails-thumbnail.jpg"
+                gen_thumbnails_subdir(from_utf8(xmldir.attributes['thumbnails-captionfile']), xmldir, false,
+                                      [ { 'filename' => thumbnail, 'size' => $albums_thumbnail_size } ], 'thumbnails')
+                html_index += run_iterations(iterations, 1)
+                caption = xmldir.attributes['thumbnails-caption']
+                html_index.gsub!(/~~image_iteration~~/, "<a href=\"thumbnails#{$htmlsuffix}\">" + img_element(thumbnail, caption) + '</a>')
+                html_index.gsub!(/~~caption_iteration~~/, quote_caption(caption))
+            end
+
+            #- deal with sub-albums (direct to subdirs/index.html pages)
+            xmldir.elements.each('dir') { |child|
+                if child.attributes['deleted']
+                    next
+                end
+                subdir = make_dest_filename(from_utf8(File.basename(child.attributes['path'])))
+                thumbnail = "#{dest_dir}/thumbnails-#{subdir}.jpg"
+                html_index += run_iterations(iterations, 1)
+                captionfile, caption = find_subalbum_caption_info(child)
+                gen_thumbnails_subdir(captionfile, child, false,
+                                      [ { 'filename' => thumbnail, 'size' => $albums_thumbnail_size } ], find_subalbum_info_type(child))
+                html_index.gsub!(/~~caption_iteration~~/, quote_caption(caption))
+                html_index.gsub!(/~~image_iteration~~/, "<a href=\"#{subdir}/index#{$htmlsuffix}\">" + img_element(thumbnail, caption) + '</a>')
+            }
+
+            html_index += close_iterations(iterations)
+
+            for i in html
+                i.gsub!(/~~thumbnails~~/, html_index)
+                i.gsub!(/~~madewith~~/, $madewith || '')
+                i.gsub!(/~~indexlink~~/, $indexlink || '')
+                substitute_addthis(i)
+            end
+            
+        else
+            html = html_reload_to_thumbnails
+        end
+
+        save_html(html, "#{dest_dir}/index")
+        if $multi_languages
+            #- in case MultiViews will not work, generate some compat
+            ios = File.open("#{dest_dir}/index.html", "w")
+            ios.write("<html><head><meta http-equiv=\"refresh\" content=\"0.1;url=index.#{$multi_languages[1]}.html\"></head></html>")
+            ios.close
+        end
+
+        #- substitute multiple "return to albums", previous/next correctly
+        #- the following two statements are dramatical optimizations to executing for each substInFile callback
+        dirpresent = xmldir.elements['dir']
+        parentname = xmldir.parent.name
+        if xmldir.child_byname_notattr('image', 'deleted') || xmldir.child_byname_notattr('video', 'deleted')
+            for suffix in [ '', '-nojs' ]
+                for sizeobj in $images_size
+                    Dir.glob("#{dest_dir}/thumbnails-#{size2js(sizeobj['name'])}#{suffix}-*.html") do |file|
+                        #- unroll translations, they are costly if rerun for each line of files
+                        rta = find_translation_for_file(file, N_('return to albums'))
+                        pa = find_translation_for_file(file, N_('previous album'))
+                        na = find_translation_for_file(file, N_('next album'))
+                        substInFile(file) { |line|
+                            sub_previous_next_album(file, previous_album, next_album, line, pa, na)
+                            if dirpresent
+                                line.sub!(/~~return_to_albums~~/, '<a href="index' + $htmlsuffix + '">' + rta + '</a>')
+                            else
+                                if parentname == 'dir'
+                                    line.sub!(/~~return_to_albums~~/, '<a href="../index' + $htmlsuffix + '">' + rta + '</a>')
+                                else
+                                    line.sub!(/~~return_to_albums~~/, '')
+                                end
+                            end
+                            line
+                        }
+                    end
+                    if suffix == '' && xmldir.child_byname_notattr('image', 'deleted')
+                        Dir.glob("#{dest_dir}/image-#{size2js(sizeobj['name'])}*.html") do |file|
+                            pa = find_translation_for_file(file, N_('previous album'))
+                            na = find_translation_for_file(file, N_('next album'))
+                            substInFile(file) { |line|
+                                sub_previous_next_album(file, previous_album, next_album, line, pa, na)
+                            }
+                        end
+                    end
+                end
+            end
+        end
+    }
+
+    msg 3, _(" all done.")
+end
+
+handle_options
+read_config
+check_installation
+
+build_html_skeletons
+
+walk_source_dir
+exit(0)

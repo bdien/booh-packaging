@@ -1,0 +1,116 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+    <title>~~title~~</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <meta name="author" content="sbs theme, by Erik Ramseth -- based heavily on 'Simple' theme by Guillaume Cottenceau">
+    ~~~thumbnails_head_code~~~
+    ~~flowplayer_head_code~~
+    <style type="text/css" media="screen">
+    <!--
+body {
+        background-color: #ffffff;
+        color: #000000;
+        font-family: "Bitstream Vera Sans", "Lucida Sans", Geneva, Arial, Helvetica, sans-serif;
+}
+
+a:link {
+        color: #7B7BA8;
+        text-decoration: none;
+}
+
+a:visited {
+        color: #7B7BA8;
+        text-decoration: none;
+}
+
+a:hover {
+        color: #7B7BA8;
+        text-decoration: underline;
+}
+
+input {
+        border: solid 1px;
+}
+
+img {
+        border: solid 1px;
+        border-color: #000000;
+}
+.nothing {
+        border: solid 0px;
+}
+
+.thumbnail_image {
+  display: table-cell;
+  background-color: lightgrey;
+}
+
+.thumbnail_image img {
+  background-color: #fff;
+  border: 1px solid #a9a9a9;
+  margin: -3px 3px 3px -3px;
+  padding: 3px;
+}
+
+.thumbnail_video {
+  display: table-cell;
+  background-color: lightgrey;
+}
+
+.thumbnail_video img {
+  background-color: #fff;
+  border: 1px solid #a9a9a9;
+  margin: -3px 3px 3px -3px;
+  padding: 3px;
+}
+    -->
+    </style>
+</head>
+
+<body bgcolor="#FFFFFF">
+
+<p align="center">
+    <font size="+3">~~title~~</font>
+    <br/>
+    <font size="-2">~~sizes~~ | ~~</font>
+    <br/>
+</p>
+<table width="100%">
+  <tr>
+    <td width="25%"></td>
+    <td width="50%" align="center">~~run_slideshow~~</td>
+    <td width="25%" align="right">~~addthis~~</td>
+  </tr>
+</table>
+<br/>
+
+~~ifmultiplepages?~~<p align="center"><font size="-1">~~multiplepagesstuff~~</font></p>~~fi~~
+
+<table width="100%">
+~~iterate1_open~~
+<tr>
+    ~~iterate2_open_maxN~~
+    <td align="center" valign="top" ~~colspan~~ ~~homogeinize_width~~>
+       ~~image_iteration~~
+       ~~ifimage?~~<br/>~~fi~~ ~~caption_iteration~~
+    </td>
+    ~~iterate2_close~~
+</tr>
+~~iterate1_close~~
+</table>
+
+~~ifmultiplepages?~~<p align="center"><font size="+1">~~multiplepagesstuff~~</font></p>~~fi~~
+
+<p align="center">~~previous_album~~ ~~ifprevious_album?~~|~~fi~~ ~~return_to_albums~~ ~~ifnext_album?~~|~~fi~~ ~~next_album~~</p>
+
+<table width="100%" cellpadding="0" border="0">
+<tr>
+  <td align="left"> <font size="-1"><i>~~indexlink~~</i></font></td>
+  <td align="right"><font size="-1"><i>~~madewith~~</i> </font></td>
+</tr>
+</table>  
+
+</body>
+</html>

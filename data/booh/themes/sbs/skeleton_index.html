@@ -1,0 +1,84 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+    <title>~~title~~</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <meta name="author" content="sbs theme, by Erik Ramseth -- based heavily on 'Simple' theme by Guillaume Cottenceau">
+    ~~~index_head_code~~~
+    <style type="text/css" media="screen">
+    <!--
+body {
+        background-color: #ffffff;
+        color: #000000;
+        font-family: "Bitstream Vera Sans", "Lucida Sans", Geneva, Arial, Helvetica, sans-serif;
+}
+
+a:link {
+        color: #7B7BA8;
+        text-decoration: none;
+}
+
+a:visited {
+        color: #7B7BA8;
+        text-decoration: none;
+}
+
+a:hover {
+        color: #7B7BA8;
+        text-decoration: underline;
+}
+
+input {
+        border: solid 1px;
+}
+
+img {
+        border: solid 1px;
+        border-color: #000000;
+}
+
+.imager {
+  float: right;
+  background-color: lightgrey;
+}
+
+.imager img {
+  background-color: #fff;
+  border: 1px solid #a9a9a9;
+  margin: -3px 3px 3px -3px;
+  padding: 5px;
+}
+    -->
+    </style>
+</head>
+
+<body bgcolor="#FFFFFF" ~~~body_additions~~~>
+
+~~ifnavigation?~~<p>~~navigation~~</p>~~fi~~
+
+<p align="center" id="title"><font size="+3">~~title~~</font></p>
+
+<table width="100%" cellpadding="10" border="0">
+~~iterate1_open~~
+<tr>
+    <td width="50%" align="right" valign="top">
+       <div class="imager">~~image_iteration~~</div>
+    </td>
+    <td width="50%" align="left">
+       <p>~~caption_iteration~~</p>
+    </td>
+</tr>
+~~iterate1_close~~
+</table>
+
+<table width="100%" cellpadding="0" border="0">
+<tr>
+  <td align="left"> <font size="-1"><i>~~indexlink~~</i></font></td>
+  <td align="right"><font size="-1"><i>~~addthis~~</i> </font></td>
+</tr>
+</table>  
+<div style='text-align:right'>~~madewith~~</div>
+
+</body>
+</html>

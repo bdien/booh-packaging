@@ -1,0 +1,2067 @@
+#! /usr/bin/ruby
+#
+#                         *  BOOH  *
+#
+# A.k.a 'Best web-album Of the world, Or your money back, Humerus'.
+#
+# The acronyn sucks, however this is a tribute to Dragon Ball by
+# Akira Toriyama, where the last enemy beaten by heroes of Dragon
+# Ball is named "Boo". But there was already a free software project
+# called Boo, so this one will be it "Booh". Or whatever.
+#
+#
+# Copyright (c) 2004-2010 Guillaume Cottenceau <http://zarb.org/~gc/resource/gc_mail.png>
+#
+# This software may be freely redistributed under the terms of the GNU
+# public license version 2.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program; if not, write to the Free Software
+# Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA
+
+require 'getoptlong'
+require 'tempfile'
+
+require 'gtk2'
+require 'booh/libadds'
+
+require 'gettext'
+include GetText
+bindtextdomain("booh")
+
+require 'booh/rexml/document'
+include REXML
+
+require 'booh/booh-lib'
+include Booh
+require 'booh/UndoHandler'
+
+
+#- options
+$options = [
+    [ '--help',          '-h', GetoptLong::NO_ARGUMENT, _("Get help message") ],
+    [ '--sort-by-exif-date', '-s', GetoptLong::NO_ARGUMENT, _("Sort entries by EXIF date") ],
+    [ '--verbose-level', '-v', GetoptLong::REQUIRED_ARGUMENT, _("Set max verbosity level (0: errors, 1: warnings, 2: important messages, 3: other messages)") ],
+    [ '--version',       '-V', GetoptLong::NO_ARGUMENT, _("Print version and exit") ],
+]
+
+$preloader_allowed = false
+
+def usage
+    puts _("Usage: %s [OPTION]...") % File.basename($0)
+    $options.each { |ary|
+        printf " %3s, %-15s %s\n", ary[1], ary[0], ary[3]
+    }
+end
+
+def handle_options
+    parser = GetoptLong.new
+    parser.set_options(*$options.collect { |ary| ary[0..2] })
+    begin
+        parser.each_option do |name, arg|
+            case name
+            when '--help'
+                usage
+                exit(0)
+
+            when '--sort-by-exif-date'
+                $sort_by_exif_date = true
+
+            when '--verbose-level'
+                $verbose_level = arg.to_i
+
+            when '--version'
+                puts _("Booh version %s
+
+Copyright (c) 2005-2010 Guillaume Cottenceau.
+This is free software; see the source for copying conditions.  There is NO
+warranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.") % $VERSION
+
+                exit(0)
+
+            end
+        end
+    rescue
+        puts $!
+        usage
+        exit(1)
+    end
+end
+
+def total_memory
+    meminfo = IO.readlines('/proc/meminfo').join
+    meminfo =~ /MemTotal:.*?(\d+)/ or return -1
+    memory = $1.to_i
+    meminfo =~ /SwapTotal:.*?(\d+)/ or return -1
+    return memory + $1.to_i
+end
+
+def startup_memfree
+    if $startup_memfree.nil?
+        meminfo = IO.readlines('/proc/meminfo').join
+        meminfo =~ /MemFree:.*?(\d+)/ or return -1
+        memfree = $1
+        meminfo =~ /Buffers:.*?(\d+)/ and buffers = $1
+        meminfo =~ /Cached:.*?(\d+)/ and cached = $1
+        $startup_memfree = memfree.to_i + buffers.to_i + cached.to_i
+    end
+    return $startup_memfree
+end
+
+def set_cache_memory_use_figure
+    
+    if $config['cache-memory-use'] =~ /memfree_(\d+)/
+        $config['cache-memory-use-figure'] = startup_memfree*$1.to_f/100
+    else
+        $config['cache-memory-use-figure'] = $config['cache-memory-use'].to_i
+    end
+    #- cannot fork if process is > 0.5 total memory
+    if $config['cache-memory-use-figure'] > total_memory * 0.4
+        $config['cache-memory-use-figure'] = total_memory * 0.4
+        msg 2, _("Cache memory used: %s kB (reduced because cannot exceed 50%% of total memory)") % $config['cache-memory-use-figure']
+    else
+        msg 2, _("Cache memory used: %s kB") % $config['cache-memory-use-figure']
+    end
+end
+
+def read_config
+    $config = {}
+    $config_file = File.expand_path('~/.booh-classifier-rc')
+    if File.readable?($config_file)
+        $xmldoc = REXML::Document.new(File.new($config_file))
+        $xmldoc.root.elements.each { |element|
+            txt = element.get_text
+            if txt
+                if txt.value =~ /~~~/
+                    $config[element.name] = txt.value.split(/~~~/)
+                else
+                    $config[element.name] = txt.value
+                end
+            elsif element.elements.size == 0
+                $config[element.name] = ''
+            else
+                $config[element.name] = {}
+                element.each { |chld|
+                    txt = chld.get_text
+                    $config[element.name][chld.name] = txt ? txt.value : nil
+                }
+            end
+        }
+    end
+    $config['video-viewer'] ||= '/usr/bin/mplayer %f || /usr/bin/vlc %f'
+    $config['browser'] ||= "/usr/bin/mozilla-firefox -remote 'openURL(%f,new-window)' || /usr/bin/mozilla-firefox %f || /usr/bin/firefox -remote 'openURL(%f,new-window)' || /usr/bin/firefox %f"
+    $config['preload-distance'] ||= '5'
+    $config['cache-memory-use'] ||= 'memfree_80%'
+    $config['rotate-set-exif'] ||= 'true'
+    $config['thumbnails-height'] ||= '64'
+    set_cache_memory_use_figure
+end
+
+def check_config
+    missing = %w(mplayer).delete_if { |prg| system("which #{prg} >/dev/null 2>/dev/null") }
+    if missing != []
+        show_popup($main_window, utf8(_("The following program(s) are needed to handle videos: '%s'. Videos will be ignored.") % missing.join(', ')), { :pos_centered => true })
+    end
+
+    if !system("which exif >/dev/null 2>/dev/null")
+        show_popup($main_window, utf8(_("The program 'exif' is needed to view EXIF data. Please install it.")), { :pos_centered => true })
+    end
+    viewer_binary = $config['video-viewer'].split.first
+    if viewer_binary && ! File.executable?(viewer_binary)
+        show_popup($main_window, utf8(_("The configured video viewer seems to be unavailable.
+You should fix this in Edit/Preferences so that you can view videos.
+
+Problem was: '%s' is not an executable file.
+Hint: don't forget to specify the full path to the executable,
+e.g. '/usr/bin/mplayer' is correct but 'mplayer' only is not.") % viewer_binary), { :pos_centered => true, :not_transient => true })
+    end
+    check_browser
+end
+
+def write_config
+    ios = File.open($config_file, "w")
+    $xmldoc = Document.new "<booh-classifier-rc version='#{$VERSION}'/>"
+    $xmldoc << XMLDecl.new(XMLDecl::DEFAULT_VERSION, $CURRENT_CHARSET)
+    $config.each_pair { |key, value|
+        elem = $xmldoc.root.add_element key
+        if value.is_a? Hash
+            $config[key].each_pair { |subkey, subvalue|
+                subelem = elem.add_element subkey
+                subelem.add_text subvalue.to_s
+            }
+        elsif value.is_a? Array
+            elem.add_text value.join('~~~')
+        else
+            if !value
+                elem.remove
+            else
+                elem.add_text value.to_s
+            end
+        end
+    }
+    $xmldoc.write(ios)
+    ios.close
+end
+
+def save_undo(name, closure, *params)
+    UndoHandler.save_undo(name, closure, [ *params ])
+    $undo_mb.sensitive = true
+    $redo_mb.sensitive = false
+end
+
+def get_mem
+    IO.readlines('/proc/self/status').join =~ /VmSize.*?(\d+)\s*kB/
+    msg 3, "VmSize: #{$1}"
+    return $1.to_i
+end
+
+def show_mem(*txt)
+    txt.length > 0 and print txt[0]
+    msg 2, "RSS: #{get_mem}"
+end
+
+class Gdk::Color
+    def darker
+        color = dup
+        color.red = [ color.red - 10000, 0 ].max
+        color.green = [ color.green - 10000, 0 ].max
+        color.blue = [ color.blue - 10000, 0 ].max
+        return color
+    end
+    def lighter
+        color = dup
+        color.red = [ color.red + 10000, 65535 ].min
+        color.green = [ color.green + 10000, 65535 ].min
+        color.blue = [ color.blue + 10000, 65535 ].min
+        return color
+    end
+end
+
+$color_red = Gdk::Color.new(65535, 0, 0)
+$colors = [ Gdk::Color.new(0, 65535, 0),
+            Gdk::Color.new(0, 0, 65535),
+            Gdk::Color.new(65535, 65535, 0),
+            Gdk::Color.new(0, 65535, 65535),
+            Gdk::Color.new(65535, 0, 65535) ]
+
+class Label
+    attr_accessor :color, :name, :button, :counter
+    def initialize(name)
+        @name = name
+    end
+end
+
+class InterruptedLoading < Exception
+    #- not a StandardError, not catched by a simple rescue
+end
+
+def show_pixbufs_present
+    if 3 <= $verbose_level
+        out = 'Full pixbufs ['
+        for entry in $allentries
+            out += entry.pixbuf_full_present? ? 'F' : '.'
+        end
+        msg 3, out + ']'
+    end
+end
+
+class Entry
+    @@max_width = nil
+    def Entry.thumbnails_height
+        return $config['thumbnails-height'].to_i
+    end
+
+    attr_accessor :path, :guipath, :type, :angle, :button, :image, :alignment, :removed, :labeled, :loader
+
+    def initialize(path, type, guipath)
+        @path = path
+        @type = type
+        @guipath = guipath
+        if @@max_width.nil?
+            @@max_width = $main_window.root_window.size[0] - $labels_vbox.allocation.width - ( $videoborder_pixbuf.width + MainView.borders_thickness) * 2
+        end
+    end
+
+    def pixbuf_full_present?
+        return ! @pixbuf_full.nil?
+    end
+    def free_pixbuf_full
+        if @pixbuf_full.nil?
+            return false
+        else
+            msg 3, ">>> free_pixbuf_full #{path}"
+            @pixbuf_full = nil
+            return true
+        end
+    end
+
+    def pixbuf_main
+        Gtk.main_iteration while Gtk.events_pending?
+        width, height = $mainview.window.size 
+        width = MainView.get_usable_width(width)
+        height = MainView.get_usable_height(height)
+        if @pixbuf_main.nil? || width != @width || height != @height
+            @width = width
+            @height = height
+            load_into_pixbuf_full  #- make sure it is loaded
+            if @pixbuf_full.nil?
+                return
+            end
+            if @pixbuf_full.width.to_f / @pixbuf_full.height > width.to_f / height
+                resized_height = @pixbuf_full.height * (width.to_f/@pixbuf_full.width)
+                if @pixbuf_full.width > width || @pixbuf_full.height > resized_height
+                    @pixbuf_main = @pixbuf_full.scale(width, resized_height, Gdk::Pixbuf::INTERP_BILINEAR)
+                else
+                    @pixbuf_main = @pixbuf_full
+                end
+            else
+                resized_width = @pixbuf_full.width * (height.to_f/@pixbuf_full.height)
+                if @pixbuf_full.width > resized_width || @pixbuf_full.height > height
+                    @pixbuf_main = @pixbuf_full.scale(resized_width, height, Gdk::Pixbuf::INTERP_BILINEAR)
+                else
+                    @pixbuf_main = @pixbuf_full
+                end
+            end
+        end
+        return @pixbuf_main
+    end
+    def pixbuf_main_present?
+        return ! @pixbuf_main.nil?
+    end
+    def free_pixbuf_main
+        if @pixbuf_main.nil?
+            return false
+        else
+            msg 3, ">>> free_pixbuf_main #{path}"
+            @pixbuf_main = nil
+            return true
+        end
+    end
+
+    def pixbuf_thumbnail
+        Gtk.main_iteration while Gtk.events_pending?
+        if @pixbuf_thumbnail.nil?
+            if @pixbuf_main
+                msg 3, ">>> pixbuf_thumbnail from main #{path}"
+                @pixbuf_thumbnail = @pixbuf_main.scale(@pixbuf_main.width * (Entry.thumbnails_height.to_f/@pixbuf_main.height), Entry.thumbnails_height, Gdk::Pixbuf::INTERP_BILINEAR)
+            else
+                msg 3, ">>> pixbuf_thumbnail from file #{path}"
+                @pixbuf_thumbnail = load_into_pixbuf_at_size { |w, h|
+                    if @angle == 0
+                        if h > Entry.thumbnails_height
+                            [ w * Entry.thumbnails_height.to_f/h, Entry.thumbnails_height ]
+                        else
+                            [ w, h ]
+                        end
+                    else
+                        if w > Entry.thumbnails_height
+                            [ Entry.thumbnails_height, h * Entry.thumbnails_height.to_f/w ]
+                        else
+                            [ w, h ]
+                        end
+                    end
+                }
+            end
+        end
+        return @pixbuf_thumbnail
+    end
+    def free_pixbuf_thumbnail
+        if @pixbuf_thumbnail.nil?
+            return false
+        else
+            msg 3, ">>> free_pixbuf_thumbnail #{path}"
+            @pixbuf_thumbnail = nil
+            return true
+        end
+    end
+
+    def outline_color
+        if removed
+            return $color_red
+        elsif labeled
+            return labeled.color
+        else
+            return nil
+        end
+    end
+
+    def show_bg
+        if outline_color.nil?
+            button.modify_bg(Gtk::StateType::NORMAL, nil)
+            button.modify_bg(Gtk::StateType::PRELIGHT, nil)
+            button.modify_bg(Gtk::StateType::ACTIVE, nil)
+        else
+            button.modify_bg(Gtk::StateType::NORMAL, outline_color)
+            button.modify_bg(Gtk::StateType::PRELIGHT, outline_color.lighter)
+            button.modify_bg(Gtk::StateType::ACTIVE, outline_color)
+        end
+    end
+
+    def get_beautified_name
+        if type == 'image'
+            size = get_image_size(path)
+            return _("%s (%sx%s, %s KB)") % [@guipath.gsub(/\.[^.]+$/, ''),
+                                             size[:x],
+                                             size[:y],
+                                             commify(file_size(path)/1024)]
+        else
+            return _("%s (video - %s KB)") % [@guipath.gsub(/\.[^.]+$/, ''),
+                                             commify(file_size(path)/1024)]
+        end
+    end
+
+    def cancel_loader
+        if ! @loader.nil?
+            #- avoid unneeded memory allocation
+            @loader.signal_handler_disconnect(@area_prepared_cb)
+            begin
+                @loader.close
+            rescue
+                #- ignore loader errors, at that point they are fairly normal, we're canceling a partial load
+            end
+            @loader = nil
+        end
+    end
+
+    private
+    def load_into_pixbuf_full
+        if @pixbuf_full.nil?
+            msg 3, ">>> load_into_pixbuf_full #{path}"
+            @pixbuf_full = load_into_pixbuf_at_size { |w, h|
+                if @angle == 0
+                    if w > @@max_width
+                        #- save memory and speedup (+35%) loading 
+                        [ w * (factor = @@max_width.to_f/w), h * factor ]
+                    else
+                        [ w, h ]
+                    end
+                else
+                    if h > @@max_width
+                        [ w * (factor = @@max_width.to_f/h), h * factor ]
+                    else
+                        [ w, h ]
+                    end
+                end
+            }
+            show_pixbufs_present
+        end
+    end
+
+    def load_into_pixbuf_at_size(&specify_size)
+        if @type == 'video'
+            if @video_image_path.nil?
+                orig_base = File.basename(path)
+                tmpdir = gen_video_thumbnail(path, false, 0)
+                if tmpdir.nil?
+                    return
+                end
+                @video_image_path = "#{tmpdir}/00000001.jpg"
+            end
+            image_path = @video_image_path
+        else
+            image_path = @path
+        end
+        if @angle.nil?
+            if @type == 'image'
+                @angle = guess_rotate(image_path)
+            else
+                @angle = 0
+            end
+        end
+        begin
+            #- use a pixbuf loader and check Gtk.events_pending? on each chunk, to keep the UI responsive even
+            #- if loaded pictures are several MBs large
+            if @loader.nil?
+                @loader = Gdk::PixbufLoader.new
+                @loader.signal_connect('size-prepared') { |l, w, h|
+                    @loader.set_size(*specify_size.call(w, h))
+                }
+                @area_prepared_cb = @loader.signal_connect('area-prepared') { @loaded_pixbuf = @loader.pixbuf }
+                @loader_offset = 0
+            end
+            msg 3, "calling load_not_freezing_ui on #{image_path}, offset #{@loader_offset}"
+            @loader_offset = @loader.load_not_freezing_ui(image_path, @loader_offset)
+            if @loader_offset > 0
+                #- interrupted
+                raise InterruptedLoading
+            end
+            @loader = nil
+            if @loaded_pixbuf.nil?
+                raise "Loaded pixbuf nil - #{path} #{image_path}"
+            end
+        rescue
+            msg 0, "Cannot load #{image_path}: #{$!}"
+            return
+        ensure
+            if @video_image_path && @loader.nil?
+                File.delete(@video_image_path)
+                Dir.rmdir(File.dirname(@video_image_path))
+                @video_image_path = nil
+            end
+        end
+        if @loaded_pixbuf
+            if @angle != 0
+                msg 3, ">>> load_into_pixbuf_full #{image_path} => rotate #{@angle}"
+                @loaded_pixbuf = rotate_pixbuf(@loaded_pixbuf, @angle)
+            end
+        end
+        retval = @loaded_pixbuf
+        @loaded_pixbuf = nil
+        return retval
+    end
+
+    def to_s
+        @path
+    end
+end
+
+$allentries = []
+
+def gc
+    start = Time.now
+    GC.start
+    msg 3, "GC in #{Time.now - start} s"
+end
+
+def free_cache_if_needed
+    i = $allentries.index($mainview.get_shown_entry)
+    return if i.nil?
+    if get_mem > $config['cache-memory-use-figure']
+        msg 3, "too much RSS, triggering GC"
+        gc
+    end
+    if get_mem < $config['cache-memory-use-figure']
+        return
+    end
+    msg 3, "too much RSS, freeing some cache"
+    start = Time.now
+    freed = 0
+    ($allentries.size - 1).downto($config['preload-distance'].to_i + 1) { |j|
+        index = i + j
+        if i + j < $allentries.size
+            $allentries[i + j].free_pixbuf_full
+            if $allentries[i + j].free_pixbuf_main
+                freed += 1
+            end
+        end
+        if i - j >= 0
+            $allentries[i - j].free_pixbuf_full
+            if $allentries[i - j].free_pixbuf_main
+                freed += 1
+            end
+        end
+        if freed >= 10
+            gc
+            if get_mem < $config['cache-memory-use-figure'] * 3 / 4
+                msg 3, "RSS down enough - freeing done in #{Time.now - start} s"
+                show_pixbufs_present
+                return
+            end
+            freed = 0
+        end
+    }
+    msg 3, "freeing done in #{Time.now - start} s"
+    show_pixbufs_present
+end
+
+def run_preloader_real
+    msg 3, "*** >> main preloading triggered..."
+    if $mainview.get_shown_entry
+        free_cache_if_needed
+        if $config['preload-distance'].to_i == 0
+            return true
+        end
+        index = $allentries.index($mainview.get_shown_entry)
+        index_right = index
+        index_left = index
+        loaded_right = 0
+        loaded_left = 0
+        right_done = false
+        left_done = false
+        loaded = []
+        while ! right_done || ! left_done
+            if ! right_done
+                index_right += 1
+                while index_right < $allentries.size && ! visible($allentries[index_right])
+                    index_right += 1
+                end
+                if index_right == $allentries.size
+                    right_done = true
+                else
+                    if ! $allentries[index_right].pixbuf_main_present?
+                        msg 3, "preloading #{$allentries[index_right].path}"
+                        begin
+                            $allentries[index_right].pixbuf_main
+                        rescue InterruptedLoading
+                            msg 3, "*** >>>> interrupted, rerun"
+                            return false
+                        end
+                    end
+                    loaded << index_right
+                    loaded_right += 1
+                    if loaded_right == $config['preload-distance'].to_i
+                        right_done = true
+                    end
+                end
+            end
+
+            if ! left_done
+                index_left -= 1
+                while index_left >= 0 && ! visible($allentries[index_left])
+                    index_left -= 1
+                end
+                if index_left == -1
+                    left_done = true
+                else
+                    if ! $allentries[index_left].pixbuf_main_present?
+                        msg 3, "preloading #{$allentries[index_left].path}"
+                        begin
+                            $allentries[index_left].pixbuf_main
+                        rescue InterruptedLoading
+                            msg 3, "*** >>>> interrupted, rerun"
+                            return false
+                        end
+                    end
+                    loaded << index_left
+                    loaded_left += 1
+                    if loaded_left == $config['preload-distance'].to_i
+                        left_done = true
+                    end
+                end
+            end
+
+            #- in case just loaded another directory
+            if $preloader_force_exit
+                $preloader_force_exit = false
+                return true
+            end
+            #- in case moved fast
+            if index != $allentries.index($mainview.get_shown_entry)
+                msg 3, "*** >>>> moved already, rerun"
+                return false
+            end
+        end
+    end
+    msg 3, "*** << main preloading finished"
+    return true
+end
+
+def run_preloader
+    if ! $preloader_allowed
+        msg 3, "*** preloader not yet allowed"
+        return
+    end
+
+    if $preloader_running
+        msg 3, "preloader already running"
+        return
+    end
+    msg 3, "run preloader"
+    $preloader_running = true
+    Gtk.idle_add {
+        msg 3, "begin preloader from timeout "
+        if run_preloader_real
+            $preloader_running = false
+            false
+        else
+            true
+        end
+    }
+end
+
+class MainView < Gtk::DrawingArea
+
+    @@borders_thickness = 5
+    @@borders_length = 25
+    @@redraw_pending = nil
+
+    def MainView.borders_thickness
+        return @@borders_thickness
+    end
+
+    def MainView.get_usable_width(available_width)
+        return available_width - ($videoborder_pixbuf.width + @@borders_thickness) * 2
+    end
+
+    def MainView.get_usable_height(available_height)
+        return available_height - @@borders_thickness * 2
+    end
+    
+    def initialize
+        super()
+        signal_connect('expose-event') { draw }
+        signal_connect('configure-event') { update_shown }
+    end
+
+    def try_show_entry(entry)
+        if entry && entry.button
+            if entry.button.has_focus?
+                redraw
+            else
+                entry.button.grab_focus
+            end
+        end
+    end
+
+    def set_shown_entry(entry)
+        t1 = Time.now
+        if entry && entry == @entry
+            return
+        end
+        if entry && ! entry.button
+            #- not loaded yet
+            return
+        end
+        @entry = entry
+        @entry and msg 3, "*** set entry to #{@entry.path}"
+        redraw
+        msg 3, "entry shown in: #{Time.now - t1} s"
+    end
+
+    def get_shown_entry
+        return @entry
+    end
+
+    def show_next_entry(entry)
+        index = $allentries.index(entry)
+        if index < $allentries.size - 1
+            index += 1
+        end
+        while index < $allentries.size - 1 && $allentries[index] && $allentries[index].button && ! $allentries[index].button.visible?
+            index += 1
+        end
+        while $allentries[index] && $allentries[index].button && ! $allentries[index].button.visible? && index > 0
+            index -= 1
+        end
+        if index < $allentries.size && $allentries[index] && $allentries[index].button && $allentries[index].button.visible?
+            try_show_entry($allentries[index])
+            return
+        end
+        #- find a fallback before
+        while index < $allentries.size && index > 0 && $allentries[index] && (! $allentries[index].button || ! $allentries[index].button.visible?)
+            index -= 1
+        end
+        if index < $allentries.size && index > 0 && $allentries[index] && $allentries[index].button && $allentries[index].button.visible?
+            try_show_entry($allentries[index])
+        end
+    end
+
+    def redraw
+        if @@redraw_pending
+            msg 3, "redraw already pending"
+            return
+        end
+        msg 3, "redraw"
+        @@redraw_pending = Gtk.idle_add {
+            msg 3, "begin redraw from timeout "
+            begin
+                msg 3, "try redraw from timeout"
+                redraw_real
+                @@redraw_pending = nil
+                run_preloader
+                false
+            rescue InterruptedLoading
+                msg 3, "interrupted, will retry"
+                true
+            end
+        }
+    end
+
+    def redraw_real
+        @entry and sb_msg(_("Selected %s") % @entry.get_beautified_name)
+        if ! update_shown
+            return
+        end
+        w, h = window.size
+        window.begin_paint(Gdk::Rectangle.new(0, 0, w, h))
+        window.clear
+        draw
+        window.end_paint
+    end
+
+    def update_shown
+        if @entry
+            msg 3, "################################################ trying to show #{@entry.path}"
+            pixbuf = @entry.pixbuf_main
+            if pixbuf
+                @pixbuf = pixbuf
+                width, height = window.size 
+                @xpos = (width - @pixbuf.width)/2
+                @ypos = (height - @pixbuf.height)/2
+                return true
+            else
+                return false
+            end
+        else
+            @pixbuf = nil
+            return true
+        end
+    end
+
+    def draw
+        if @pixbuf
+            window.draw_pixbuf(nil, @pixbuf, 0, 0, @xpos, @ypos, -1, -1, Gdk::RGB::DITHER_NONE, -1, -1)
+            if @entry && @entry.type == 'video'
+                window.draw_borders($videoborder_pixbuf, @xpos - $videoborder_pixbuf.width, @xpos + @pixbuf.width, @ypos, @ypos + @pixbuf.height)
+            end
+            if @entry && ! @entry.outline_color.nil?
+                gc = Gdk::GC.new(window)
+                colormap.alloc_color(@entry.outline_color, false, true)
+                gc.set_foreground(@entry.outline_color)
+                if @entry.type == 'video'
+                    xleft = @xpos - $videoborder_pixbuf.width
+                    xright = @xpos + @pixbuf.width + $videoborder_pixbuf.width
+                else
+                    xleft = @xpos
+                    xright = @xpos + @pixbuf.width
+                end
+                window.draw_polygon(gc, true, [[xleft - @@borders_thickness, @ypos - @@borders_thickness],
+                                               [xright + @@borders_thickness, @ypos - @@borders_thickness],
+                                               [xright + @@borders_thickness, @ypos + @pixbuf.height + @@borders_thickness],
+                                               [xleft - @@borders_thickness, @ypos + @pixbuf.height + @@borders_thickness],
+                                               [xleft - @@borders_thickness, @ypos - 1],
+                                               [xleft - 1, @ypos - 1],
+                                               [xleft - 1, @ypos + @pixbuf.height + 1],
+                                               [xright + 1, @ypos + @pixbuf.height + 1],
+                                               [xright + 1, @ypos - 1],
+                                               [xleft - @@borders_thickness, @ypos - 1]])
+            end
+        end
+    end
+end
+
+def autoscroll_if_needed(button, center)
+    xpos_left = button.allocation.x
+    xpos_right = button.allocation.x + button.allocation.width
+    hadj = $imagesline_sw.hadjustment
+    current_minx_visible = hadj.value
+    current_maxx_visible = hadj.value + hadj.page_size
+    if ! center
+        if xpos_left < current_minx_visible
+            #- autoscroll left
+            newval = hadj.value - (current_minx_visible - xpos_left)
+            hadj.value = newval
+        elsif xpos_right > current_maxx_visible
+            #- autoscroll right
+            newval = hadj.value + (xpos_right - current_maxx_visible)
+            if newval > hadj.upper - hadj.page_size
+                newval = hadj.upper - hadj.page_size
+            end
+            hadj.value = newval
+        end
+    else
+        hadj.value = clamp((xpos_left + xpos_right) / 2 - hadj.page_size / 2, 0, hadj.upper - hadj.page_size)
+    end
+end
+
+def show_popup(parent, msg, *options)
+    dialog = Gtk::Dialog.new
+    if options[0]
+        options = options[0]
+    else
+        options = {}
+    end
+    if options[:title]
+        dialog.title = options[:title]
+    else
+        dialog.title = utf8(_("Booh message"))
+    end
+    lbl = Gtk::Label.new
+    if options[:nomarkup]
+        lbl.text = msg
+    else
+        lbl.markup = msg
+    end
+    if options[:centered]
+        lbl.set_justify(Gtk::Justification::CENTER)
+    end
+    if options[:selectable]
+        lbl.selectable = true
+    end
+    if options[:scrolled]
+        sw = Gtk::ScrolledWindow.new(nil, nil)
+        sw.set_policy(Gtk::POLICY_AUTOMATIC, Gtk::POLICY_AUTOMATIC)
+        sw.add_with_viewport(lbl)
+        dialog.vbox.add(sw)
+        dialog.set_default_size(500, 600)
+    else
+        dialog.vbox.add(lbl)
+        dialog.set_default_size(200, 120)
+    end
+    if options[:bottomwidget]
+        dialog.vbox.add(options[:bottomwidget])
+    end
+    if options[:okcancel]
+        cancel = dialog.add_button(Gtk::Stock::CANCEL, Gtk::Dialog::RESPONSE_CANCEL)
+        if ! options[:bottomwidget]
+            cancel.grab_focus
+        end
+        dialog.add_button(Gtk::Stock::OK, Gtk::Dialog::RESPONSE_OK)
+    else
+        ok = dialog.add_button(Gtk::Stock::OK, Gtk::Dialog::RESPONSE_OK).grab_focus
+        if ! options[:bottomwidget]
+            ok.grab_focus
+        end
+    end
+
+    if options[:pos_centered]
+        dialog.window_position = Gtk::Window::POS_CENTER
+    else
+        dialog.window_position = Gtk::Window::POS_MOUSE
+    end
+
+    if options[:linkurl]
+        linkbut = Gtk::Button.new('')
+        linkbut.child.markup = "<span foreground=\"#00000000FFFF\" underline=\"single\">#{options[0][:linkurl]}</span>"
+        linkbut.signal_connect('clicked') {
+            open_url(options[0][:linkurl] + '/index.html')
+            dialog.response(Gtk::Dialog::RESPONSE_OK)
+            set_mousecursor_normal
+        }
+        linkbut.relief = Gtk::RELIEF_NONE
+        linkbut.signal_connect('enter-notify-event') { set_mousecursor(Gdk::Cursor::HAND2, linkbut); false }
+        linkbut.signal_connect('leave-notify-event') { set_mousecursor(nil, linkbut); false }
+        dialog.vbox.add(Gtk::Alignment.new(0.5, 0.5, 0, 0).add(linkbut))
+    end
+
+    dialog.show_all
+
+    if options[:stuff_connector]
+        options[:stuff_connector].call({ :dialog => dialog })
+    end
+                                        
+    if !options[:not_transient]
+        dialog.transient_for = parent
+        dialog.run { |response|
+            if options[:data_getter]
+                options[:data_getter].call
+            end
+            dialog.destroy
+            if options[:okcancel]
+                return response == Gtk::Dialog::RESPONSE_OK
+            end
+        }
+    else
+        dialog.signal_connect('response') { dialog.destroy }
+    end
+end
+
+def view_entry(entry)
+    if entry.type == 'image'
+        show_popup($main_window,
+                   utf8(`exif -m '#{entry.path}'`),
+                   { :title => utf8(_("EXIF data of %s") % File.basename(entry.path)), :nomarkup => true, :scrolled => true, :not_transient => true })
+    else
+        cmd = from_utf8($config['video-viewer']).gsub('%f', "'#{entry.path}'") + ' &'
+        msg 2, cmd
+        system(cmd)
+    end
+end
+
+def update_counters
+    value = 0
+    $allentries.each { |entry|
+        if ! entry.removed && entry.labeled.nil?
+            value += 1
+        end
+    }
+    $unlabelled_counter.set_markup('<tt>' + value.to_s + '</tt>')
+    value = 0
+    $allentries.each { |entry|
+        if entry.removed 
+            value += 1
+        end
+    }
+    $toremove_counter.set_markup('<tt>' + value.to_s + '</tt>')
+    $labels.values.each { |label|
+        value = 0
+        $allentries.each { |entry|
+            if entry.labeled == label
+                value += 1
+            end
+        }
+        label.counter.set_markup('<tt>' + value.to_s + '</tt>')
+    }
+end
+
+def thumbnail_keypressed(entry, event)
+    if event.state & Gdk::Window::MOD1_MASK != 0
+        #- ALT pressed: Alt-Left and Alft-Right rotate
+        if event.keyval == Gdk::Keyval::GDK_Left || event.keyval == Gdk::Keyval::GDK_Right
+            if event.keyval == Gdk::Keyval::GDK_Left
+                entry.angle = (entry.angle - 90) % 360
+            else
+                entry.angle = (entry.angle + 90) % 360
+            end
+            entry.free_pixbuf_full
+            entry.free_pixbuf_main
+            entry.free_pixbuf_thumbnail
+            show_pixbufs_present
+            $mainview.redraw
+            entry.image.pixbuf = entry.pixbuf_thumbnail
+            if $config['rotate-set-exif'] == 'true' && entry.type == 'image'
+                Exif.set_orientation(entry.path, angle_to_exif_orientation(entry.angle))
+            end
+        end
+
+    elsif event.state & Gdk::Window::CONTROL_MASK != 0
+        #- CONTROL pressed: Ctrl-z and Ctrl-r for undo/redo, Ctrl-space for recentre
+        if event.keyval == Gdk::Keyval::GDK_z
+            perform_undo
+        end
+        if event.keyval == Gdk::Keyval::GDK_r
+            perform_redo
+        end
+        if event.keyval == Gdk::Keyval::GDK_space
+            shown = $mainview.get_shown_entry
+            shown and autoscroll_if_needed(shown.button, true)
+        end
+
+    else
+        removed_before = entry.removed
+        label_before = entry.labeled
+
+        if event.keyval == Gdk::Keyval::GDK_Delete
+            if ! FileTest.writable?(entry.path)
+                show_popup($main_window, utf8(_("Notice: no write access to '%s', permission will be denied at execute step.") % entry.path))
+            end
+            entry.removed = true
+            entry.labeled = nil
+            entry.show_bg
+            update_visibility(entry)
+            update_counters
+            $mainview.show_next_entry(entry)
+
+            save_undo(_("set for removal"),
+                      proc {
+                          entry.removed = removed_before
+                          entry.labeled = label_before
+                          entry.show_bg
+                          update_visibility(entry)
+                          update_counters
+                          if entry.button.visible?
+                              $mainview.try_show_entry(entry)
+                          end
+                          proc {
+                              entry.removed = true
+                              entry.labeled = nil
+                              entry.show_bg
+                              update_visibility(entry)
+                              update_counters
+                              if entry.button.visible?
+                                  $mainview.try_show_entry(entry)
+                              end
+                          }
+                      })
+
+        elsif event.keyval == Gdk::Keyval::GDK_space
+            if entry.labeled
+                msg = _("Cleared label")
+            elsif entry.removed
+                msg = _("Cleared set for removal")
+            end
+            entry.removed = false
+            entry.labeled = nil
+            entry.show_bg
+            update_counters
+            $mainview.show_next_entry(entry)
+
+            save_undo(msg,
+                      proc {
+                          entry.removed = removed_before
+                          entry.labeled = label_before
+                          entry.show_bg
+                          update_counters
+                          $mainview.try_show_entry(entry)
+                          proc {
+                              entry.removed = false
+                              entry.labeled = nil
+                              entry.show_bg
+                              update_counters
+                              $mainview.try_show_entry(entry)
+                          }
+                      })
+
+        elsif event.keyval == Gdk::Keyval::GDK_Return
+            view_entry(entry)
+
+        elsif event.keyval == Gdk::Keyval::GDK_Home
+            index = 0
+            while $allentries[index] && $allentries[index].button && !visible($allentries[index])
+                index += 1
+            end
+            if $allentries[index] && $allentries[index].button
+                $allentries[index].button.grab_focus
+            end
+
+        elsif event.keyval == Gdk::Keyval::GDK_End
+            index = $allentries.size - 1
+            while $allentries[index] && ! $allentries[index].button
+                #- not yet loaded
+                index -= 1
+            end
+            while $allentries[index] && $allentries[index].button && !visible($allentries[index])
+                index -= 1
+            end
+            if $allentries[index] && $allentries[index].button
+                $allentries[index].button.grab_focus
+            end
+
+        else
+            char = [ Gdk::Keyval.to_unicode(event.keyval) ].pack("C*")
+            if char =~ /^[a-zA-z0-9]$/
+                label = $labels[char]
+                
+                if label.nil?
+                    vb = Gtk::VBox.new(false, 0)
+                    vb.pack_start(labelentry = Gtk::Entry.new.set_text(char), false, false)
+                    vb.pack_start(Gtk::Alignment.new(0.5, 0.5, 0, 0).add(bt = Gtk::ColorButton.new))
+                    color = bt.color = Gdk::Color.new(16384 + rand(49151), 16384 + rand(49151), 16384 + rand(49151))
+                    bt.signal_connect('color-set') { color = bt.color }
+                    text = nil
+                    labelentry.signal_connect('changed') {  #- cannot add a new label with first letter of an existing label
+                        while $labels.has_key?(labelentry.text[0,1])
+                            labelentry.text = labelentry.text.sub(/./, '')
+                        end
+                    }
+                    if show_popup($main_window,
+                                  utf8(_("You typed the text character '%s', which is not associated with a label.\nType in the full name of the label below to create a new one.")) % char,
+                                  { :okcancel => true, :bottomwidget => vb, :data_getter => proc { text = labelentry.text },
+                                    :stuff_connector => proc { |stuff| labelentry.select_region(0, 0)
+                                                                       labelentry.position = -1
+                                                                       labelentry.signal_connect('activate') { stuff[:dialog].response(Gtk::Dialog::RESPONSE_OK) } } } )
+                        if text.length > 0
+                            char = text[0,1]  #- in case it changed
+                            label = Label.new(text)
+                            label.color = color
+                            $labels[char] = label
+                            $ordered_labels << label
+                            lbl = Gtk::Label.new.set_markup('<b>(' + char + ')</b>' + text[1..-1]).set_justify(Gtk::Justification::CENTER)
+                            $labels_vbox.pack_start(Gtk::HBox.new(false, 5).pack_start(label.button = Gtk::CheckButton.new.add(evt = Gtk::EventBox.new.add(lbl))).
+                                                                            pack_start(Gtk::Label.new, true, true).
+                                                                            pack_start(label.counter = Gtk::Label.new.set_markup('<tt>0</tt>'), false, false).show_all)
+                            label.button.active = true
+                            label.button.signal_connect('toggled') { update_all_visibilities }
+                            evt.modify_bg(Gtk::StateType::NORMAL, label.color)
+                            evt.modify_bg(Gtk::StateType::PRELIGHT, label.color.lighter.lighter)
+                            evt.modify_bg(Gtk::StateType::ACTIVE, label.color.lighter)
+                        end
+                    end
+                end
+
+                if label
+                    entry.removed = false
+                    entry.labeled = label
+                    entry.show_bg
+                    update_visibility(entry)
+                    update_counters
+                    $mainview.show_next_entry(entry)
+
+                    save_undo(_("set label"),
+                              proc {
+                                  entry.removed = removed_before
+                                  entry.labeled = label_before
+                                  entry.show_bg
+                                  update_visibility(entry)
+                                  update_counters
+                                  if entry.button.visible?
+                                      $mainview.try_show_entry(entry)
+                                  end
+                                  proc {
+                                      entry.removed = false
+                                      entry.labeled = label
+                                      entry.show_bg
+                                      update_visibility(entry)
+                                      update_counters
+                                      if entry.button.visible?
+                                          $mainview.try_show_entry(entry)
+                                      end
+                                  }
+                              })
+                end
+            end
+        end
+    end
+end
+
+def sb_msg(msg)
+    $statusbar.pop(0)
+    if msg
+        $statusbar.push(0, utf8(msg))
+    end
+end
+
+def show_entry(entry, i, tips)
+    #- scope entry
+    #msg 3, "showing entry #{entry}"
+    entry.image = Gtk::Image.new(entry.pixbuf_thumbnail)
+    if entry.type == 'video'
+        entry.button = Gtk::Button.new.add(Gtk::HBox.new.pack_start(da1 = Gtk::DrawingArea.new.set_size_request($videoborder_pixbuf.width, -1), false, false).
+                                           pack_start(entry.image).
+                                           pack_start(da2 = Gtk::DrawingArea.new.set_size_request($videoborder_pixbuf.width, -1), false, false))
+        da1.signal_connect('realize') { da1.window.set_back_pixmap($videoborder_pixmap, false) }
+        da2.signal_connect('realize') { da2.window.set_back_pixmap($videoborder_pixmap, false) }
+    else
+        entry.button = Gtk::Button.new.add(entry.image)
+    end
+    tips.set_tip(entry.button, entry.get_beautified_name, nil)
+    $imagesline.pack_start(entry.alignment = Gtk::Alignment.new(0.5, 1, 0, 0).add(entry.button).show_all, false, false)
+    entry.button.signal_connect('clicked') {
+        shown = $mainview.get_shown_entry
+        if shown != entry
+            shown and shown.alignment.set(0.5, 1, 0, 0)
+            entry.alignment.set(0.5, 0, 0, 0)
+            autoscroll_if_needed(entry.button, false)
+            $mainview.set_shown_entry(entry)
+        end
+    }
+    entry.button.signal_connect('button-press-event') { |w, event|
+        if entry.type == 'video' && event.event_type == Gdk::Event::BUTTON2_PRESS
+            video_view(entry)
+        end
+    }
+    entry.button.signal_connect('focus-in-event') { entry.button.clicked }
+    entry.button.signal_connect('key-press-event') { |w, e| thumbnail_keypressed(entry, e) }
+    if i == 0
+        entry.button.grab_focus
+    end
+    update_visibility(entry)
+end
+
+def show_entries(allentries)
+    update_counters
+    sb_msg(_("Loading images..."))
+    $loading_progressbar.fraction = 0
+    $loading_progressbar.text = utf8(_("Loading... %d%") % 0)
+    $loading_progressbar.show
+    t1 = Time.now
+    total_loaded_files = 0
+    total_loaded_size = 0
+    i = 0
+    tips = Gtk::Tooltips.new
+    while i < allentries.size
+        begin
+            entry = allentries[i]
+            if i == 0
+                loaded_pixbuf = entry.pixbuf_main
+            else
+                loaded_pixbuf = entry.pixbuf_thumbnail
+            end
+        rescue InterruptedLoading
+            redo
+        end
+
+        if $allentries != allentries
+            #- loaded another directory while this one was not yet finished
+            msg 3, "allentries differ, stopping this deprecated load"
+            return
+        end
+
+        if loaded_pixbuf
+            show_entry(entry, i, tips)
+            if $allentries != allentries
+                #- loaded another directory while this one was not yet finished
+                msg 3, "allentries differ, stopping this deprecated load"
+                return
+            end
+
+            total_loaded_size += file_size(entry.path)
+            total_loaded_files += 1
+            i += 1
+            if i > $config['preload-distance'].to_i && i <= $config['preload-distance'].to_i * 2
+                #- when we're at preload distance, begin preloading to preload distance
+                begin
+                    allentries[i - $config['preload-distance'].to_i].pixbuf_main
+                rescue InterruptedLoading
+                end
+            end
+            if i == $config['preload-distance'].to_i * 2 + 1
+                #- when we're after double preload distance, activate normal preloading
+                $preloader_allowed = true
+            end
+            
+        else
+            allentries.delete_at(i)
+        end
+        $loading_progressbar.fraction = i.to_f / allentries.size
+        $loading_progressbar.text = utf8(_("Loading... %d%") % (100 * $loading_progressbar.fraction))
+        if $quit
+            return
+        end
+        if i % 25 == 0
+            gc
+        end
+    end
+    $preloader_allowed = true
+    if i <= $config['preload-distance'].to_i * 2
+        #- not yet preloaded correctly
+        run_preloader
+    end
+    sb_msg(_("%d images of total %s kB loaded in %3.2f seconds.") % [ total_loaded_files, commify(total_loaded_size / 1024), Time.now - t1 ])
+    $loading_progressbar.hide
+    $execute.sensitive = true
+end
+
+def reset_all
+    reset_labels
+    reset_thumbnails
+    $mainview.set_shown_entry(nil)
+    sb_msg(nil)
+    $preloader_allowed = false
+    $execute.sensitive = false
+end
+
+def open_dir(*paths)
+    #- remove visual stuff, so that user will see something is happening
+    reset_all
+    sb_msg(_("Scanning source directory... %s") % "")
+    Gtk.main_iteration while Gtk.events_pending?
+
+    for path in paths
+        path = File.expand_path(path.sub(%r|/$|, ''))
+        $workingdir = path
+        entries = []
+        if File.directory?(path)
+            examined_dirs = `find '#{path}' -type d -follow`.sort.collect { |v| v.chomp }
+            #- validate first
+            examined_dirs.each { |dir|
+                if dir =~ /'/
+                    return utf8(_("Source directory or sub-directories can't contain a single-quote character, sorry: %s") % dir)
+                end
+                begin
+                    Dir.entries(dir).each { |file|
+                        if file =~ /'/ && type = entry2type(file) && type == 'video'
+                            return utf8(_("Videos can't contain a single quote character ('), sorry: %s") % "#{dir}/#{file}")
+                        end
+                    }
+                rescue
+                    puts "Failed to open directory #{dir}: #{$!}"
+                end
+            }
+            
+            #- scan for populate second
+            examined_dirs.each { |dir|
+                if File.basename(dir) =~ /^\./
+                    msg 1, _("Ignoring directory %s, begins with a dot (indicating a hidden directory)") % dir
+                    next
+                end
+                begin
+                    entries += Dir.entries(dir).collect { |file| File.join(dir, file) }
+                rescue
+                    #- already puts'ed 10 lines upper
+                end
+                sb_msg(_("Scanning source directory... %s") % (_("%d entries found") % entries.size))
+                Gtk.main_iteration while Gtk.events_pending?
+            }
+
+        else
+            entries << path
+        end
+
+        if $sort_by_exif_date
+            dates = {}
+            entries.each { |file|
+                date_time = Exif.datetimeoriginal(file)
+                if ! date_time.nil?
+                    dates[file] = date_time
+                end
+            }
+            entries = smartsort(entries, dates)
+        else
+            entries.sort!
+        end
+        entries.each { |file|
+            type = entry2type(file)
+            if type
+                if File.directory?(path)
+                    $allentries << Entry.new(file, type, file[path.length + 1 .. -1])
+                else
+                    $allentries << Entry.new(file, type, file)
+                end
+            end
+        }
+    end
+    return nil
+end
+
+def open_dir_popup
+    fc = Gtk::FileChooserDialog.new(utf8(_("Specify the directory to work with")),
+                                    nil,
+                                    Gtk::FileChooser::ACTION_SELECT_FOLDER,
+                                    nil,
+                                    [Gtk::Stock::OPEN, Gtk::Dialog::RESPONSE_ACCEPT], [Gtk::Stock::CANCEL, Gtk::Dialog::RESPONSE_CANCEL])
+    fc.transient_for = $main_window
+    if $workingdir
+        fc.current_folder = $workingdir
+    end
+    ok = false
+    load = false
+    while !ok
+        if fc.run == Gtk::Dialog::RESPONSE_ACCEPT
+            msg = open_dir(fc.filename)
+            if msg
+                show_popup(fc, msg)
+                ok = false
+            else
+                ok = true
+                load = true
+            end
+        else
+            ok = true
+        end
+    end
+    fc.destroy
+    if load
+        show_entries($allentries)
+    end
+end
+
+def try_quit(*options)
+    if ! $allentries.detect { |e| e.removed || e.labeled } || show_popup($main_window,
+                                                                         utf8(_("You have not executed the classification. Are you sure you want to quit?")),
+                                                                         { :okcancel => true })
+        Gtk.main_quit
+        $quit = true
+        return false
+    else
+        return true
+    end
+end
+
+def execute
+    dialog = Gtk::Dialog.new
+    dialog.title = utf8(_("Booh message"))
+
+    vb1 = Gtk::VBox.new(false, 5)
+    label = Gtk::Label.new.set_markup(utf8(_("You're about to <b>execute</b> actions on the marked images.\nPlease confirm below the actions. You cannot undo this operation!")))
+    vb1.pack_start(label, false, false)
+
+    lastpath = $workingdir
+
+    table = Gtk::Table.new(0, 0, false)
+    table.set_row_spacings(5)
+    table.set_column_spacings(5)
+    table.attach(Gtk::Label.new.set_markup(utf8(_("<b>Label name:</b>"))).set_justify(Gtk::Justification::CENTER), 0, 1, 0, 1, Gtk::FILL, Gtk::FILL, 5, 0)
+    table.attach(Gtk::Label.new.set_markup(utf8(_("<b>Amount of pictures:</b>"))).set_justify(Gtk::Justification::CENTER), 1, 2, 0, 1, Gtk::FILL, Gtk::FILL, 5, 0)
+    table.attach(Gtk::Label.new.set_markup(utf8(_("<b>Pictures examples:</b>"))).set_justify(Gtk::Justification::CENTER), 2, 3, 0, 1, Gtk::FILL, Gtk::FILL, 5, 0)
+    table.attach(Gtk::Label.new.set_markup(utf8(_("<b>Action to perform:</b>"))).set_justify(Gtk::Justification::CENTER), 3, 4, 0, 1, Gtk::FILL, Gtk::FILL, 5, 0)
+    add_row = proc { |row, name, color, truthproc, normal|
+        table.attach(Gtk::Alignment.new(0, 0.5, 1, 0).add(Gtk::EventBox.new.add(Gtk::Label.new.set_markup(name)).modify_bg(Gtk::StateType::NORMAL, color)),
+                     0, 1, row, row + 1, Gtk::FILL, Gtk::FILL, 5, 5)
+        counter = 0
+        examples = Gtk::HBox.new(false, 5)
+        $allentries.each { |entry|
+            if truthproc.call(entry)
+                counter += 1
+                if counter < 4
+                    thumbnail = Gtk::Image.new(entry.pixbuf_thumbnail)
+                    if entry.type == 'video'
+                        thumbnail = Gtk::HBox.new.pack_start(da1 = Gtk::DrawingArea.new.set_size_request($videoborder_pixbuf.width, -1), false, false).
+                                                  pack_start(thumbnail).
+                                                  pack_start(da2 = Gtk::DrawingArea.new.set_size_request($videoborder_pixbuf.width, -1), false, false)
+                        da1.signal_connect('realize') { da1.window.set_back_pixmap($videoborder_pixmap, false) }
+                        da2.signal_connect('realize') { da2.window.set_back_pixmap($videoborder_pixmap, false) }
+                    end
+                    examples.pack_start(thumbnail, false, false)
+                elsif counter == 4
+                    examples.pack_start(Gtk::Label.new.set_markup("<b>...</b>"), false, false)
+                end
+            end
+        }
+        table.attach(Gtk::Label.new(counter.to_s).set_justify(Gtk::Justification::CENTER), 1, 2, row, row + 1, 0, 0, 5, 5)
+        table.attach(examples, 2, 3, row, row + 1, Gtk::FILL, Gtk::FILL, 5, 5)
+
+        if counter == 0
+            return {}
+        end
+
+        combostore = Gtk::ListStore.new(Gdk::Pixbuf, String)
+        iter = combostore.append
+        if normal
+            iter[0] = $main_window.render_icon(Gtk::Stock::PASTE, Gtk::IconSize::MENU)
+            iter[1] = utf8(_("Copy to:"))
+            iter = combostore.append
+            iter[0] = $main_window.render_icon(Gtk::Stock::GO_FORWARD, Gtk::IconSize::MENU)
+            iter[1] = utf8(_("Move to:"))
+        else
+            iter[0] = $main_window.render_icon(Gtk::Stock::DELETE, Gtk::IconSize::MENU)
+            iter[1] = utf8(_("Permanently remove"))
+        end
+        iter = combostore.append
+        iter[0] = $main_window.render_icon(Gtk::Stock::MEDIA_STOP, Gtk::IconSize::MENU)
+        iter[1] = utf8(_("Do nothing"))
+        combo = Gtk::ComboBox.new(combostore)
+        combo.active = 0
+        renderer = Gtk::CellRendererPixbuf.new
+        combo.pack_start(renderer, false)
+        combo.set_attributes(renderer, :pixbuf => 0)
+        renderer = Gtk::CellRendererText.new
+        combo.pack_start(renderer, true)
+        combo.set_attributes(renderer, :text => 1)
+
+        if normal
+            pathbutton = Gtk::Button.new.add(pathlabel = Gtk::Label.new.set_markup(utf8(_("<i>(unset)</i>"))))
+            pathbutton.signal_connect('clicked') {
+                fc = Gtk::FileChooserDialog.new(utf8(_("Specify the directory where to move the pictures to")),
+                                                nil,
+                                                Gtk::FileChooser::ACTION_SELECT_FOLDER,
+                                                nil,
+                                                [Gtk::Stock::OPEN, Gtk::Dialog::RESPONSE_ACCEPT], [Gtk::Stock::CANCEL, Gtk::Dialog::RESPONSE_CANCEL])
+                fc.transient_for = dialog
+                if lastpath
+                    fc.current_folder = lastpath
+                end
+                if fc.run == Gtk::Dialog::RESPONSE_ACCEPT
+                    pathlabel.text = fc.filename
+                    pathlabel.set_alignment(0, 0.5)
+                end
+                lastpath = fc.filename
+                fc.destroy
+            }
+            combo.signal_connect('changed') {
+                pathbutton.sensitive = combo.active <= 1
+            }
+            vb = Gtk::VBox.new(false, 5)
+            vb.pack_start(combo, false, false)
+            vb.pack_start(pathbutton, false, false)
+            table.attach(Gtk::Alignment.new(0, 0.5, 1, 0).add(vb), 3, 4, row, row + 1, Gtk::FILL, Gtk::FILL, 5, 5)
+            { :combo => combo, :pathlabel => pathlabel }
+        else
+            table.attach(Gtk::Alignment.new(0, 0.5, 1, 0).add(combo), 3, 4, row, row + 1, Gtk::FILL, Gtk::FILL, 5, 5)
+            { :combo => combo }
+        end
+    }
+    stuff = {}
+    stuff['toremove'] = add_row.call(1, utf8(_("<i>to remove</i>")), $color_red, proc { |entry| entry.removed }, false)
+    $ordered_labels.each_with_index { |label, row| stuff[label] = add_row.call(row + 2, label.name, label.color, proc { |entry| entry.labeled == label }, true) }
+    vb1.pack_start(sw = Gtk::ScrolledWindow.new(nil, nil).add_with_viewport(table).set_policy(Gtk::POLICY_AUTOMATIC, Gtk::POLICY_AUTOMATIC), true, true)
+
+    toremove_amount = $allentries.find_all { |entry| entry.removed }.size
+    toremove_size = commify($allentries.find_all { |entry| entry.removed }.collect { |entry| file_size(entry.path) }.sum / 1024)
+    check_removal = Gtk::CheckButton.new(utf8(_("I have noticed I am about to permanently remove the %d above mentioned pictures (total %s kB).") % [ toremove_amount, toremove_size ]))
+    if toremove_amount > 0
+        vb1.pack_start(check_removal, false, false)
+        stuff['toremove'][:combo].signal_connect('changed') { |widget|
+            check_removal.sensitive = widget.active == 0
+        }
+    end
+
+    dialog.vbox.add(vb1)
+
+    dialog.set_default_size(800, 600)
+    dialog.add_button(Gtk::Stock::CANCEL, Gtk::Dialog::RESPONSE_CANCEL)
+    dialog.add_button(Gtk::Stock::OK, Gtk::Dialog::RESPONSE_OK)
+    dialog.window_position = Gtk::Window::POS_MOUSE
+    dialog.transient_for = $main_window
+
+    dialog.show_all
+
+    while true
+        dialog.run { |response|        
+            if response == Gtk::Dialog::RESPONSE_OK
+                problem = false
+                if toremove_amount > 0 && stuff['toremove'][:combo].active == 0
+                    if ! check_removal.active?
+                        show_popup(dialog, utf8(_("You have not confirmed that you noticed the permanent removal of the pictures marked for deletion.")))
+                        problem = true
+                        break
+                    end
+                    $allentries.each { |entry|
+                        if entry.removed
+                            if ! FileTest.writable?(entry.path)
+                                show_popup(dialog, utf8(_("Sorry, permission denied to remove '%s'.") % [ entry.path ]))
+                                problem = true
+                                break
+                            end
+                        end
+                    }
+                end
+                label2entries = {}
+                $labels.values.each { |label| label2entries[label] = [] }
+                $allentries.each { |entry| entry.labeled and label2entries[entry.labeled] << entry }
+                stuff.keys.each { |key|
+                    if key.is_a?(Label) && stuff[key][:combo] && stuff[key][:combo].active <= 1
+                        destination = stuff[key][:pathlabel].text
+                        if destination[0] != ?/
+                            show_popup(dialog, utf8(_("You have not selected a directory where to move/copy %s.") % key.name))
+                            problem = true
+                            break
+                        end
+                        begin
+                            Dir.mkdir(destination)
+                        rescue Errno::EEXIST
+                        end
+                        begin
+                            st = File.stat(destination)
+                        rescue
+                            show_popup(dialog, utf8(_("Directory %s, where to move/copy %s, is not valid or not createable.") % [destination, key.name]))
+                            problem = true
+                            break
+                        end
+                        if ! st.directory? || ! st.writable?
+                            show_popup(dialog, utf8(_("Directory %s, where to move/copy %s, is not valid or not writable.") % [destination, key.name]))
+                            problem = true
+                            break
+                        end
+                        label2entries[key].each { |entry|
+                            begin
+                                File.stat(File.join(destination, File.basename(entry.path)))
+                                show_popup(dialog, utf8(_("Sorry, a file '%s' already exists in directory '%s'.") % [ File.basename(entry.path), destination ]))
+                                problem = true
+                                break
+                            rescue
+                            end
+                        }
+                        if stuff[key][:combo].active == 1
+                            label2entries[key].each { |entry|
+                                if ! FileTest.writable?(entry.path)
+                                    show_popup(dialog, utf8(_("Sorry, permission denied to move '%s'.") % [ entry.path ]))
+                                    problem = true
+                                    break
+                                end
+                            }
+                        end
+                        if problem
+                            break
+                        end
+                    end
+                }
+                if ! problem
+                    begin
+                        moved = 0
+                        copied = 0
+                        stuff.keys.each { |key|
+                            if key.is_a?(Label) && stuff[key][:combo] && stuff[key][:combo].active <= 1
+                                destination = stuff[key][:pathlabel].text
+                                label2entries[key].each { |entry|
+                                    if stuff[key][:combo].active == 0
+                                        system("cp -dp '#{entry.path}' '#{destination}'") or raise "failed to copy '#{entry.path}'"
+                                        copied += 1
+                                    elsif stuff[key][:combo].active == 1
+                                        system("mv '#{entry.path}' '#{destination}'") or raise "failed to move '#{entry.path}'"
+                                        moved += 1
+                                    end
+                                }
+                            end
+                        }
+                        removed = 0
+                        if stuff['toremove'][:combo] && stuff['toremove'][:combo].active == 0
+                            $allentries.each { |entry|
+                                if entry.removed
+                                    File.delete(entry.path)
+                                    removed += 1
+                                end
+                            }
+                        end
+                    rescue
+                        msg 1, "woops: #{$!}"
+                        show_popup(dialog, utf8(_("Unexpected error: '%s'.") % $!))
+                    end
+                    show_popup(dialog, utf8(_("Successfully moved %d files, copied %d file, and removed %d files.") % [ moved, copied, removed ]))
+                    dialog.destroy
+                    reset_all
+                    return
+                end
+
+            else
+                dialog.destroy
+                return
+            end
+        }
+    end
+end
+
+def visible(entry)
+    if ! entry
+        #- just "executed"
+        return
+    end
+    if ! entry.button
+        #- not yet loaded
+        return
+    end
+    if entry.labeled
+        if entry.labeled.button.active?
+            return true
+        else
+            return false
+        end
+    elsif entry.removed
+        if $toremove_button.active?
+            return true
+        else
+            return false
+        end
+    else
+        if $unlabelled_button.active?
+            return true
+        else
+            return false
+        end
+    end
+end
+
+def update_visibility(entry)
+    v = visible(entry)
+    if v.nil?
+        return
+    end
+    if v
+        entry.button.show
+    else
+        entry.button.hide
+    end
+end
+        
+def update_all_visibilities_aux
+    $allentries.each { |entry|
+        update_visibility(entry)
+    }
+    shown = $mainview.get_shown_entry
+    shown or return
+    while shown.button && ! shown.button.visible? && shown != $allentries.last
+        shown = $allentries[$allentries.index(shown) + 1]
+    end 
+    if shown.button && shown.button.visible?
+        shown.button.grab_focus
+        return
+    end
+    $allentries.reverse.each { |entry|
+        if entry.button && entry.button.visible?
+            entry.button.grab_focus
+            return
+        end
+    }
+end
+
+def update_all_visibilities
+    update_all_visibilities_aux
+    Gtk.main_iteration while Gtk.events_pending?
+    shown = $mainview.get_shown_entry
+    shown and autoscroll_if_needed(shown.button, false)
+end
+
+
+def preferences
+    dialog = Gtk::Dialog.new(utf8(_("Edit preferences")),
+                             $main_window,
+                             Gtk::Dialog::MODAL | Gtk::Dialog::DESTROY_WITH_PARENT,
+                             [Gtk::Stock::OK, Gtk::Dialog::RESPONSE_OK],
+                             [Gtk::Stock::CANCEL, Gtk::Dialog::RESPONSE_CANCEL])
+
+    tooltips = Gtk::Tooltips.new
+
+    table_y = 0
+
+    dialog.vbox.add(tbl = Gtk::Table.new(0, 0, false))
+    tbl.attach(Gtk::Alignment.new(1, 0.5, 0, 0).add(Gtk::Label.new.set_markup(utf8(_("Command for watching videos: ")))),
+               0, 1, table_y, table_y + 1, Gtk::FILL, Gtk::SHRINK, 2, 2)
+    tbl.attach(Gtk::Alignment.new(0, 0.5, 1, 0).add(video_viewer_entry = Gtk::Entry.new.set_text($config['video-viewer']).set_size_request(250, -1)),
+               1, 2, table_y, table_y + 1, Gtk::FILL, Gtk::SHRINK, 2, 2)
+    tooltips.set_tip(video_viewer_entry, utf8(_("Use %f to specify the filename;\nfor example: /usr/bin/mplayer %f")), nil)
+
+    table_y += 1
+    tbl.attach(Gtk::Alignment.new(1, 0.5, 0, 0).add(Gtk::Label.new.set_markup(utf8(_("Browser's command: ")))),
+               0, 1, table_y, table_y + 1, Gtk::FILL, Gtk::SHRINK, 2, 2)
+    tbl.attach(Gtk::Alignment.new(0, 0.5, 1, 0).add(browser_entry = Gtk::Entry.new.set_text($config['browser'])),
+               1, 2, table_y, table_y + 1, Gtk::FILL, Gtk::SHRINK, 2, 2)
+    tooltips.set_tip(browser_entry, utf8(_("Use %f to specify the filename;\nfor example: /usr/bin/mozilla-firefox -remote 'openURL(%f,new-window)' || /usr/bin/mozilla-firefox %f")), nil)
+
+    table_y += 1
+    tbl.attach(Gtk::Alignment.new(1, 0.5, 0, 0).add(Gtk::Label.new.set_markup(utf8(_("Thumbnails height: ")))),
+               0, 1, table_y, table_y + 1, Gtk::FILL, Gtk::SHRINK, 2, 2)
+    tbl.attach(Gtk::Alignment.new(0, 0.5, 1, 0).add(thumbnails_height = Gtk::SpinButton.new(32, 256, 16).set_value($config['thumbnails-height'].to_i)),
+               1, 2, table_y, table_y + 1, Gtk::FILL, Gtk::SHRINK, 2, 2)
+    tooltips.set_tip(thumbnails_height, utf8(_("The desired height of the thumbnails in the thumbnails line of the bottom")), nil)
+
+    table_y += 1
+    tbl.attach(Gtk::Alignment.new(1, 0.5, 0, 0).add(Gtk::Label.new.set_markup(utf8(_("Preloading distance: ")))),
+               0, 1, table_y, table_y + 1, Gtk::FILL, Gtk::SHRINK, 2, 2)
+    tbl.attach(Gtk::Alignment.new(0, 0.5, 1, 0).add(preload_distance = Gtk::SpinButton.new(0, 50, 1).set_value($config['preload-distance'].to_i)),
+               1, 2, table_y, table_y + 1, Gtk::FILL, Gtk::SHRINK, 2, 2)
+    tooltips.set_tip(preload_distance, utf8(_("Amount of pictures preloaded left and right to the currently shown")), nil)
+
+    table_y += 1
+    tbl.attach(Gtk::Alignment.new(1, 0.5, 0, 0).add(Gtk::Label.new.set_markup(utf8(_("Cache memory use: ")))),
+               0, 1, table_y, table_y + 1, Gtk::FILL, Gtk::SHRINK, 2, 2)
+    tbl.attach(Gtk::Alignment.new(0, 0.5, 1, 0).add(cache_vbox = Gtk::VBox.new(false, 0)),
+               1, 2, table_y, table_y + 1, Gtk::FILL, Gtk::SHRINK, 2, 2)
+    cache_vbox.pack_start(Gtk::HBox.new(false, 0).pack_start(cache_memfree_radio = Gtk::RadioButton.new(''), false, false).
+                                                  pack_start(cache_memfree_spin = Gtk::SpinButton.new(0, 100, 10), false, false).
+                                                  pack_start(cache_memfree_label = Gtk::Label.new(utf8(_("% of free memory"))), false, false), false, false)
+    cache_memfree_spin.signal_connect('value-changed') { cache_memfree_radio.active = true }
+    tooltips.set_tip(cache_memfree_spin, utf8(_("Percentage of free memory (+ buffers/cache) measured at startup")), nil)
+    cache_vbox.pack_start(Gtk::HBox.new(false, 0).pack_start(cache_specify_radio = Gtk::RadioButton.new(cache_memfree_radio, ''), false, false).
+                                                  pack_start(cache_specify_spin = Gtk::SpinButton.new(0, 4000, 50), false, false).
+                                                  pack_start(cache_specify_label = Gtk::Label.new(utf8(_("MB"))).set_sensitive(false), false, false), false, false)
+    cache_specify_spin.signal_connect('value-changed') { cache_specify_radio.active = true }
+    cache_memfree_radio.signal_connect('toggled') {
+        if cache_memfree_radio.active?
+            cache_memfree_label.sensitive = true
+            cache_specify_label.sensitive = false
+        else
+            cache_specify_label.sensitive = true
+            cache_memfree_label.sensitive = false
+        end
+    }
+    tooltips.set_tip(cache_specify_spin, utf8(_("Amount of memory in megabytes")), nil)
+    if $config['cache-memory-use'] =~ /memfree_(\d+)/
+        cache_memfree_spin.value = $1.to_i
+    else
+        cache_specify_spin.value = $config['cache-memory-use'].to_i / 1024
+    end
+
+    table_y += 1
+    tbl.attach(update_exif_orientation_check = Gtk::CheckButton.new(utf8(_("Update file's EXIF orientation when rotating a picture"))),
+               0, 2, table_y, table_y + 1, Gtk::FILL, Gtk::SHRINK, 2, 2)
+    tooltips.set_tip(update_exif_orientation_check, utf8(_("When rotating a picture (Alt-Right/Left), also update EXIF orientation in the file itself")), nil)
+    update_exif_orientation_check.active = $config['rotate-set-exif'] == 'true'
+
+    dialog.vbox.show_all
+    dialog.run { |response|
+        if response == Gtk::Dialog::RESPONSE_OK
+            $config['video-viewer'] = from_utf8(video_viewer_entry.text)
+            $config['browser'] = from_utf8(browser_entry.text)
+            $config['thumbnails-height'] = thumbnails_height.value
+            $config['preload-distance'] = preload_distance.value
+            $config['rotate-set-exif'] = update_exif_orientation_check.active?.to_s
+            if cache_memfree_radio.active?
+                $config['cache-memory-use'] = "memfree_#{cache_memfree_spin.value}%"
+            else
+                $config['cache-memory-use'] = cache_specify_spin.value.to_i * 1024
+            end
+            set_cache_memory_use_figure
+        end
+    }
+    dialog.destroy
+end
+
+def perform_undo
+    if $undo_mb.sensitive?
+        $redo_mb.sensitive = true
+        if not more_undoes = UndoHandler.undo($statusbar)
+            $undo_mb.sensitive = false
+        end
+    end
+end
+
+def perform_redo
+    if $redo_mb.sensitive?
+        $undo_mb.sensitive = true
+        if not more_redoes = UndoHandler.redo($statusbar)
+            $redo_mb.sensitive = false
+        end
+    end
+end
+
+def create_menubar    
+    #- menu
+    mb = Gtk::MenuBar.new
+
+    filemenu = Gtk::MenuItem.new(utf8(_("_File")))
+    filesubmenu = Gtk::Menu.new
+    filesubmenu.append(open      = Gtk::ImageMenuItem.new(Gtk::Stock::OPEN))
+    filesubmenu.append(            Gtk::SeparatorMenuItem.new)
+    filesubmenu.append($execute  = Gtk::ImageMenuItem.new(Gtk::Stock::EXECUTE).set_sensitive(false))
+    filesubmenu.append(            Gtk::SeparatorMenuItem.new)
+    filesubmenu.append(quit      = Gtk::ImageMenuItem.new(Gtk::Stock::QUIT))
+    filemenu.set_submenu(filesubmenu)
+    mb.append(filemenu)
+
+    open.signal_connect('activate') { open_dir_popup }
+    $execute.signal_connect('activate') { execute }
+    quit.signal_connect('activate') { try_quit }
+
+    editmenu = Gtk::MenuItem.new(utf8(_("_Edit")))
+    editsubmenu = Gtk::Menu.new
+    editsubmenu.append($undo_mb    = Gtk::ImageMenuItem.new(Gtk::Stock::UNDO).set_sensitive(false))
+    editsubmenu.append($redo_mb    = Gtk::ImageMenuItem.new(Gtk::Stock::REDO).set_sensitive(false))
+    editsubmenu.append(              Gtk::SeparatorMenuItem.new)
+    editsubmenu.append(prefs       = Gtk::ImageMenuItem.new(Gtk::Stock::PREFERENCES))
+    editmenu.set_submenu(editsubmenu)
+    mb.append(editmenu)
+
+    $undo_mb.signal_connect('activate') { perform_undo }
+    $redo_mb.signal_connect('activate') { perform_redo }
+    prefs.signal_connect('activate') { preferences }
+    
+    helpmenu = Gtk::MenuItem.new(utf8(_("_Help")))
+    helpsubmenu = Gtk::Menu.new
+    helpsubmenu.append(howto = Gtk::ImageMenuItem.new(Gtk::Stock::HELP))
+    helpsubmenu.append(speed = Gtk::ImageMenuItem.new(utf8(_("Speedup: key shortcuts"))))
+    speed.image = Gtk::Image.new("#{$FPATH}/images/stock-info-16.png")
+    helpsubmenu.append(tutos = Gtk::ImageMenuItem.new(utf8(_("Online tutorials (opens a web-browser)"))))
+    tutos.image = Gtk::Image.new("#{$FPATH}/images/stock-web-16.png")
+    helpsubmenu.append(Gtk::SeparatorMenuItem.new)
+    helpsubmenu.append(about = Gtk::ImageMenuItem.new(Gtk::Stock::ABOUT))
+    helpmenu.set_submenu(helpsubmenu)
+    mb.append(helpmenu)
+
+    howto.signal_connect('activate') {
+        show_popup($main_window, utf8(_("<span size='large' weight='bold'>Help</span>
+
+1. Open a directory with <span foreground='darkblue'>File/Open</span>; the classifier will scan it (including subdirectories) and
+show thumbnails for all photos and videos at the bottom.
+
+2. You can then navigate through images with the <span foreground='darkblue'>Left/Right</span> keyboard keys, or by <span foreground='darkblue'>clicking</span>
+on thumbnails.
+
+3. You may associate a <span foreground='darkblue'>label</span> to each thumbnail. Either hit the <span foreground='darkblue'>Delete</span> key to associate
+the built-in <i>to remove</i> label, or hit any alphabetical key to associate a label you define.
+The first time you hit a key without any label associated, a popup will ask for the full
+name of this label, and what color you want. To clear the current label, hit the <span foreground='darkblue'>Space</span> key.
+
+4. To help you better view what thumbnails are associated to your labels, you may <span foreground='darkblue'>hide</span>
+some of them by unchecking the labels checkboxes on the left.
+
+5. Once you're finished reviewing all thumbnails, use <span foreground='darkblue'>File/Execute</span> to execute the desired
+actions according to associated labels. You can permanently remove (or not) images with
+the <i>to remove</i> label, and copy or move images with the labels you defined.
+")), { :pos_centered => true, :not_transient => true })
+    }
+    speed.signal_connect('activate') {
+        show_popup($main_window, utf8(_("<span size='large' weight='bold'>Key shortcuts</span>
+
+<span foreground='darkblue'>Left/Right</span>: move left and right in images
+<span foreground='darkblue'>Enter</span>: 'view' current image: for images, display EXIF data; for videos, play it
+<span foreground='darkblue'>Alt-Left/Right</span>: rotate current image clockwise/counter-clockwise
+<span foreground='darkblue'>Delete</span>: assign the 'to remove' label on current image
+<span foreground='darkblue'>Space</span>: clear any label on current image
+<span foreground='darkblue'>Control-z</span>: undo
+<span foreground='darkblue'>Control-r</span>: redo
+<span foreground='darkblue'>Control-Space</span>: recenter thumbnails on current item
+
+Any alphabetical key will assign (or popup for) the associated label on current image.
+")), { :pos_centered => true, :not_transient => true })
+    }
+    tutos.signal_connect('activate') { open_url('http://booh.org/tutorial') }
+    about.signal_connect('activate') { call_about }
+
+
+    #- no toolbar, to save height
+
+    return mb
+end
+
+def reset_labels
+    for child in $labels_vbox.children
+        $labels_vbox.remove(child)
+    end
+    $labels_vbox.pack_start(Gtk::Label.new(utf8(_("Labels list:"))).set_justify(Gtk::Justification::CENTER), false, false).show_all
+    $labels = {}
+    $ordered_labels = []
+    lbl = Gtk::Label.new.set_markup(utf8(_("<i>unlabelled</i>")))
+    $labels_vbox.pack_start(Gtk::HBox.new(false, 5).pack_start($unlabelled_button = Gtk::CheckButton.new.add(Gtk::EventBox.new.add(lbl)), false, false).
+                                                    pack_start(Gtk::Label.new, true, true).  #- I suck
+                                                    pack_start($unlabelled_counter = Gtk::Label.new.set_markup('<tt>0</tt>'), false, false).show_all)
+    $unlabelled_button.active = true
+    $unlabelled_button.signal_connect('toggled') { update_all_visibilities }
+    lbl = Gtk::Label.new.set_markup(utf8(_("<i>to remove</i>")))
+    $labels_vbox.pack_start(Gtk::HBox.new(false, 5).pack_start($toremove_button = Gtk::CheckButton.new.add(evt = Gtk::EventBox.new.add(lbl)), false, false).
+                                                    pack_start(Gtk::Label.new, true, true).
+                                                    pack_start($toremove_counter = Gtk::Label.new.set_markup('<tt>0</tt>'), false, false).show_all)
+    $toremove_button.active = true
+    $toremove_button.signal_connect('toggled') { update_all_visibilities }
+    evt.modify_bg(Gtk::StateType::NORMAL, $color_red)
+    evt.modify_bg(Gtk::StateType::PRELIGHT, $color_red.lighter.lighter)
+    evt.modify_bg(Gtk::StateType::ACTIVE, $color_red.lighter)
+end
+
+def cleanup_loaders
+    $allentries.each { |e| 
+        e.cancel_loader
+    }
+end
+
+def reset_thumbnails
+    cleanup_loaders
+    $allentries = []
+    if $preloader_running
+        $preloader_force_exit = true
+    end
+    for child in $imagesline.children
+        $imagesline.remove(child)
+    end
+    set_imagesline_size_request
+end
+
+def set_imagesline_size_request
+    $imagesline.set_size_request(-1, Gtk::Button.new.size_request[1] + Entry.thumbnails_height + Entry.thumbnails_height/4)
+end
+
+def create_main_window
+
+    $videoborder_pixbuf = Gdk::Pixbuf.new("#{$FPATH}/images/video_border.png")
+    $videoborder_pixmap, = $videoborder_pixbuf.render_pixmap_and_mask(0)
+
+    mb = create_menubar
+
+    main_vbox = Gtk::VBox.new(false, 0)
+    main_vbox.pack_start(mb, false, false)
+    mainview_hbox = Gtk::HBox.new
+    mainview_hbox.pack_start(Gtk::Alignment.new(0.5, 0, 1, 1).add(left_vbox = Gtk::VBox.new(false, 5)), false, true)
+    left_vbox.pack_start(($labels_vbox = Gtk::VBox.new(false, 5)), false, true)
+    left_vbox.pack_end($loading_progressbar = Gtk::ProgressBar.new.set_text(utf8(_("Loading... %d%") % 0)), false, true)
+    mainview_hbox.pack_start($mainview = MainView.new, true, true)
+    main_vbox.pack_start(mainview_hbox, true, true)
+    $imagesline_sw = Gtk::ScrolledWindow.new(nil, nil)
+    $imagesline_sw.set_policy(Gtk::POLICY_ALWAYS, Gtk::POLICY_NEVER)
+    $imagesline_sw.add_with_viewport($imagesline = Gtk::HBox.new(false, 0).show)
+    main_vbox.pack_start($imagesline_sw, false, false)
+    main_vbox.pack_end($statusbar = Gtk::Statusbar.new, false, false)
+
+    set_imagesline_size_request
+
+    $main_window = create_window
+    $main_window.add(main_vbox)
+    $main_window.signal_connect('delete-event') {
+        try_quit
+    }
+
+    #- read/save size and position of window
+    if $config['pos-x'] && $config['pos-y']
+        $main_window.move($config['pos-x'].to_i, $config['pos-y'].to_i)
+    else
+        $main_window.window_position = Gtk::Window::POS_CENTER
+    end
+    msg 3, "size: #{$config['width']}x#{$config['height']}"
+    $main_window.set_default_size(($config['width'] || 800).to_i, ($config['height'] || 600).to_i)
+    $main_window.signal_connect('configure-event') {
+        msg 3, "configure: pos: #{$main_window.window.root_origin.inspect} size: #{$main_window.window.size.inspect}"
+        x, y = $main_window.window.root_origin
+        width, height = $main_window.window.size
+        $config['pos-x'] = x
+        $config['pos-y'] = y
+        $config['width'] = width
+        $config['height'] = height
+        false
+    }
+
+    $main_window.show_all
+    $loading_progressbar.hide
+end
+
+
+handle_options
+read_config
+Gtk.init
+
+
+create_main_window
+check_config
+
+if ARGV[0]
+    if msg = open_dir(*ARGV)
+        puts msg
+    else
+        Gtk.idle_add {
+            show_entries($allentries)
+            false
+        }
+    end
+end
+Gtk.main
+
+cleanup_loaders
+
+write_config

@@ -1,0 +1,87 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+    <title>~~title~~</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <meta name="author" content="'Cardu' theme - Cornelia Luoni"/>
+    ~~~image_head_code~~~
+    ~~flowplayer_head_code~~
+    <script type="text/javascript" src="~~pathtobase~~booh.js"></script>
+    <link rel="stylesheet" type="text/css" href="~~pathtobase~~booh.css" media="screen" />
+</head>
+
+<body ~~~body_additions~~~>
+
+~~hidden_images_for_remotes~~
+
+<table class='imgnav'>
+  <tr>
+    <td width="20%">&nbsp;</td>
+    <td width="1%">
+      <form action="fake">
+        <img src="~~pathtobase~~first_dark.gif" alt="first" onclick="first()" id="img_first"/>
+      </form>
+    </td>
+    <td width="3%">&nbsp;</td>
+    <td width="1%">
+      <form action="fake">
+        <img src="~~pathtobase~~previous_dark.gif" alt="previous" onclick="previous()" id="img_previous"/>
+      </form>
+    </td>
+    <td class='sizes'>
+      ~~sizes~~ | ~~
+      <br/>
+      <font size="-1">~~previous_album~~ ~~ifprevious_album?~~|~~fi~~ ~~thumbnails~~ ~~ifnext_album?~~|~~fi~~ ~~next_album~~</font>
+    </td>
+    <td width="1%">
+      <form action="fake">
+        <img src="~~pathtobase~~next_dark.gif" alt="next" onclick="next()" id="img_next"/>
+      </form>
+    </td>
+    <td width="3%">&nbsp;</td>
+    <td width="1%">
+      <form action="fake">
+        <img src="~~pathtobase~~last_dark.gif" alt="last" onclick="last()" id="img_last"/>
+      </form>
+    </td>
+    <td width="20%">&nbsp;</td>
+  </tr>
+</table>
+<table align="center">
+ <!-- <p id="dbg_text">&nbsp;</p> -->
+  <tr>
+    <td align="center" colspan="9">
+      <br/>
+        ~~~image~~~
+    </td>
+  </tr>
+</table>
+<table align="center">
+<tr>
+    <td align="center" colspan="9">
+        <b><font size="+1" color="#ffff99" ~~~caption_additions~~~>&nbsp;</font></b>
+        <br/>
+        <font size="-2" ~~~image_counter_additions~~~>&nbsp;</font>
+        <hr width="100%"/>
+    </td>
+</tr>
+
+  <tr>
+    <td colspan="9" align="center">
+        ~~~button_slideshow~~~
+        ~~~pause_slideshow~~~
+    </td>
+  </tr>
+</table>
+
+<table class='footer'>
+  <tr>
+    <td class='left'>~~indexlink~~</td>
+    <td class='right'>~~addthis~~</td>
+  </tr>
+</table>
+<div class='footer right'>~~madewith~~</div>
+
+</body>
+</html>

@@ -1,0 +1,62 @@
+.\" This program is free software; you can redistribute it and/or modify
+.\" it under the terms of the GNU General Public License as published by
+.\" the Free Software Foundation; either version 2 of the License, or
+.\" (at your option) any later version.
+.\"
+.\" This program is distributed in the hope that it will be useful,
+.\" but WITHOUT ANY WARRANTY; without even the implied warranty of
+.\" MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+.\" GNU General Public License for more details.
+.\"
+.\" You should have received a copy of the GNU General Public License
+.\" along with this program; if not, write to the Free Software
+.\" Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+.\"
+
+.TH BOOH 1 "August 2008" "BOOH" "The Booh web-album"
+
+.SH NAME
+booh-classifier \- photos and videos classifier aimed at being run prior to booh
+
+.SH SYNOPSIS
+\fBbooh-classifier\fR [\fIOPTION\fR]... [\fIDIRNAME\fR]
+
+.SH DESCRIPTION
+\fBbooh-classifier\fR is a photos and videos classifier. It scans a
+directory looking for photos and videos, presenting them with a
+small thumbnail on the bottom of the application window; the main
+part shows a "fullscreen" version of the currently selected
+photo or video. The aim is to mark photos/videos for deletion or
+with user-created labels, and in the end remove the
+photos/videos marked for deletion and move or copy the photos/videos
+marked with labels.
+.PP
+Usually, you may use \fBbooh-classifier\fR to classify your
+photos/videos, and once they are classified, you can then use
+\fBbooh\fR to create a web-album.
+
+.SH OPTIONS
+.TP
+.BR -h , \ --help
+show command-line options summary
+.TP
+\fB-v \fINUM\fR, \fB--verbose \fINUM\fR
+Set max verbosity level (0: errors, 1: warnings, 2: important messages, 3: other messages)
+.TP
+\fB-s\fR, \fB--sort-by-exif-date\fR
+Sort entries by EXIF date
+
+.SH AUTHOR
+Written by Guillaume Cottenceau.
+.br
+Visit official homepage: http://booh.org/
+
+.SH SEE ALSO
+.BR booh(1)
+.BR booh-backend(1)
+
+.SH COPYRIGHT
+Copyright \(co 2008 Guillaume Cottenceau.
+.br
+This is Free Software; this software is licensed under the GPL version 2, as published by the Free Software Foundation.
+There is NO warranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.

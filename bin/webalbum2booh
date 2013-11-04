@@ -1,0 +1,163 @@
+#! /usr/bin/ruby
+#
+#                         *  BOOH  *
+#
+# A.k.a 'Best web-album Of the world, Or your money back, Humerus'.
+#
+# The acronyn sucks, however this is a tribute to Dragon Ball by
+# Akira Toriyama, where the last enemy beaten by heroes of Dragon
+# Ball is named "Boo". But there was already a free software project
+# called Boo, so this one will be it "Booh". Or whatever.
+#
+#
+# Copyright (c) 2004-2006 Guillaume Cottenceau <http://zarb.org/~gc/resource/gc_mail.png>
+#
+# This software may be freely redistributed under the terms of the GNU
+# public license version 2.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program; if not, write to the Free Software
+# Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA
+
+require 'getoptlong'
+require 'gettext'
+include GetText
+require 'booh/rexml/document'
+include REXML
+
+require 'booh/booh-lib'
+include Booh
+
+#- options
+$options = [
+    [ '--help',          '-h', GetoptLong::NO_ARGUMENT,       _("Get help message") ],
+
+    [ '--config',        '-C', GetoptLong::REQUIRED_ARGUMENT, _("File containing config listing images and videos within directories with captions") ],
+
+    [ '--verbose-level', '-v', GetoptLong::REQUIRED_ARGUMENT, _("Set max verbosity level (0: errors, 1: warnings, 2: important messages, 3: other messages)") ],
+]
+
+#- default values for some globals 
+$switches = []
+$stdout.sync = true
+
+def usage
+    puts _("Usage: %s [OPTION]...") % File.basename($0)
+    $options.each { |ary|
+        printf " %3s, %-15s %s\n", ary[1], ary[0], ary[3]
+    }
+end
+
+def handle_options
+    parser = GetoptLong.new
+    parser.set_options(*$options.collect { |ary| ary[0..2] })
+    begin
+        parser.each_option do |name, arg|
+            case name
+            when '--help'
+                usage
+                exit(0)
+
+            when '--config'
+                if File.readable?(arg)
+                    $xmldoc = REXML::Document.new File.new(arg)
+                    $conffile = arg
+                else
+                    die_ _('Config file does not exist or is unreadable.')
+                end
+
+            when '--verbose-level'
+                $verbose_level = arg.to_i
+
+            end
+        end
+    rescue
+        puts $!
+        usage
+        exit(1)
+    end
+
+    if !$xmldoc
+        die_ _("Missing --config parameter.")
+    end
+
+    $source = $xmldoc.root.attributes['source']
+    $dest = $xmldoc.root.attributes['destination']
+end
+
+def utf8_and_entities(string)
+    return utf8(string).gsub('&agrave;', 'à').
+                        gsub('&ccedil;', 'ç').
+                        gsub('&ocirc;',  'ô').
+                        gsub('&eacute;', 'é').
+                        gsub('&ecirc;',  'ê').
+                        gsub('&egrave;', 'è').
+                        gsub('&Egrave;', 'È').
+                        gsub('&icirc;',  'î').
+                        gsub('&lt;',     '<').
+                        gsub('&gt;',     '>').
+                        gsub('&ugrave;', 'ù').
+                        gsub('&quot;',   '"')
+end
+
+def parse_webalbum_indextxt(filepath)
+    begin
+        contents = File.open(filepath).readlines
+        out = {}
+        out[:legends] = {}
+        legend = ''
+        for line in contents
+            if line =~ /^\s*#/
+                next
+            elsif line =~ /^\s*TITLE\s*=\s*(.*)/
+                out[:title] = $1
+            elsif line =~ /^\s*ABSTRACT\s*=\s*(.*)/
+                out[:abstract] = $1
+            elsif line =~ /^\s*IMAGE_LEGEND\s*=\s*(.*)/
+                legend = $1
+            elsif line =~ /^\s*IMAGE_FILE\s*=\s*(.*)/
+                out[:legends][$1] = legend
+            end
+        end
+        return out
+    rescue
+        return nil
+    end
+end
+
+def walk_source_dir
+
+    `find #{$source} -type d`.sort.each { |dir|
+        dir.chomp!
+        msg 2, _("Handling %s from config list...") % dir
+
+        if !infos = parse_webalbum_indextxt("#{dir}/index.txt")
+            next
+        end
+
+        #- place xml document on proper node
+        xmldir = $xmldoc.elements["//dir[@path='#{utf8(dir)}']"]
+
+        if infos.has_key?(:title)
+            type = find_subalbum_info_type(xmldir)
+            xmldir.add_attribute("#{type}-caption", utf8_and_entities(infos[:title]))
+        end
+        
+        xmldir.elements.each { |element|
+            if %w(image video).include?(element.name)
+                if infos[:legends].has_key?(element.attributes['filename'])
+                    element.add_attribute('caption', utf8_and_entities(infos[:legends][element.attributes['filename']]))
+                end
+            end
+        }
+    }
+end
+
+
+handle_options
+
+walk_source_dir
+
+ios = File.open("#{$conffile}.merged", "w")
+$xmldoc.write(ios)
+ios.close

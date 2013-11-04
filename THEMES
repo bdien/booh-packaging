@@ -1,0 +1,96 @@
+                   [[ Themes in booh ]]
+
+Each theme is made of:
+
+- one index.html skeleton, used for the "index" page, the page
+  showing the available subalbums (no such page in the generated
+  album, if you don't have any subalbum)
+
+- one thumbnails.html skeleton, used for the thumbnails page
+
+- one image.html skeleton, used for fullscreen images
+
+- any number of resource files these html pages depend on
+  (images, css..), normally they should all go in the 'root'
+  subdirectory, so that they are only copied in the root
+  directory of the final webalbum and avoid wasting too much
+  hosting space; they can be referred from the skeleton by
+  prepending ~~pathtobase~~, which will be the relative path
+  to the root directory of the final webalbum
+
+- a metadata/parameters.rb file holding information about images
+  sizes that will fit the best the html pages layout
+
+- three metadata/screenshot-?.png files used to select theme in
+  the GUI
+
+If you want to create a new theme, or make local modifications to a
+theme, just have them in your ~/.booh-themes directory. For example,
+to hack off "dark":
+
+# mkdir ~/.booh-themes
+# cp -a /usr/share/booh/themes/dark ~/.booh-themes/mine
+
+Use a different name than original theme names (here I picked the
+dummy name "mine", choose a better one).
+
+
+                  [[ Skeleton files ]]
+
+The skeleton files contain keywords used in the backend to fill
+them up with images. There is no precise documentation about
+them, the best is to look at the 'simple' theme and learn from it
+directly. Most of them are just a simple replace, and there are
+two special cases:
+
+- conditionals:
+
+    ~~iffoo?~~bar~~fi~~
+
+  indicates that if foo is true, put bar at this position, else
+  put nothing; there are a few existing conditions tested, have a
+  look in skeletons of the 'simple' theme
+
+- loops:
+
+   ~~iterate1_open~~
+     foo
+     ~~image_iteration~~
+     bar
+   ~~iterate1_close~~
+
+   is used to put "foo" before each image (index and thumbnails
+   pages only), and bar after each image
+
+   It can be nested:
+
+   ~~iterate1_open~~
+      foo
+       ~~iterate2_open_max4~~
+         bar
+         ~~image_iteration~~
+         baz
+       ~~iterate2_close~~
+      qux
+   ~~iterate1_close~~
+
+   The character after "max" can be hardcoded, or can be "N" to
+   represent the configurable number of images per rows in the
+   thumbnails page. It indicates the amount of times iterate2
+   will be performed before another iterate1 is needed.
+
+
+                     [[ Screenshots ]]
+
+Each theme must export three screenshots, used to select theme in
+the GUI. First screenshot demonstrates the "index" page, second
+one the "thumbnails" page, and third one the "image" page.
+
+To keep a correct ratio between themes, to do your screenshot, be
+sure to use the correct images sizes for your resolution; then
+take the screenshot, crop for 1.55 aspect ratio and resize to 192
+of width (thus 124 of height).
+
+It would be best if the screenshots would show the same contents,
+so just send me your theme if you create a new one and I'll do
+the screenshots.

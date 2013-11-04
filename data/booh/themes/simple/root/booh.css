@@ -1,0 +1,107 @@
+body {
+	background: white;
+        color: black;
+        font-family: "Bitstream Vera Sans", "Lucida Sans", Geneva, Arial, Helvetica, sans-serif;
+}
+
+a:link {
+        color: #7B7BA8;
+        text-decoration: none;
+}
+
+a:visited {
+        color: #7B7BA8;
+        text-decoration: none;
+}
+
+a:hover {
+        color: #7B7BA8;
+        text-decoration: underline;
+}
+
+input {
+        border: solid 1px;
+        background-color: #DEDAD6;
+}
+
+input:hover {
+        background-color: #E8E8E8;
+}
+
+img {
+        border: solid 1px;
+        border-color: #000000;
+}
+
+.nothing {
+	border: 0 solid black;
+}
+
+.disabled {
+        font-style: italic;
+}
+.disabled:hover {
+        background-color: #DEDAD6;
+}
+
+
+table.index {
+	width: 100%;
+	border: 0px solid black;
+}
+
+table.index tr td.image {
+	width: 50%;
+	text-align: right;
+	vertical-align: top;
+	padding: 10px;
+}
+
+table.index tr td.caption {
+	width: 50%;
+	text-align: left;
+}
+
+.footer { 
+	width: 100%;
+	font-size: 0.8em;
+}
+
+.left {
+	text-align: left;
+}
+
+.right {
+	text-align: right;
+}
+
+table.imgnav tr td.sizes {
+	text-align: center;
+	font-size: 0.7em;
+}
+
+table.image {
+	width: 100%
+}
+
+table.image tr td {
+	text-align: center;
+}
+
+a.fullscreenvideolink {
+	margin-left:auto;
+	margin-right:auto;
+}
+
+table.image tr td caption {
+	font-size: 1.1em;
+}
+
+table.image tr td caption {
+	font-size: 0.8em;
+
+}
+
+span.img_alb_nav {
+}
+

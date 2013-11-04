@@ -1,0 +1,61 @@
+.\" This program is free software; you can redistribute it and/or modify
+.\" it under the terms of the GNU General Public License as published by
+.\" the Free Software Foundation; either version 2 of the License, or
+.\" (at your option) any later version.
+.\"
+.\" This program is distributed in the hope that it will be useful,
+.\" but WITHOUT ANY WARRANTY; without even the implied warranty of
+.\" MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+.\" GNU General Public License for more details.
+.\"
+.\" You should have received a copy of the GNU General Public License
+.\" along with this program; if not, write to the Free Software
+.\" Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+.\"
+
+.TH BOOH 1 "August 2008" "BOOH" "The Booh web-album"
+
+.SH NAME
+Booh \- a static web-album generator
+
+.SH SYNOPSIS
+\fBbooh\fR [\fIOPTION\fR]... [\fIFILENAME\fR]
+
+.SH DESCRIPTION
+\fBBooh\fR is a static Web-Album generator. It's a program which
+takes one or several series of photos and videos, and
+automatically build static web pages to browse them, creating
+thumbnails etc.
+.PP
+If you invoke \fBbooh\fR from the command-line, this will launch
+the graphical user interface, which is the most user friendly way
+of creating an album, editing etc. If you append a
+\fIFILENAME\fR, \fBbooh\fR will try to open this file when
+starting up.
+.PP
+Notice that prior to using \fBbooh\fR to create a Web-Album, your
+photos and videos must be classified; if they are not, you may
+use the dedicated tool \fBbooh-classifier\fR.
+
+.SH OPTIONS
+.TP
+.BR -h , \ --help
+show command-line options summary
+.TP
+\fB-v \fINUM\fR, \fB--verbose \fINUM\fR
+Set max verbosity level (0: errors, 1: warnings, 2: important messages, 3: other messages)
+
+.SH AUTHOR
+Written by Guillaume Cottenceau.
+.br
+Visit official homepage: http://booh.org/
+
+.SH SEE ALSO
+.BR booh-classifier(1)
+.BR booh-backend(1)
+
+.SH COPYRIGHT
+Copyright \(co 2005-2008 Guillaume Cottenceau.
+.br
+This is Free Software; this software is licensed under the GPL version 2, as published by the Free Software Foundation.
+There is NO warranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.

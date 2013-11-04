@@ -1,0 +1,41 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+    <title>~~title~~</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <meta name="author" content="'Cardu' theme - Cornelia Luoni"/>
+    ~~~index_head_code~~~
+    <link rel="stylesheet" type="text/css" href="~~pathtobase~~booh.css" media="screen" />
+</head>
+
+<body ~~~body_additions~~~>
+
+~~ifnavigation?~~<p>~~navigation~~</p>~~fi~~
+
+<p align="center" id="title" class='titletext'><font size="+3">~~title~~</font></p>
+
+<table class='index'>
+~~iterate1_open~~
+<tr>
+    <td class='image'>
+       ~~image_iteration~~
+    </td>
+    <td class='caption'>
+       <p>~~caption_iteration~~</p>
+    </td>
+</tr>
+<tr><td>&nbsp;</td></tr>
+~~iterate1_close~~
+</table>
+
+<table class='footer'>
+  <tr>
+    <td class='left'>~~indexlink~~</td>
+    <td class='right'>~~addthis~~</td>
+  </tr>
+</table>  
+<div class='footer right'>~~madewith~~</div>
+
+</body>
+</html>

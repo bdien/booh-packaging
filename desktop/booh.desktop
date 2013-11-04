@@ -1,0 +1,15 @@
+[Desktop Entry]
+Encoding=UTF-8
+Version=1.0
+Type=Application
+Name=Booh
+GenericName=Web Album Generator
+GenericName[fr]=Générateur de Web-Album
+GenericName[de]=Webalbum-Generator
+Comment=Create albums to show your photos and videos on the web
+Comment[fr]=Créez des albums pour montrer vos photos et vidéos sur le web
+Comment[de]=Erstellen Sie Foto- und Videoalben zur Veröffentlichung auf Internet
+Exec=booh
+Icon=booh-48x48.png
+Terminal=false
+Categories=Graphics;2DGraphics;Photography;GTK;

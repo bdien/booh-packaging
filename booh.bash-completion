@@ -1,0 +1,65 @@
+# bash completion for booh
+
+_booh-backend()
+{
+	local cur prev
+
+	COMPREPLY=()
+	cur=${COMP_WORDS[COMP_CWORD]}
+	prev=${COMP_WORDS[COMP_CWORD-1]}
+
+	case $prev in
+		-@(s|d|D|-source|-destination|-dir))
+			_filedir -d
+			return 0
+			;;
+		-@(C|M|U|O|N|u|-config|-merge-config|-merge-config-onedir|-merge-config-subdirs|-use-config))
+			_filedir
+			return 0
+			;;
+		-@(t|-theme))
+			COMPREPLY=( $( command ls /usr/share/booh/themes | grep "^$cur" ) )
+			return 0
+			;;
+		-@(m|-mproc))
+			COMPREPLY=( $( grep -c 'processor' /proc/cpuinfo | grep "^$cur" ) )
+			return 0
+			;;
+	esac
+
+	if [[ "$cur" == -* ]]; then
+		COMPREPLY=( $( compgen -W '-h --help -V --version \
+			-s --source -d --destination -t --theme \
+                        -C --config -k --config-skel -M \
+			--merge-config -O --merge-config-onedir \
+                        -U --merge-config-subdirs -D --dir -u \
+			--use-config -f --force -S --sizes -T \
+                        --thumbnails-per-row -p --thumbnails-per-page \
+                        -L --multi-languages \
+                        -o --optimize-for-32 \
+                        -r --transcode-videos \
+                        -l --index-link \
+                        -n --made-with -c --comments-format \
+                        -m --mproc -g --for-gui -v \
+                        --verbose-level' -- $cur ) )
+	fi
+}
+
+_booh-classifier()
+{
+	local cur prev
+
+	COMPREPLY=()
+	cur=${COMP_WORDS[COMP_CWORD]}
+	prev=${COMP_WORDS[COMP_CWORD-1]}
+
+	if [[ "$cur" == -* ]]; then
+		COMPREPLY=( $( compgen -W '-h --help -v --verbose-level -s --sort-by-exif-date' -- $cur ) )
+	else
+        	_filedir -d
+        fi
+}
+
+complete -F _booh-backend booh-backend
+complete -F _booh-classifier booh-classifier
+

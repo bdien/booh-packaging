@@ -1,0 +1,19 @@
+Booh uses
+
+- the ruby programming language
+
+- XML documents to save config files
+
+- convert/identify from ImageMagick for thumbnails,
+  mplayer for videos manipulation
+
+- ruby-gettext for i18n
+
+- ruby-gtk2 for the GUI
+
+  - with a self widget, `GtkAutoTable', allowing to view the
+    thumbnails and edit captions while dynamically reordering
+    when main window resize
+
+  - with many keyboard shortcuts
+

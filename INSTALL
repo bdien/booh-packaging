@@ -1,0 +1,63 @@
+This software requires for compiling:
+
+- gtk >= 2.8
+- devel of gtk
+- ruby
+- ruby-gettext >= 0.8.0
+- ruby-gtk2 >= 0.12; notice:
+  - ruby-gtk2 0.15.0, 0.17.0 and 0.18.1 should be avoided, they are known
+    problematic versions
+  - with ruby >= 1.8.7, ruby-gtk2 >= 0.18.0 should be used, otherwise
+    crashes will occur
+- devel of ruby-gnome2 (mkmf-gnome2.rb, rbgobject.h)
+- devel of libexiv2 (and thus, g++)
+
+    Note: theoretically, gtk and ruby-gtk2 are not needed if
+    you're gonna use only the backend script (the only lost
+    functionality is white balance correction which uses
+    gdk_pixbuf). However, the GUI is an important part of this
+    software and its use is encouraged (it helps a lot).
+
+And for runtime:
+
+- convert (from ImageMagick) - for photos thumbnails generation
+- identify (from ImageMagick) - for photos captions
+- exif - to show full formatted EXIF information from photos
+- mplayer - for videos thumbnails generation
+- ffmpeg (with mp3lame compiled in) - for generating embedded
+  .flv videos, to use with flowplayer (may not be a hard require)
+- gimp - for photos editing (may not be a hard require)
+- mozilla-firefox - for showing albums in browser, and going on the
+  web for tutorials (may not be a hard require)
+- lftp - for uploading web-albums
+
+        Compiling and Installing Quick Start
+
+Type this as normal user:
+
+ # ruby setup.rb config
+ # ruby setup.rb setup
+ # cd ext
+ # ruby extconf.rb && make
+
+And type this as superuser:
+
+ $ ruby setup.rb install
+ $ cd ext
+ $ make install
+
+If you want to package as normal user to another root:
+
+ $ ruby_archdir=`ruby -rrbconfig -e "puts Config::CONFIG['sitearchdir']"`
+ $ libdir=`ruby -rrbconfig -e "puts Config::CONFIG['sitelibdir']"`
+ $ rm -rf ${buildroot}
+ $ ruby setup.rb install --prefix=${buildroot}
+ $ cd ext
+ $ make install DESTDIR=${buildroot} libdir=${buildroot}${libdir} archdir=${buildroot}${ruby_archdir}
+
+Note: it will install things in traditional directories plus
+ruby_archdir and ruby_libdir.
+Change FPATH in ${buildroot}/local/lib/site_ruby/1.8/booh/config.rb to suit your $buildroot
+
+Find desktop stuff (.desktop entry and icons) for your menu/packaging system
+in the destkop/ subdir.

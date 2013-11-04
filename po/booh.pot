@@ -1,0 +1,1715 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"POT-Creation-Date: 2010-05-26 23:24+0200\n"
+"PO-Revision-Date: 2010-05-26 23:24+0200\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
+
+#: ../bin/booh:44 ../bin/booh-classifier:42 ../bin/booh-backend:45
+msgid "Get help message"
+msgstr ""
+
+#: ../bin/booh:45 ../bin/booh-classifier:44 ../bin/booh-backend:78
+msgid "Set max verbosity level (0: errors, 1: warnings, 2: important messages, 3: other messages)"
+msgstr ""
+
+#: ../bin/booh:46 ../bin/booh-classifier:45 ../bin/booh-backend:46
+msgid "Print version and exit"
+msgstr ""
+
+#: ../bin/booh:58 ../bin/booh-classifier:51 ../bin/booh-backend:91
+msgid "Usage: %s [OPTION]..."
+msgstr ""
+
+#: ../bin/booh:75 ../bin/booh-classifier:74 ../bin/booh-backend:108
+msgid "Booh version %s\n\nCopyright (c) 2005-2010 Guillaume Cottenceau.\nThis is free software; see the source for copying conditions.  There is NO\nwarranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE."
+msgstr ""
+
+#: ../bin/booh:152 ../bin/booh-classifier:171
+msgid "The configured video viewer seems to be unavailable.\nYou should fix this in Edit/Preferences so that you can view videos.\n\nProblem was: '%s' is not an executable file.\nHint: don't forget to specify the full path to the executable,\ne.g. '/usr/bin/mplayer' is correct but 'mplayer' only is not."
+msgstr ""
+
+#: ../bin/booh:162
+msgid "The configured .flv generator seems to be unavailable.\nYou should fix this in Edit/Preferences so that you can have working\nembedded flash videos.\n\nProblem was: '%s' is not an executable file.\nHint: don't forget to specify the full path to the executable,\ne.g. '/usr/bin/ffmpeg' is correct but 'ffmpeg' only is not."
+msgstr ""
+
+#: ../bin/booh:174
+msgid "The program 'convert' is needed. Please install it.\nIt is generally available with the 'ImageMagick' software package."
+msgstr ""
+
+#: ../bin/booh:179
+msgid "The program 'identify' is needed to get photos sizes and EXIF data. Please install it.\nIt is generally available with the 'ImageMagick' software package."
+msgstr ""
+
+#: ../bin/booh:183 ../bin/booh-classifier:167
+msgid "The program 'exif' is needed to view EXIF data. Please install it."
+msgstr ""
+
+#: ../bin/booh:187 ../bin/booh-classifier:163
+msgid "The following program(s) are needed to handle videos: '%s'. Videos will be ignored."
+msgstr ""
+
+#: ../bin/booh:195
+msgid "The configured image editor seems to be unavailable.\nYou should fix this in Edit/Preferences so that you can edit photos externally.\n\nProblem was: '%s' is not an executable file.\nHint: don't forget to specify the full path to the executable,\ne.g. '/usr/bin/gimp-remote' is correct but 'gimp-remote' only is not."
+msgstr ""
+
+#: ../bin/booh:315
+msgid "Could not generate fullscreen thumbnail!"
+msgstr ""
+
+#: ../bin/booh:320
+msgid "Aspect: unknown"
+msgstr ""
+
+#: ../bin/booh:323
+msgid "Aspect: %s"
+msgstr ""
+
+#: ../bin/booh:348 ../bin/booh:1682
+msgid "Mouse gesture: delete."
+msgstr ""
+
+#: ../bin/booh:446
+msgid "text edit"
+msgstr ""
+
+#: ../bin/booh:528
+msgid "rotate clockwise"
+msgstr ""
+
+#: ../bin/booh:528
+msgid "rotate counter-clockwise"
+msgstr ""
+
+#: ../bin/booh:528
+msgid "flip upside-down"
+msgstr ""
+
+#: ../bin/booh:578 ../bin/booh:4304
+msgid "Change seek time"
+msgstr ""
+
+#: ../bin/booh:586
+msgid "Please specify the <b>seek time</b> of the video, to take the thumbnail\nfrom, in seconds.\n"
+msgstr ""
+
+#: ../bin/booh:639
+msgid "Specify panorama amount"
+msgstr ""
+
+#: ../bin/booh:647
+msgid "Please specify the <b>panorama 'amount'</b> of the image, which indicates the width\nof this panorama image compared to other regular images. For example, if the panorama\nwas taken out of four photos on one row, counting the necessary overlap, the width of\nthis panorama image should probably be roughly three times the width of regular images.\n\nWith this information, booh will be able to generate panorama thumbnails looking\nthe right 'size', since the height of the thumbnail for this image will be similar\nto the height of other thumbnails.\n"
+msgstr ""
+
+#: ../bin/booh:657
+msgid "none (not a panorama image)"
+msgstr ""
+
+#: ../bin/booh:658
+msgid "amount of: "
+msgstr ""
+
+#: ../bin/booh:660
+msgid "times the width of other images"
+msgstr ""
+
+#: ../bin/booh:729
+msgid "Fix white balance"
+msgstr ""
+
+#: ../bin/booh:737
+msgid "You can fix the <b>white balance</b> of the image, if your image is too blue\nor too yellow because the recorder didn't detect the light correctly. Drag the\nslider below the image to the left for more blue, to the right for more yellow.\n"
+msgstr ""
+
+#: ../bin/booh:819 ../bin/booh:1039
+msgid "Gamma correction"
+msgstr ""
+
+#: ../bin/booh:827
+msgid "You can perform <b>gamma correction</b> of the image, if your image is too dark\nor too bright. Drag the slider below the image.\n"
+msgstr ""
+
+#: ../bin/booh:936
+msgid "Change image"
+msgstr ""
+
+#: ../bin/booh:944
+msgid "View larger"
+msgstr ""
+
+#: ../bin/booh:948
+msgid "Play video"
+msgstr ""
+
+#: ../bin/booh:955
+msgid "View EXIF data"
+msgstr ""
+
+#: ../bin/booh:959 ../bin/booh-classifier:953
+msgid "EXIF data of %s"
+msgstr ""
+
+#: ../bin/booh:963
+msgid "Rotate clockwise"
+msgstr ""
+
+#: ../bin/booh:966
+msgid "Rotate counter-clockwise"
+msgstr ""
+
+#: ../bin/booh:972
+msgid "Move left"
+msgstr ""
+
+#: ../bin/booh:980
+msgid "Move right"
+msgstr ""
+
+#: ../bin/booh:988
+msgid "Move top"
+msgstr ""
+
+#: ../bin/booh:995
+msgid "Move up"
+msgstr ""
+
+#: ../bin/booh:1001
+msgid "Move down"
+msgstr ""
+
+#: ../bin/booh:1008
+msgid "Move bottom"
+msgstr ""
+
+#: ../bin/booh:1022
+msgid "Flip upside-down"
+msgstr ""
+
+#: ../bin/booh:1025
+msgid "Specify seek time"
+msgstr ""
+
+#: ../bin/booh:1050
+msgid "Fix white-balance"
+msgstr ""
+
+#: ../bin/booh:1062
+msgid "Original contrast"
+msgstr ""
+
+#: ../bin/booh:1063
+msgid "Enhance constrast"
+msgstr ""
+
+#: ../bin/booh:1065
+msgid "Toggle contrast enhancement"
+msgstr ""
+
+#: ../bin/booh:1070
+msgid "Set as panorama"
+msgstr ""
+
+#: ../bin/booh:1098
+msgid "Edit image"
+msgstr ""
+
+#: ../bin/booh:1199 ../bin/booh-classifier:408
+msgid "%s (video - %s KB)"
+msgstr ""
+
+#: ../bin/booh:1254
+msgid "move %s"
+msgstr ""
+
+#: ../bin/booh:1281 ../bin/booh:2623
+msgid "color swap"
+msgstr ""
+
+#: ../bin/booh:1306 ../bin/booh:2642
+msgid "specify seektime"
+msgstr ""
+
+#: ../bin/booh:1338
+msgid "change panorama amount"
+msgstr ""
+
+#: ../bin/booh:1372 ../bin/booh:2667
+msgid "fix white balance"
+msgstr ""
+
+#: ../bin/booh:1407 ../bin/booh:2692
+msgid "gamma correction"
+msgstr ""
+
+#: ../bin/booh:1443 ../bin/booh:2712
+msgid "enhance"
+msgstr ""
+
+#: ../bin/booh:1459 ../bin/booh:5030
+msgid "Do you confirm this subalbum needs to be completely removed? This operation cannot be undone."
+msgstr ""
+
+#: ../bin/booh:1484
+msgid "delete"
+msgstr ""
+
+#: ../bin/booh:1504
+msgid "%s elements in the clipboard."
+msgstr ""
+
+#: ../bin/booh:1516
+msgid "paste"
+msgstr ""
+
+#: ../bin/booh:1527
+msgid "Pasted %s elements."
+msgstr ""
+
+#: ../bin/booh:1677
+msgid "Mouse gesture: rotate."
+msgstr ""
+
+#: ../bin/booh:1693
+msgid "reorder"
+msgstr ""
+
+#: ../bin/booh:1818
+msgid "Nothing selected."
+msgstr ""
+
+#: ../bin/booh:1838
+msgid "%s elements selected."
+msgstr ""
+
+#: ../bin/booh:1901
+msgid "Save failed! Try another location/name."
+msgstr ""
+
+#: ../bin/booh:1980
+msgid "Save before quitting?"
+msgstr ""
+
+#: ../bin/booh:1981
+msgid "Do you want to save your changes before quitting?"
+msgstr ""
+
+#: ../bin/booh:1992 ../bin/booh-classifier:867 ../bin/booh-classifier:1433
+msgid "Booh message"
+msgstr ""
+
+#: ../bin/booh:2081
+msgid "Thumbnails"
+msgstr ""
+
+#: ../bin/booh:2082
+msgid "Scanning photos and videos..."
+msgstr ""
+
+#: ../bin/booh:2084 ../bin/booh:2088
+msgid "not started"
+msgstr ""
+
+#: ../bin/booh:2087
+msgid "HTML pages"
+msgstr ""
+
+#: ../bin/booh:2092 ../bin/booh:2323 ../bin/booh:4327
+msgid "_Abort"
+msgstr ""
+
+#: ../bin/booh:2147
+msgid "finished"
+msgstr ""
+
+#: ../bin/booh:2208
+msgid "There was something wrong, sorry:\n\n%s"
+msgstr ""
+
+#: ../bin/booh:2321
+msgid "Scanning sub-album looking for EXIF dates..."
+msgstr ""
+
+#: ../bin/booh:2391
+msgid "remove all captions"
+msgstr ""
+
+#: ../bin/booh:2476
+msgid "Select image for caption"
+msgstr ""
+
+#: ../bin/booh:2539
+msgid "change caption file for sub-album"
+msgstr ""
+
+#: ../bin/booh:2795
+msgid "%s: %s photos and %s videos, %s sub-albums"
+msgstr ""
+
+#: ../bin/booh:2826
+msgid "Select your preferred theme"
+msgstr ""
+
+#: ../bin/booh:2834
+msgid "Theme name"
+msgstr ""
+
+#: ../bin/booh:2835
+msgid "Sub-albums page look"
+msgstr ""
+
+#: ../bin/booh:2836
+msgid "Thumbnails page look"
+msgstr ""
+
+#: ../bin/booh:2837
+msgid "Fullscreen page look"
+msgstr ""
+
+#: ../bin/booh:2908 ../bin/booh:2971 ../bin/booh:2975 ../bin/booh:2979
+msgid "Corrupted booh file..."
+msgstr ""
+
+#: ../bin/booh:2953
+msgid "File not found."
+msgstr ""
+
+#: ../bin/booh:2964
+msgid "Not a booh file!"
+msgstr ""
+
+#: ../bin/booh:2966
+msgid "Not a booh file!\n\nHint: you cannot import directly a photo or video with File/Open.\nUse File/New to create a new album."
+msgstr ""
+
+#: ../bin/booh:2983
+msgid "File's version %s, booh version now %s, marking dirty"
+msgstr ""
+
+#: ../bin/booh:2986
+msgid "File's version prior to 0.8.4, migrating directories and filenames in destination directory if needed"
+msgstr ""
+
+#: ../bin/booh:3057 ../bin/booh:3259 ../bin/booh:4586
+msgid "Save this album?"
+msgstr ""
+
+#: ../bin/booh:3058 ../bin/booh:3260 ../bin/booh:4587
+msgid "Do you want to save the changes to this album?"
+msgstr ""
+
+#: ../bin/booh:3062
+msgid "Open file"
+msgstr ""
+
+#: ../bin/booh:3095
+msgid "<i>Source:</i> %s\n<i>Destination:</i> %s\n<i>Subalbums:</i> %s\n<i>Images:</i> %s\n<i>Videos:</i> %s"
+msgstr ""
+
+#: ../bin/booh:3141
+msgid "Multi-languages support"
+msgstr ""
+
+#: ../bin/booh:3149
+msgid "You can choose to activate <b>multi-languages</b> support for this web-album\n(it will work only if you publish your web-album on an Apache web-server). This will\nuse the MultiViews feature of Apache; the pages will be served according to the\nvalue of the Accept-Language HTTP header sent by the web browsers, so that people\nwith different languages preferences will be able to browse your web-album with\nnavigation in their language (if language is available).\n"
+msgstr ""
+
+#: ../bin/booh:3158
+msgid "Disabled"
+msgstr ""
+
+#: ../bin/booh:3159
+msgid "Enabled"
+msgstr ""
+
+#: ../bin/booh:3163
+msgid "Pick languages to support"
+msgstr ""
+
+#: ../bin/booh:3170
+msgid "Select the languages to support:"
+msgstr ""
+
+#: ../bin/booh:3181
+msgid "Select the fallback language:"
+msgstr ""
+
+#: ../bin/booh:3207 ../bin/booh:3222
+msgid "Languages: %s. Fallback: %s."
+msgstr ""
+
+#: ../bin/booh:3264
+msgid "Create a new album"
+msgstr ""
+
+#: ../bin/booh:3270 ../bin/booh:3644
+msgid "Locations"
+msgstr ""
+
+#: ../bin/booh:3271
+msgid "Directory of photos/videos: "
+msgstr ""
+
+#: ../bin/booh:3275 ../bin/booh:3285 ../bin/booh:3291
+msgid "browse..."
+msgstr ""
+
+#: ../bin/booh:3277
+msgid "<span size='small'><i>number of photos/videos down this directory:</i></span> "
+msgstr ""
+
+#: ../bin/booh:3279 ../bin/booh:3413
+msgid "<span size='small'><i>N/A</i></span>"
+msgstr ""
+
+#: ../bin/booh:3281
+msgid "Directory where to put the web-album: "
+msgstr ""
+
+#: ../bin/booh:3287
+msgid "Filename to store this album's properties: "
+msgstr ""
+
+#: ../bin/booh:3295 ../bin/booh:3658
+msgid "Configuration"
+msgstr ""
+
+#: ../bin/booh:3296 ../bin/booh:3659
+msgid "Theme: "
+msgstr ""
+
+#: ../bin/booh:3298 ../bin/booh:3661
+msgid "Sizes of images to generate: "
+msgstr ""
+
+#: ../bin/booh:3300 ../bin/booh:3663
+msgid "Optimize for 3/2 aspect ratio"
+msgstr ""
+
+#: ../bin/booh:3301 ../bin/booh:3664 ../bin/booh-backend:65
+msgid "Resize images with optimized sizes for 3/2 aspect ratio rather than 4/3 (typical aspect ratio of photos from point-and-shoot cameras - also called compact cameras - is 4/3, whereas photos from SLR cameras - also called reflex cameras - is 3/2)"
+msgstr ""
+
+#: ../bin/booh:3302 ../bin/booh:3665
+msgid "Number of thumbnails per row: "
+msgstr ""
+
+#: ../bin/booh:3305 ../bin/booh:3668
+msgid "Number of thumbnails per page: "
+msgstr ""
+
+#: ../bin/booh:3310 ../bin/booh:3673
+msgid "<i>None - all thumbnails in one page</i>"
+msgstr ""
+
+#: ../bin/booh:3320 ../bin/booh:3687
+msgid "Configure multi-languages"
+msgstr ""
+
+#: ../bin/booh:3321 ../bin/booh:3688
+msgid "When disabled, the web-album will be generated with navigation in your desktop language. When enabled, the web-album will be generated with navigation in all languages you select, but you have to publish your web-album on an Apache web-server for that feature to work."
+msgstr ""
+
+#: ../bin/booh:3328 ../bin/booh:3335 ../bin/booh:3691
+msgid "Multi-languages: enabled."
+msgstr ""
+
+#: ../bin/booh:3330 ../bin/booh:3337 ../bin/booh:3693
+msgid "Multi-languages: disabled."
+msgstr ""
+
+#: ../bin/booh:3340 ../bin/booh:3705
+msgid "'Return to your website' link on pages bottom: "
+msgstr ""
+
+#: ../bin/booh:3342 ../bin/booh:3710
+msgid "Optional HTML markup to use on pages bottom for a small link returning to wherever you see fit in your website (or somewhere else)"
+msgstr ""
+
+#: ../bin/booh:3343 ../bin/booh:3711
+msgid "'Made with' markup on pages bottom: "
+msgstr ""
+
+#: ../bin/booh:3344
+msgid "made with <a href=%booh>booh</a>!"
+msgstr ""
+
+#: ../bin/booh:3345 ../bin/booh:3716
+msgid "Optional HTML markup to use on pages bottom for a small 'made with' label; %booh is replaced by the website of booh;\nfor example: made with <a href=%booh>booh</a>!"
+msgstr ""
+
+#: ../bin/booh:3346 ../bin/booh:3717 ../bin/booh-backend:69
+msgid "Include the 'addthis' bookmarking and sharing button"
+msgstr ""
+
+#: ../bin/booh:3347 ../bin/booh:3718 ../bin/booh-backend:71
+msgid "Quote HTML markup in captions"
+msgstr ""
+
+#: ../bin/booh:3348 ../bin/booh:3719
+msgid "If checked, text using markup special characters such as '<grin>' will be shown properly; if unchecked, markup such as '<a href..' links will be interpreted by the browser properly"
+msgstr ""
+
+#: ../bin/booh:3363
+msgid "<span size='small'><i>invalid source directory</i></span>"
+msgstr ""
+
+#: ../bin/booh:3375
+msgid "<span size='small'><i>processing...</i></span>"
+msgstr ""
+
+#: ../bin/booh:3398
+msgid "<span size='small'><i>%s photos and %s videos</i></span>"
+msgstr ""
+
+#: ../bin/booh:3410
+msgid "<span size='small'><i>permission denied</i></span>"
+msgstr ""
+
+#: ../bin/booh:3424
+msgid "Select the directory of photos/videos"
+msgstr ""
+
+#: ../bin/booh:3439
+msgid "Select a new directory where to put the web-album"
+msgstr ""
+
+#: ../bin/booh:3452
+msgid "Select a new file to store this album's properties"
+msgstr ""
+
+#: ../bin/booh:3480 ../bin/booh:3742 ../lib/booh/booh-lib.rb:78
+msgid "original"
+msgstr ""
+
+#: ../bin/booh:3482 ../bin/booh:3744
+msgid "Include original photo in web-album"
+msgstr ""
+
+#: ../bin/booh:3495 ../bin/booh:3760
+msgid "Set the number of thumbnails per row of the 'thumbnails' pages (if chosen theme uses a row arrangement)"
+msgstr ""
+
+#: ../bin/booh:3525
+msgid "The directory of photos/videos is invalid. Please check your input."
+msgstr ""
+
+#: ../bin/booh:3528
+msgid "The directory of photos/videos doesn't exist. Please check your input."
+msgstr ""
+
+#: ../bin/booh:3531
+msgid "The destination directory is invalid. Please check your input."
+msgstr ""
+
+#: ../bin/booh:3534 ../bin/booh-backend:127
+msgid "Sorry, destination directory can't contain non simple alphanumeric characters."
+msgstr ""
+
+#: ../bin/booh:3537
+msgid "The destination directory already exists. All existing files and directories\ninside it will be permanently removed before creating the web-album!\nAre you sure you want to continue?"
+msgstr ""
+
+#: ../bin/booh:3542
+msgid "There is already a file by the name of the destination directory. Please choose another one."
+msgstr ""
+
+#: ../bin/booh:3545
+msgid "Please specify a filename to store the album's properties."
+msgstr ""
+
+#: ../bin/booh:3548
+msgid "The filename to store the album's properties is invalid. Please check your input."
+msgstr ""
+
+#: ../bin/booh:3551
+msgid "Sorry, the filename specified to store the album's properties is an existing directory. Please choose another one."
+msgstr ""
+
+#: ../bin/booh:3554 ../bin/booh:3790
+msgid "You need to select at least one size (not counting original)."
+msgstr ""
+
+#: ../bin/booh:3558
+msgid "Could not create destination directory. Permission denied?"
+msgstr ""
+
+#: ../bin/booh:3611 ../bin/booh:3835 ../bin/booh:3855 ../bin/booh:3872 ../bin/booh:3892
+msgid "Please wait while scanning source directory..."
+msgstr ""
+
+#: ../bin/booh:3621
+msgid "Properties of your album"
+msgstr ""
+
+#: ../bin/booh:3645
+msgid "Directory of source photos/videos: "
+msgstr ""
+
+#: ../bin/booh:3649
+msgid "Directory where the web-album is created: "
+msgstr ""
+
+#: ../bin/booh:3653
+msgid "Filename where this album's properties are stored: "
+msgstr ""
+
+#: ../bin/booh:3902
+msgid "Select a new filename to store this album's properties"
+msgstr ""
+
+#: ../bin/booh:3924 ../bin/booh-classifier:1746
+msgid "Edit preferences"
+msgstr ""
+
+#: ../bin/booh:3932
+msgid "Options"
+msgstr ""
+
+#: ../bin/booh:3933 ../bin/booh-classifier:1757
+msgid "Command for watching videos: "
+msgstr ""
+
+#: ../bin/booh:3938 ../bin/booh-classifier:1761
+msgid "Use %f to specify the filename;\nfor example: /usr/bin/mplayer %f"
+msgstr ""
+
+#: ../bin/booh:3942
+msgid "Command for editing images: "
+msgstr ""
+
+#: ../bin/booh:3946
+msgid "Use %f to specify the filename;\nfor example: /usr/bin/gimp-remote %f"
+msgstr ""
+
+#: ../bin/booh:3950 ../bin/booh-classifier:1764
+msgid "Browser's command: "
+msgstr ""
+
+#: ../bin/booh:3954 ../bin/booh-classifier:1768
+msgid "Use %f to specify the filename;\nfor example: /usr/bin/mozilla-firefox -remote 'openURL(%f,new-window)' || /usr/bin/mozilla-firefox %f"
+msgstr ""
+
+#: ../bin/booh:3958
+msgid "Use embedded flash player for videos,\nand use this .flv generator:"
+msgstr ""
+
+#: ../bin/booh:3962
+msgid "Flowplayer will be used for embedded video playback"
+msgstr ""
+
+#: ../bin/booh:3963
+msgid "Use %f to specify the input filename, %o the output filename;\nfor example: /usr/bin/ffmpeg -i %f -b ${i}k -ar 22050 -ab 32k %o"
+msgstr ""
+
+#: ../bin/booh:3967
+msgid "Use symmetric multi-processing"
+msgstr ""
+
+#: ../bin/booh:3969
+msgid "processors"
+msgstr ""
+
+#: ../bin/booh:3971
+msgid "When activated, this option allows the thumbnails creation to run faster. However, if you don't have a multi-processor machine, this will only slow down processing!"
+msgstr ""
+
+#: ../bin/booh:3974
+msgid "Disable mouse gestures"
+msgstr ""
+
+#: ../bin/booh:3976
+msgid "Mouse gestures are 'unusual' mouse movements triggering special actions, and are great for speeding up your editions. Get details on available mouse gestures from the Help menu."
+msgstr ""
+
+#: ../bin/booh:3979
+msgid "Delete original photos/videos as well"
+msgstr ""
+
+#: ../bin/booh:3981
+msgid "Normally, deleting a photo or video in booh only removes it from the web-album. If you check this option, the original file in source directory will be removed as well. Undo is possible, since actual deletion is performed only when web-album is saved."
+msgstr ""
+
+#: ../bin/booh:3999
+msgid "Advanced"
+msgstr ""
+
+#: ../bin/booh:4000
+msgid "Options to pass to <i>convert</i> when\nperforming 'enhance contrast': "
+msgstr ""
+
+#: ../bin/booh:4004
+msgid "Format to use for comments of \nphotos in new albums:"
+msgstr ""
+
+#: ../bin/booh:4010
+msgid "Normally, filenames without extension are used as comments for photos and videos in new albums. Use this entry to use something else."
+msgstr ""
+
+#: ../bin/booh:4153 ../bin/booh-classifier:1815
+msgid "Update file's EXIF orientation when rotating a picture"
+msgstr ""
+
+#: ../bin/booh:4155 ../bin/booh-classifier:1817
+msgid "When rotating a picture (Alt-Right/Left), also update EXIF orientation in the file itself"
+msgstr ""
+
+#: ../bin/booh:4157
+msgid "Transcode videos"
+msgstr ""
+
+#: ../bin/booh:4162
+msgid "Whether to transcode videos into the web-album instead of using the original videos directly (can be an interesting disk space saver!). First put the extension of the output video and a colon; then use %f to specify the input and %o the output;\nfor example: avi:mencoder -nosound -ovc xvid -xvidencopts bitrate=800:me_quality=6 -o %o %f"
+msgstr ""
+
+#: ../bin/booh:4223
+msgid "<b>One-Click tools.</b>\n\n%s When such a tool is activated\n(<span foreground='darkblue'>Rotate clockwise</span>, <span foreground='darkblue'>Rotate counter-clockwise</span>, <span foreground='darkblue'>Enhance</span> or <span foreground='darkblue'>Delete</span>), clicking\non a thumbnail will immediately apply the desired action.\n\nClick the <span foreground='darkblue'>None</span> icon when you're finished with One-Click tools.\n"
+msgstr ""
+
+#: ../bin/booh:4236
+msgid "Logging into remote site..."
+msgstr ""
+
+#: ../bin/booh:4263
+msgid "Specified URL incorrect, please check your input."
+msgstr ""
+
+#: ../bin/booh:4270
+msgid "Mirroring data..."
+msgstr ""
+
+#: ../bin/booh:4291
+msgid "Successfully mirrored into remote repository."
+msgstr ""
+
+#: ../bin/booh:4293
+msgid "Failed to mirror into remote repository."
+msgstr ""
+
+#: ../bin/booh:4308
+msgid "<b>Upload web-album.</b>\n\nMirror web-album into remote repository (lftp URL):\n<i>The destination directory '%s' will be created/updated there.</i>"
+msgstr ""
+
+#: ../bin/booh:4313
+msgid "Upload"
+msgstr ""
+
+#: ../bin/booh:4324
+msgid "Please wait, mirroring..."
+msgstr ""
+
+#: ../bin/booh:4325
+msgid "Initialization..."
+msgstr ""
+
+#: ../bin/booh:4389
+msgid "Failed to execute 'lftp' program."
+msgstr ""
+
+#: ../bin/booh:4405 ../bin/booh-classifier:1861
+msgid "_File"
+msgstr ""
+
+#: ../bin/booh:4414
+msgid "Merge new/removed photos/videos in current subalbum"
+msgstr ""
+
+#: ../bin/booh:4416
+msgid "Take into account new/removed photos/videos in currently viewed subalbum"
+msgstr ""
+
+#: ../bin/booh:4417
+msgid "Merge new subalbums (subdirectories) in current subalbum"
+msgstr ""
+
+#: ../bin/booh:4419
+msgid "Take into account new subalbums in currently viewed subalbum (and only here)"
+msgstr ""
+
+#: ../bin/booh:4420
+msgid "Scan source directory to merge new subalbums and new/removed photos/videos"
+msgstr ""
+
+#: ../bin/booh:4422
+msgid "Take into account new/removed subalbums (subdirectories) and new/removed photos/videos in existing subalbums (anywhere)"
+msgstr ""
+
+#: ../bin/booh:4424
+msgid "Extend album..."
+msgstr ""
+
+#: ../bin/booh:4427
+msgid "Generate web-album"
+msgstr ""
+
+#: ../bin/booh:4429
+msgid "(Re)generate web-album from latest changes into the destination directory"
+msgstr ""
+
+#: ../bin/booh:4430
+msgid "View web-album with browser"
+msgstr ""
+
+#: ../bin/booh:4432
+msgid "Upload web-album"
+msgstr ""
+
+#: ../bin/booh:4436
+msgid "View and modify properties of the web-album"
+msgstr ""
+
+#: ../bin/booh:4452
+msgid "Notice: flash videos normally don't play locally.\n"
+msgstr ""
+
+#: ../bin/booh:4454
+msgid "Please wait while generating web-album...\nThis may take a while, please be patient."
+msgstr ""
+
+#: ../bin/booh:4457
+msgid "Your web-album is now ready in directory '%s'.\nAs multi-languages is activated, you will not be able to view it\nlocally in your browser though."
+msgstr ""
+
+#: ../bin/booh:4460
+msgid "Your web-album is now ready in directory '%s'.\n%s\nClick to view it in your browser:"
+msgstr ""
+
+#: ../bin/booh:4483 ../bin/booh:4495
+msgid "Seems like you should generate the web-album first."
+msgstr ""
+
+#: ../bin/booh:4490
+msgid "The program 'lftp' is needed to upload web-albums. Please install it."
+msgstr ""
+
+#: ../bin/booh:4502 ../bin/booh-classifier:1875
+msgid "_Edit"
+msgstr ""
+
+#: ../bin/booh:4507
+msgid "Sort by EXIF date"
+msgstr ""
+
+#: ../bin/booh:4509
+msgid "Remove all captions in this sub-album"
+msgstr ""
+
+#: ../bin/booh:4511
+msgid "Mainly useful when you don't want to type any caption, that will remove default captions made of filenames"
+msgstr ""
+
+#: ../bin/booh:4522 ../bin/booh-classifier:1888
+msgid "_Help"
+msgstr ""
+
+#: ../bin/booh:4524
+msgid "One-click tools"
+msgstr ""
+
+#: ../bin/booh:4526
+msgid "Speedup: key shortcuts and mouse gestures"
+msgstr ""
+
+#: ../bin/booh:4528 ../bin/booh-classifier:1893
+msgid "Online tutorials (opens a web-browser)"
+msgstr ""
+
+#: ../bin/booh:4536
+msgid "One-Click tools are available in the toolbar."
+msgstr ""
+
+#: ../bin/booh:4540
+msgid "<span size='large' weight='bold'>Key shortcuts:</span>\n\n<span foreground='darkblue'>Tab</span>: go to next image caption and select text (begin typing to erase current text!)\n<span foreground='darkblue'>Shift-Tab</span>: go to previous image caption\n<span foreground='darkblue'>Control-Left/Right/Up/Down</span>: go to specified direction's image caption\n<span foreground='darkblue'>Control-Enter</span>: for a photo, open larger view; for a video, launch player\n<span foreground='darkblue'>Control-Delete</span>: delete image\n<span foreground='darkblue'>Shift-Left/Right/Up/Down</span>: move image left/right/up/down\n<span foreground='darkblue'>Alt-Left/Right</span>: rotate image clockwise/counter-clockwise\n<span foreground='darkblue'>Control-z</span>: undo\n<span foreground='darkblue'>Control-r</span>: redo\n\n<span size='large' weight='bold'>Mouse gestures:</span>\n\nMouse gestures are 'unusual' mouse movements triggering special actions, and are great\nfor speeding up your editions. If bothered, you can disable them from Edit/Preferences.\n\n<span foreground='darkblue'>Left click, drag to the right, release</span>: rotate image clockwise\n<span foreground='darkblue'>Left click, drag to the left, release</span>: rotate image counter-clockwise\n<span foreground='darkblue'>Left click, drag to the bottom, release</span>: remove image\n<span foreground='darkblue'>Left click, hold left button, right click</span>: undo\n<span foreground='darkblue'>Right click, hold right button, left click</span>: redo\n"
+msgstr ""
+
+#: ../bin/booh:4576
+msgid "Open"
+msgstr ""
+
+#: ../bin/booh:4608 ../bin/booh:4611
+msgid "Rotate"
+msgstr ""
+
+#: ../bin/booh:4614
+msgid "Enhance"
+msgstr ""
+
+#: ../bin/booh:4616
+msgid "Delete"
+msgstr ""
+
+#: ../bin/booh:4619
+msgid "None"
+msgstr ""
+
+#: ../bin/booh:4634
+msgid "You have just clicked on a One-Click tool."
+msgstr ""
+
+#: ../bin/booh:4743
+msgid "Password protect this sub-album"
+msgstr ""
+
+#: ../bin/booh:4751
+msgid "You can choose to <b>password protect</b> the sub-album '%s' (only available\nif you plan to publish your web-album with an Apache web-server). This will use\nthe .htaccess/.htpasswd feature of Apache (not so strongly crypted password, but\ngenerally ok for protecting web contents). Users will be prompted with a dialog\nasking for a username and a password, failure to give the correct pair will\nblock access.\n"
+msgstr ""
+
+#: ../bin/booh:4759
+msgid "free access"
+msgstr ""
+
+#: ../bin/booh:4760
+msgid "password protect with password file:"
+msgstr ""
+
+#: ../bin/booh:4762
+msgid "help about password file"
+msgstr ""
+
+#: ../bin/booh:4764
+msgid "generate a password file"
+msgstr ""
+
+#: ../bin/booh:4776
+msgid "Password protection proposed here uses the .htaccess/.htpasswd features\nproposed by Apache. So first, be sure you will publish your web-album on an\nApache web-server. Second, you will need to have a .htpasswd file accessible\nby Apache somewhere on the web-server disks. The password file you must\nprovide in the dialog when choosing to password protect is the full absolute\npath to access this file <b>on the web-server</b> (not on your machine). Note\nthat if you use a relative path, it will be considered relative to the\nDocument Root of the Apache configuration."
+msgstr ""
+
+#: ../bin/booh:4787
+msgid "Generate a password file"
+msgstr ""
+
+#: ../bin/booh:4795
+msgid "I can generate a password file (.htpasswd for Apache) for you. Just type\nthe username and password you wish to put in it below and validate."
+msgstr ""
+
+#: ../bin/booh:4798
+msgid "Username:"
+msgstr ""
+
+#: ../bin/booh:4800
+msgid "Password:"
+msgstr ""
+
+#: ../bin/booh:4819
+msgid "The file <b>%s</b> now contains the username and the crypted password. Now\ncopy it to a suitable location on the machine hosting the Apache web-server (better not\nbelow the Document Root), and specify this location in the password protect dialog."
+msgstr ""
+
+#: ../bin/booh:4841
+msgid "set password protection for %s"
+msgstr ""
+
+#: ../bin/booh:4862
+msgid "Save modifications?"
+msgstr ""
+
+#: ../bin/booh:4863
+msgid "You need to save or discard your changes before extending the album."
+msgstr ""
+
+#: ../bin/booh:4872
+msgid "Extend the album"
+msgstr ""
+
+#: ../bin/booh:4880
+msgid "If you want this album to be part of a larger album, you can choose to\n<b>extend</b> it. This album will become a sub-album of the larger album.\nA new directory will be created in source and destination directories with\nthe specified name, and everything currently in there will be moved down.\nA typical use case is a ski album, with <span foreground='darkblue'>Tignes</span> and <span foreground='darkblue'>Courchevel</span> subalbums;\nif you want to extend it to a vacations album, then you may input the\nname <span foreground='darkblue'>Ski</span>; after the album is extended, then you may create other\ndirectories at the same level as <span foreground='darkblue'>Ski</span> in the source directory, such as\n<span foreground='darkblue'>Summers</span> and <span foreground='darkblue'>Christmas</span> and arrange related photos/videos in there."
+msgstr ""
+
+#: ../bin/booh:4915
+msgid "New layout: "
+msgstr ""
+
+#: ../bin/booh:4918
+msgid "Directory name:"
+msgstr ""
+
+#: ../bin/booh:4933 ../bin/booh-classifier:1329 ../bin/booh-backend:823
+msgid "Source directory or sub-directories can't contain a single-quote character, sorry: %s"
+msgstr ""
+
+#: ../bin/booh:4940 ../bin/booh:4948
+msgid "%s already exists."
+msgstr ""
+
+#: ../bin/booh:4944
+msgid "No write access to '%s'."
+msgstr ""
+
+#: ../bin/booh:4957
+msgid "Erroneous name."
+msgstr ""
+
+#: ../bin/booh:5021
+msgid "Password protect"
+msgstr ""
+
+#: ../bin/booh:5024
+msgid "Restore deleted photos/videos/subalbums"
+msgstr ""
+
+#: ../bin/booh:5049
+msgid "Sub-albums page"
+msgstr ""
+
+#: ../bin/booh:5051
+msgid "Thumbnails page"
+msgstr ""
+
+#: ../bin/booh:5116
+msgid "Ready."
+msgstr ""
+
+#: ../bin/booh-classifier:43
+msgid "Sort entries by EXIF date"
+msgstr ""
+
+#: ../bin/booh-classifier:121
+msgid "Cache memory used: %s kB (reduced because cannot exceed 50%% of total memory)"
+msgstr ""
+
+#: ../bin/booh-classifier:123
+msgid "Cache memory used: %s kB"
+msgstr ""
+
+#: ../bin/booh-classifier:403
+msgid "%s (%sx%s, %s KB)"
+msgstr ""
+
+#: ../bin/booh-classifier:771
+msgid "Selected %s"
+msgstr ""
+
+#: ../bin/booh-classifier:1026
+msgid "Notice: no write access to '%s', permission will be denied at execute step."
+msgstr ""
+
+#: ../bin/booh-classifier:1035
+msgid "set for removal"
+msgstr ""
+
+#: ../bin/booh-classifier:1059
+msgid "Cleared label"
+msgstr ""
+
+#: ../bin/booh-classifier:1061
+msgid "Cleared set for removal"
+msgstr ""
+
+#: ../bin/booh-classifier:1128
+msgid "You typed the text character '%s', which is not associated with a label.\nType in the full name of the label below to create a new one."
+msgstr ""
+
+#: ../bin/booh-classifier:1160
+msgid "set label"
+msgstr ""
+
+#: ../bin/booh-classifier:1233
+msgid "Loading images..."
+msgstr ""
+
+#: ../bin/booh-classifier:1235 ../bin/booh-classifier:1287 ../bin/booh-classifier:2004
+msgid "Loading... %d%"
+msgstr ""
+
+#: ../bin/booh-classifier:1300
+msgid "%d images of total %s kB loaded in %3.2f seconds."
+msgstr ""
+
+#: ../bin/booh-classifier:1317 ../bin/booh-classifier:1353
+msgid "Scanning source directory... %s"
+msgstr ""
+
+#: ../bin/booh-classifier:1334
+msgid "Videos can't contain a single quote character ('), sorry: %s"
+msgstr ""
+
+#: ../bin/booh-classifier:1345 ../bin/booh-backend:836
+msgid "Ignoring directory %s, begins with a dot (indicating a hidden directory)"
+msgstr ""
+
+#: ../bin/booh-classifier:1353
+msgid "%d entries found"
+msgstr ""
+
+#: ../bin/booh-classifier:1388
+msgid "Specify the directory to work with"
+msgstr ""
+
+#: ../bin/booh-classifier:1421
+msgid "You have not executed the classification. Are you sure you want to quit?"
+msgstr ""
+
+#: ../bin/booh-classifier:1436
+msgid "You're about to <b>execute</b> actions on the marked images.\nPlease confirm below the actions. You cannot undo this operation!"
+msgstr ""
+
+#: ../bin/booh-classifier:1444
+msgid "<b>Label name:</b>"
+msgstr ""
+
+#: ../bin/booh-classifier:1445
+msgid "<b>Amount of pictures:</b>"
+msgstr ""
+
+#: ../bin/booh-classifier:1446
+msgid "<b>Pictures examples:</b>"
+msgstr ""
+
+#: ../bin/booh-classifier:1447
+msgid "<b>Action to perform:</b>"
+msgstr ""
+
+#: ../bin/booh-classifier:1482
+msgid "Copy to:"
+msgstr ""
+
+#: ../bin/booh-classifier:1485
+msgid "Move to:"
+msgstr ""
+
+#: ../bin/booh-classifier:1488
+msgid "Permanently remove"
+msgstr ""
+
+#: ../bin/booh-classifier:1492
+msgid "Do nothing"
+msgstr ""
+
+#: ../bin/booh-classifier:1503
+msgid "<i>(unset)</i>"
+msgstr ""
+
+#: ../bin/booh-classifier:1505
+msgid "Specify the directory where to move the pictures to"
+msgstr ""
+
+#: ../bin/booh-classifier:1535 ../bin/booh-classifier:1959
+msgid "<i>to remove</i>"
+msgstr ""
+
+#: ../bin/booh-classifier:1541
+msgid "I have noticed I am about to permanently remove the %d above mentioned pictures (total %s kB)."
+msgstr ""
+
+#: ../bin/booh-classifier:1565
+msgid "You have not confirmed that you noticed the permanent removal of the pictures marked for deletion."
+msgstr ""
+
+#: ../bin/booh-classifier:1572
+msgid "Sorry, permission denied to remove '%s'."
+msgstr ""
+
+#: ../bin/booh-classifier:1586
+msgid "You have not selected a directory where to move/copy %s."
+msgstr ""
+
+#: ../bin/booh-classifier:1597
+msgid "Directory %s, where to move/copy %s, is not valid or not createable."
+msgstr ""
+
+#: ../bin/booh-classifier:1602
+msgid "Directory %s, where to move/copy %s, is not valid or not writable."
+msgstr ""
+
+#: ../bin/booh-classifier:1609
+msgid "Sorry, a file '%s' already exists in directory '%s'."
+msgstr ""
+
+#: ../bin/booh-classifier:1618
+msgid "Sorry, permission denied to move '%s'."
+msgstr ""
+
+#: ../bin/booh-classifier:1658
+msgid "Unexpected error: '%s'."
+msgstr ""
+
+#: ../bin/booh-classifier:1660
+msgid "Successfully moved %d files, copied %d file, and removed %d files."
+msgstr ""
+
+#: ../bin/booh-classifier:1771
+msgid "Thumbnails height: "
+msgstr ""
+
+#: ../bin/booh-classifier:1775
+msgid "The desired height of the thumbnails in the thumbnails line of the bottom"
+msgstr ""
+
+#: ../bin/booh-classifier:1778
+msgid "Preloading distance: "
+msgstr ""
+
+#: ../bin/booh-classifier:1782
+msgid "Amount of pictures preloaded left and right to the currently shown"
+msgstr ""
+
+#: ../bin/booh-classifier:1785
+msgid "Cache memory use: "
+msgstr ""
+
+#: ../bin/booh-classifier:1791
+msgid "% of free memory"
+msgstr ""
+
+#: ../bin/booh-classifier:1793
+msgid "Percentage of free memory (+ buffers/cache) measured at startup"
+msgstr ""
+
+#: ../bin/booh-classifier:1796
+msgid "MB"
+msgstr ""
+
+#: ../bin/booh-classifier:1807
+msgid "Amount of memory in megabytes"
+msgstr ""
+
+#: ../bin/booh-classifier:1891
+msgid "Speedup: key shortcuts"
+msgstr ""
+
+#: ../bin/booh-classifier:1901
+msgid "<span size='large' weight='bold'>Help</span>\n\n1. Open a directory with <span foreground='darkblue'>File/Open</span>; the classifier will scan it (including subdirectories) and\nshow thumbnails for all photos and videos at the bottom.\n\n2. You can then navigate through images with the <span foreground='darkblue'>Left/Right</span> keyboard keys, or by <span foreground='darkblue'>clicking</span>\non thumbnails.\n\n3. You may associate a <span foreground='darkblue'>label</span> to each thumbnail. Either hit the <span foreground='darkblue'>Delete</span> key to associate\nthe built-in <i>to remove</i> label, or hit any alphabetical key to associate a label you define.\nThe first time you hit a key without any label associated, a popup will ask for the full\nname of this label, and what color you want. To clear the current label, hit the <span foreground='darkblue'>Space</span> key.\n\n4. To help you better view what thumbnails are associated to your labels, you may <span foreground='darkblue'>hide</span>\nsome of them by unchecking the labels checkboxes on the left.\n\n5. Once you're finished reviewing all thumbnails, use <span foreground='darkblue'>File/Execute</span> to execute the desired\nactions according to associated labels. You can permanently remove (or not) images with\nthe <i>to remove</i> label, and copy or move images with the labels you defined.\n"
+msgstr ""
+
+#: ../bin/booh-classifier:1923
+msgid "<span size='large' weight='bold'>Key shortcuts</span>\n\n<span foreground='darkblue'>Left/Right</span>: move left and right in images\n<span foreground='darkblue'>Enter</span>: 'view' current image: for images, display EXIF data; for videos, play it\n<span foreground='darkblue'>Alt-Left/Right</span>: rotate current image clockwise/counter-clockwise\n<span foreground='darkblue'>Delete</span>: assign the 'to remove' label on current image\n<span foreground='darkblue'>Space</span>: clear any label on current image\n<span foreground='darkblue'>Control-z</span>: undo\n<span foreground='darkblue'>Control-r</span>: redo\n<span foreground='darkblue'>Control-Space</span>: recenter thumbnails on current item\n\nAny alphabetical key will assign (or popup for) the associated label on current image.\n"
+msgstr ""
+
+#: ../bin/booh-classifier:1950
+msgid "Labels list:"
+msgstr ""
+
+#: ../bin/booh-classifier:1953
+msgid "<i>unlabelled</i>"
+msgstr ""
+
+#: ../lib/booh/html-merges.rb:54 ../lib/booh/html-merges.rb:88 ../bin/booh-backend:1301
+msgid "Run slideshow!"
+msgstr ""
+
+#: ../lib/booh/html-merges.rb:55
+msgid "Stop slideshow"
+msgstr ""
+
+#: ../lib/booh/html-merges.rb:64
+msgid "<<- First"
+msgstr ""
+
+#: ../lib/booh/html-merges.rb:70 ../bin/booh-backend:1296
+msgid "<- Previous"
+msgstr ""
+
+#: ../lib/booh/html-merges.rb:76 ../bin/booh-backend:1298
+msgid "Next ->"
+msgstr ""
+
+#: ../lib/booh/html-merges.rb:82
+msgid "Last ->>"
+msgstr ""
+
+#: ../lib/booh/html-merges.rb:92
+msgid "pause:"
+msgstr ""
+
+#: ../lib/booh/html-merges.rb:92
+msgid "secs"
+msgstr ""
+
+#: ../lib/booh/html-merges.rb:169
+msgid "<i>Hint: you can click on the images to open the albums!</i>"
+msgstr ""
+
+#: ../bin/booh-backend:48
+msgid "Directory which contains original photos/videos as files or subdirs"
+msgstr ""
+
+#: ../bin/booh-backend:49
+msgid "Directory which will contain the web-album; if it already exits, then all existing files and directories inside it will be removed!"
+msgstr ""
+
+#: ../bin/booh-backend:51
+msgid "Select HTML theme to use"
+msgstr ""
+
+#: ../bin/booh-backend:52
+msgid "File containing config listing photos and videos within directories with captions"
+msgstr ""
+
+#: ../bin/booh-backend:53
+msgid "Filename where the script will output a config skeleton"
+msgstr ""
+
+#: ../bin/booh-backend:54
+msgid "File containing config listing, where to merge new/removed photos/videos from --source, and change theme info"
+msgstr ""
+
+#: ../bin/booh-backend:55
+msgid "File containing config listing, for merging the subdir specified with --dir"
+msgstr ""
+
+#: ../bin/booh-backend:56
+msgid "File containing config listing, for merging the new subdirs down the subdir specified with --dir"
+msgstr ""
+
+#: ../bin/booh-backend:57
+msgid "Directory for merge with --merge-config-onedir or --merge-config-subdirs"
+msgstr ""
+
+#: ../bin/booh-backend:58
+msgid "File containing config listing, where to change theme info"
+msgstr ""
+
+#: ../bin/booh-backend:59
+msgid "Force generation of album even if the GUI marked some directories as already generated"
+msgstr ""
+
+#: ../bin/booh-backend:61
+msgid "Specify the list of images sizes to use instead of all specified in the theme (this is a comma-separated list)"
+msgstr ""
+
+#: ../bin/booh-backend:62
+msgid "Specify the list of languages to support (uses Apache MultiViews); this is a comma-separated list of supported languages, with last element used as the fallback language; for example: 'fr,eo,en,en'; supported languages: %s"
+msgstr ""
+
+#: ../bin/booh-backend:63
+msgid "Specify the amount of thumbnails per row in the thumbnails page (if applicable in theme)"
+msgstr ""
+
+#: ../bin/booh-backend:64
+msgid "Specify the amount of thumbnails per page in the thumbnails page, after which split occurs"
+msgstr ""
+
+#: ../bin/booh-backend:66
+msgid "Transcode videos with given external program; %f is the placeholder for the input video, %o for the output video; before the external program, the output video extension should be given followed by a colon"
+msgstr ""
+
+#: ../bin/booh-backend:67
+msgid "Use embedded flash player for videos (flowplayer) and use this .flv generator (%f is the placeholder for the input video, %o for the output video)"
+msgstr ""
+
+#: ../bin/booh-backend:68
+msgid "Specify the HTML markup to use on the bottom of pages for a small link returning to wherever you see fit in your website (or somewhere else)"
+msgstr ""
+
+#: ../bin/booh-backend:70
+msgid "Specify the HTML markup to use on the bottom of pages for a small 'made with' message"
+msgstr ""
+
+#: ../bin/booh-backend:72
+msgid "Specify comments format to use for images instead of only filename when creating new albums; use ImageMagick's format"
+msgstr ""
+
+#: ../bin/booh-backend:74
+msgid "Specify the number of processors for multi-processors machines"
+msgstr ""
+
+#: ../bin/booh-backend:76
+msgid "Do the minimum work to be able to see the album under the GUI (don't generate all thumbnails)"
+msgstr ""
+
+#: ../bin/booh-backend:79
+msgid "Name a file where to write information about what's going on (used by the GUI)"
+msgstr ""
+
+#: ../bin/booh-backend:119
+msgid "Argument to --source must be a directory"
+msgstr ""
+
+#: ../bin/booh-backend:124
+msgid "If --destination exists, it must be a directory"
+msgstr ""
+
+#: ../bin/booh-backend:140 ../bin/booh-backend:163 ../bin/booh-backend:174
+#: ../bin/booh-backend:185 ../bin/booh-backend:203
+msgid "Config file does not exist or is unreadable."
+msgstr ""
+
+#: ../bin/booh-backend:146
+msgid "Config skeleton file (%s) already exists and is a directory! Please change the filename."
+msgstr ""
+
+#: ../bin/booh-backend:148
+msgid "Config skeleton file already exists, backuping to %s.backup"
+msgstr ""
+
+#: ../bin/booh-backend:157 ../bin/booh-backend:168 ../bin/booh-backend:179
+msgid "Merge config notice: backuping current config file to %s.backup"
+msgstr ""
+
+#: ../bin/booh-backend:190
+msgid "Specified directory to merge with --dir is not readable"
+msgstr ""
+
+#: ../bin/booh-backend:197
+msgid "Use config notice: backuping current config file to %s.backup"
+msgstr ""
+
+#: ../bin/booh-backend:212
+msgid "--multi-languages: argument must be a comma-separated list of supported languages, with last element used as the fallback language; for example: 'fr,eo,en,en'; supported languages: %s"
+msgstr ""
+
+#: ../bin/booh-backend:228
+msgid "--transcode-videos: argument must be the external program for transcoding, and contain %f for the input video, %o for the output video, and before the external program, the output video extension should be given followed by a colon"
+msgstr ""
+
+#: ../bin/booh-backend:234
+msgid "--flv-generator: argument must contain %f for the input video and %o for the output video"
+msgstr ""
+
+#: ../bin/booh-backend:299
+msgid "Missing --dir for --merge-config-onedir"
+msgstr ""
+
+#: ../bin/booh-backend:302
+msgid "Missing --dir for --merge-config-subdirs"
+msgstr ""
+
+#: ../bin/booh-backend:310
+msgid "Missing --destination parameter."
+msgstr ""
+
+#: ../bin/booh-backend:450
+msgid "The program 'convert' is needed. Please install it. \nIt is generally available with the 'ImageMagick' software package."
+msgstr ""
+
+#: ../bin/booh-backend:454
+msgid "the program 'identify' is needed to get images sizes and EXIF data. Please install it.\nIt is generally available with the 'ImageMagick' software package."
+msgstr ""
+
+#: ../bin/booh-backend:460
+msgid "the following program(s) are needed to handle videos: '%s'. Videos will be ignored."
+msgstr ""
+
+#: ../bin/booh-backend:470
+msgid "No '%s' found for substitution"
+msgstr ""
+
+#: ../bin/booh-backend:657
+msgid "Bookmark and Share"
+msgstr ""
+
+#: ../bin/booh-backend:813
+msgid "Merging config: removing directory %s from config, isn't on filesystem anymore"
+msgstr ""
+
+#: ../bin/booh-backend:828
+msgid "Files can't contain any of the characters ', \", [ or ], sorry: %s"
+msgstr ""
+
+#: ../bin/booh-backend:878
+msgid "Handling %s from config list..."
+msgstr ""
+
+#: ../bin/booh-backend:885
+msgid "Examining %s..."
+msgstr ""
+
+#: ../bin/booh-backend:890
+msgid "Ignoring %s, contains one of forbidden characters: '\"[]"
+msgstr ""
+
+#: ../bin/booh-backend:911
+msgid "Config merge: removing %s from config; use the backup file to retrieve caption info if this was a mistake"
+msgstr ""
+
+#: ../bin/booh-backend:926
+msgid "	%s photos"
+msgstr ""
+
+#: ../bin/booh-backend:928
+msgid "	%s videos"
+msgstr ""
+
+#: ../bin/booh-backend:999
+msgid "Outputting in %s..."
+msgstr ""
+
+#: ../bin/booh-backend:1019
+msgid "	creating photos thumbnails..."
+msgstr ""
+
+#: ../bin/booh-backend:1063
+msgid "	creating videos thumbnails..."
+msgstr ""
+
+#: ../bin/booh-backend:1163
+msgid "	generating HTML pages..."
+msgstr ""
+
+#: ../bin/booh-backend:1224
+msgid "(no preview)"
+msgstr ""
+
+#: ../bin/booh-backend:1295
+msgid "Pages: "
+msgstr ""
+
+#: ../bin/booh-backend:1315
+msgid "<i>Click on an image to view it larger</i>"
+msgstr ""
+
+#: ../bin/booh-backend:1428
+msgid "return to thumbnails"
+msgstr ""
+
+#: ../bin/booh-backend:1448
+msgid "	fixating configuration file..."
+msgstr ""
+
+#: ../bin/booh-backend:1480
+msgid "		removing %s, no element in it"
+msgstr ""
+
+#: ../bin/booh-backend:1513
+msgid "completed necessary stuff for GUI, exiting."
+msgstr ""
+
+#: ../bin/booh-backend:1519
+msgid "	rescanning directories to generate all 'index.html' files..."
+msgstr ""
+
+#: ../bin/booh-backend:1609
+msgid "return to albums"
+msgstr ""
+
+#: ../bin/booh-backend:1610 ../bin/booh-backend:1628
+msgid "previous album"
+msgstr ""
+
+#: ../bin/booh-backend:1611 ../bin/booh-backend:1629
+msgid "next album"
+msgstr ""
+
+#: ../bin/booh-backend:1640
+msgid " all done."
+msgstr ""
+
+#: ../lib/booh/booh-lib.rb:76
+msgid "small"
+msgstr ""
+
+#: ../lib/booh/booh-lib.rb:76
+msgid "medium"
+msgstr ""
+
+#: ../lib/booh/booh-lib.rb:76
+msgid "large"
+msgstr ""
+
+#: ../lib/booh/booh-lib.rb:77
+msgid "x-large"
+msgstr ""
+
+#: ../lib/booh/booh-lib.rb:77
+msgid "xx-large"
+msgstr ""
+
+#: ../lib/booh/booh-lib.rb:90
+msgid "english"
+msgstr ""
+
+#: ../lib/booh/booh-lib.rb:90
+msgid "german"
+msgstr ""
+
+#: ../lib/booh/booh-lib.rb:90
+msgid "french"
+msgstr ""
+
+#: ../lib/booh/booh-lib.rb:90
+msgid "japanese"
+msgstr ""
+
+#: ../lib/booh/booh-lib.rb:90
+msgid "esperanto"
+msgstr ""
+
+#: ../lib/booh/booh-lib.rb:123
+msgid "	***ERROR***: %s\n"
+msgstr ""
+
+#: ../lib/booh/booh-lib.rb:125
+msgid "	Warning: %s\n"
+msgstr ""
+
+#: ../lib/booh/booh-lib.rb:135
+msgid "	***ERROR***: %s"
+msgstr ""
+
+#: ../lib/booh/booh-lib.rb:137
+msgid "	Warning: %s"
+msgstr ""
+
+#: ../lib/booh/booh-lib.rb:151
+msgid "Selecting theme '%s'"
+msgstr ""
+
+#: ../lib/booh/booh-lib.rb:156
+msgid "Theme was not found (tried %s and %s directories)."
+msgstr ""
+
+#: ../lib/booh/booh-lib.rb:167
+msgid "Can't carry on, no valid size selected."
+msgstr ""
+
+#: ../lib/booh/booh-lib.rb:279
+msgid ","
+msgstr ""
+
+#: ../lib/booh/booh-lib.rb:364
+msgid "specified seektime too large? that may also be another probleme. try another value."
+msgstr ""
+
+#: ../lib/booh/booh-lib.rb:563
+msgid "The configured browser seems to be unavailable.\nYou should fix this in Edit/Preferences so that you can open URLs.\n\nProblem was: '%s' is not an executable file."
+msgstr ""
+
+#: ../lib/booh/booh-lib.rb:877
+msgid "''The Web-Album of choice for discriminating Linux users''"
+msgstr ""
+
+#: ../lib/booh/booh-lib.rb:878
+msgid "Esperanto: Stephane Fillod\nJapanese: Masao Mutoh\nGerman: Roland Eckert\nFrench: Guillaume Cottenceau"
+msgstr ""
+
+#: ../lib/booh/UndoHandler.rb:49
+msgid "Undo %s."
+msgstr ""
+
+#: ../lib/booh/UndoHandler.rb:62
+msgid "Redo %s."
+msgstr ""
+
+#: ../data/booh/themes/cardu/metadata/parameters.rb:32 ../data/booh/themes/dark/metadata/parameters.rb:32
+#: ../data/booh/themes/sbs/metadata/parameters.rb:32 ../data/booh/themes/simple/metadata/parameters.rb:32
+msgid "Sizes that should fit browsers in fullscreen for 800x600 screens"
+msgstr ""
+
+#: ../data/booh/themes/cardu/metadata/parameters.rb:40 ../data/booh/themes/dark/metadata/parameters.rb:40
+#: ../data/booh/themes/sbs/metadata/parameters.rb:40 ../data/booh/themes/simple/metadata/parameters.rb:40
+msgid "Sizes that should fit browsers in fullscreen for 1024x768 screens"
+msgstr ""
+
+#: ../data/booh/themes/cardu/metadata/parameters.rb:48 ../data/booh/themes/dark/metadata/parameters.rb:48
+#: ../data/booh/themes/sbs/metadata/parameters.rb:48 ../data/booh/themes/simple/metadata/parameters.rb:48
+msgid "Sizes that should fit browsers in fullscreen for 1280x1024 screens"
+msgstr ""
+
+#: ../data/booh/themes/cardu/metadata/parameters.rb:55 ../data/booh/themes/dark/metadata/parameters.rb:55
+#: ../data/booh/themes/sbs/metadata/parameters.rb:55 ../data/booh/themes/simple/metadata/parameters.rb:55
+msgid "Sizes that should fit browsers in fullscreen for 1400x1050 screens"
+msgstr ""
+
+#: ../data/booh/themes/cardu/metadata/parameters.rb:63 ../data/booh/themes/dark/metadata/parameters.rb:63
+#: ../data/booh/themes/sbs/metadata/parameters.rb:63 ../data/booh/themes/simple/metadata/parameters.rb:63
+msgid "Sizes that should fit browsers in fullscreen for 1600x1200 screens"
+msgstr ""

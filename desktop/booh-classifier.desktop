@@ -1,0 +1,15 @@
+[Desktop Entry]
+Encoding=UTF-8
+Version=1.0
+Type=Application
+Name=Booh Classifier
+GenericName=Photos and Videos Classifier
+GenericName[fr]=Trieuse de photos et vidéos
+GenericName[de]=Foto- und Videosortierer
+Comment=Classify pour photos and videos
+Comment[fr]=Triez vos photos et vidéos
+Comment[de]=Sortieren Sie Ihre Fotos und Videos
+Exec=booh-classifier
+Icon=booh-48x48.png
+Terminal=false
+Categories=Graphics;2DGraphics;Photography;GTK;

@@ -1,0 +1,31 @@
+#! /usr/bin/ruby
+#
+#                         *  BOOH  *
+#
+# A.k.a 'Best web-album Of the world, Or your money back, Humerus'.
+#
+# The acronyn sucks, however this is a tribute to Dragon Ball by
+# Akira Toriyama, where the last enemy beaten by heroes of Dragon
+# Ball is named "Boo". But there was already a free software project
+# called Boo, so this one will be it "Booh". Or whatever.
+#
+#
+# Copyright (c) 2004-2006 Guillaume Cottenceau <http://zarb.org/~gc/resource/gc_mail.png>
+#
+# This software may be freely redistributed under the terms of the GNU
+# public license version 2.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program; if not, write to the Free Software
+# Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA
+
+require 'gtk2'
+require 'booh/libadds'
+
+if ARGV.size != 3
+    puts "Usage: %s orig_file dest_file_jpeg level" % File.basename($0)
+    exit 1
+
+else
+    Gdk::Pixbuf.new(ARGV[0]).gammacorrect!(ARGV[2].to_f).save(ARGV[1], "jpeg")
+end

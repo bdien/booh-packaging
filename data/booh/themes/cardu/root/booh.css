@@ -1,0 +1,151 @@
+body {
+        background-color: darkslategray;
+        color: #8090a0;
+        font-family: "Bitstream Vera Sans", "Lucida Sans", Geneva, Arial, Helvetica, sans-serif;
+}
+
+a:link {
+        color: #bacbdc;
+        text-decoration: none;
+}
+
+a:visited {
+        color: #bacbdc;
+        text-decoration: none;
+}
+
+a:hover {
+        color: #ccddee;
+        text-decoration: underline;
+}
+
+input {
+        border: solid 1px;
+        background-color: #708090;
+}
+
+input:hover {
+        background-color: #E8E8E8;
+}
+
+td {
+        color: white;
+}
+.nothing {
+        border: solid 0px;
+}
+
+.thumbnail_image {
+        background-color: #122;
+}
+.thumbnail_image img {
+        border: 1px solid #a9a9a9;
+        margin: -3px 3px 3px -3px;
+        padding: 3px;
+}
+.thumbnail_video {
+        background-color: #122;
+}
+.thumbnail_video img {
+        border: 1px solid #a9a9a9;
+        margin: -3px 3px 3px -3px;
+        padding: 3px;
+}
+
+.fullscreen_image {
+        float: left;
+        background-color: #122;
+}
+.fullscreen_image img {
+        background-color: #fff;
+        border: 1px solid #a9a9a9;
+        margin: -10px 10px 10px -10px;
+        padding: 9px;
+}
+.fullscreen_video {
+        float: left;
+        background-color: #122;
+}
+.fullscreen_video img {
+        background-color: #fff;
+        border: 1px solid #a9a9a9;
+        margin: -10px 10px 10px -10px;
+        padding: 9px;
+}
+
+.disabled {
+        font-style: italic;
+}
+.disabled:hover {
+        background-color: #DEDAD6;
+}
+
+.titletext {
+        color: #ffb;
+}
+
+.image img {
+        border: solid 2px;
+        border-color: #90a0b0;
+}
+
+table.index {
+	width: 100%;
+	padding: 10px;
+	border: 0px solid black;
+}
+
+table.index tr td.image {
+	width: 50%;
+	text-align: right;
+	vertical-align: top;
+}
+
+table.index tr td.caption {
+	width: 50%;
+	text-align: left;
+}
+
+.footer { 
+	width: 100%;
+	font-size: 0.8em;
+}
+
+.left {
+	text-align: left;
+}
+
+.right {
+	text-align: right;
+}
+
+table.imgnav tr td.sizes {
+	text-align: center;
+	font-size: 0.7em;
+}
+
+table.image {
+	width: 100%
+}
+
+table.image tr td {
+	text-align: center;
+}
+
+a.fullscreenvideolink {
+	margin-left:auto;
+	margin-right:auto;
+}
+
+table.image tr td caption {
+	font-size: 1.1em;
+}
+
+table.image tr td caption {
+	font-size: 0.8em;
+
+}
+
+span.img_alb_nav {
+}
+

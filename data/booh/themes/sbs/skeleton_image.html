@@ -1,0 +1,139 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+    <title>~~title~~</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <meta name="author" content="sbs theme, by Erik Ramseth -- based heavily on `Simple' theme by Guillaume Cottenceau">
+    ~~~image_head_code~~~
+    ~~flowplayer_head_code~~
+    <script type="text/javascript" src="~~pathtobase~~booh.js"></script>
+    <style type="text/css" media="screen">
+    <!--
+body {
+        background-color: #ffffff;
+        color: #000000;
+        font-family: "Bitstream Vera Sans", "Lucida Sans", Geneva, Arial, Helvetica, sans-serif;
+}
+
+a:link {
+        color: #7B7BA8;
+        text-decoration: none;
+}
+
+a:visited {
+        color: #7B7BA8;
+        text-decoration: none;
+}
+
+a:hover {
+        color: #7B7BA8;
+        text-decoration: underline;
+}
+
+img {
+        border: solid 1px;
+        border-color: #000000;
+}
+
+input {
+        border: solid 1px;
+        background-color: #DEDAD6;
+}
+input:hover {
+        background-color: #E8E8E8;
+}
+.disabled {
+        font-style: italic;
+}
+.disabled:hover {
+        background-color: #DEDAD6;
+}
+
+.fullscreen_image {
+  display: table-cell;
+  background-color: lightgrey;
+}
+
+.fullscreen_image img {
+  background-color: #fff;
+  border: 1px solid #a9a9a9;
+  margin: -3px 3px 3px -3px;
+  padding: 3px;
+}
+
+.fullscreen_video {
+  display: table-cell;
+  background-color: lightgrey;
+}
+
+.fullscreen_video img {
+  background-color: #fff;
+  border: 1px solid #a9a9a9;
+  margin: -3px 3px 3px -3px;
+  padding: 3px;
+}
+
+a.fullscreenvideolink {
+	margin-left:auto;
+	margin-right:auto;
+}
+    -->
+    </style>
+</head>
+
+<body bgcolor="#FFFFFF" ~~~body_additions~~~>
+
+~~hidden_images_for_remotes~~
+
+<table align="center" width="100%">
+<tr>
+    <td width="10%">&nbsp;</td>
+    <td width="1%">~~~button_first~~~</td>
+    <td width="3%">&nbsp;</td>
+    <td width="1%">~~~button_previous~~~</td>
+    <td align="center"><font size="-2">~~sizes~~ | ~~</font></td>
+    <td width="1%">~~~button_next~~~</td>
+    <td width="3%">&nbsp;</td>
+    <td width="1%">~~~button_last~~~</td>
+    <td width="10%">&nbsp;</td>
+</tr>
+</table>
+<table align="center">
+<!-- <p id="dbg_text">&nbsp;</p> -->
+<tr>
+    <td align="center" colspan="9">
+        ~~~image~~~
+    </td>
+</tr>
+</table>
+<table align="center">
+<tr>
+    <td align="center" colspan="9">
+        <font size="+1" ~~~caption_additions~~~>&nbsp;</font>
+        <font size="-2" ~~~image_counter_additions~~~>&nbsp;</font>
+    </td>
+</tr>
+
+~~~body_code~~~
+
+<tr>
+    <td colspan="9" align="center">
+        ~~~button_slideshow~~~
+        ~~~pause_slideshow~~~
+        <br/>
+        <font size="-1">~~previous_album~~ ~~ifprevious_album?~~|~~fi~~ ~~thumbnails~~ ~~ifnext_album?~~|~~fi~~ ~~next_album~~</font>
+    </td>
+</tr>
+</table>
+
+<table width="100%" cellpadding="0" border="0">
+<tr>
+  <td align="left"> <font size="-1"><i>~~indexlink~~</i></font></td>
+  <td align="right"><font size="-1"><i>~~addthis~~</i> </font></td>
+</tr>
+</table>  
+<div style='text-align:right'>~~madewith~~</div>
+
+</body>
+</html>

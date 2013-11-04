@@ -1,0 +1,152 @@
+.\" This program is free software; you can redistribute it and/or modify
+.\" it under the terms of the GNU General Public License as published by
+.\" the Free Software Foundation; either version 2 of the License, or
+.\" (at your option) any later version.
+.\"
+.\" This program is distributed in the hope that it will be useful,
+.\" but WITHOUT ANY WARRANTY; without even the implied warranty of
+.\" MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+.\" GNU General Public License for more details.
+.\"
+.\" You should have received a copy of the GNU General Public License
+.\" along with this program; if not, write to the Free Software
+.\" Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+.\"
+
+.TH BOOH-BACKEND 1 "August 2008" "BOOH" "The Booh web-album"
+
+.SH NAME
+booh-backend \- backend script of \fBBooh\fR, a static web-album generator
+
+.SH SYNOPSIS
+\fBbooh-backend\fR [\fIOPTION\fR]...
+
+.SH DESCRIPTION
+\fBBooh\fR is a static web-album generator. It's a program which
+takes one or several series of photos and videos, and
+automatically build static web pages to browse them, creating
+thumbnails etc.
+.PP
+If you invoke \fBbooh-backend\fR from the command-line, this will
+launch the backend script allowing to create or update a web-album.
+Contrast with \fBbooh\fR, which is the graphical user interface - the
+easiest and recommended way to create an album.
+
+.SH OPTIONS
+.TP
+\fB-h\fR, \fB--help\fR
+Get help message
+.TP
+\fB-V\fR, \fB--version\fR
+Print version and exit
+.TP
+\fB-s\fR \fIDIR\fR, \fB--source\fR \fIDIR\fR
+Directory which contains original photos/videos as files or subdirs
+.TP
+\fB-d\fR \fIDIR\fR, \fB--destination\fR \fIDIR\fR
+Directory which will contain the web-album; if it already exits, then all existing files and directories inside it will be removed!
+.TP
+\fB-t\fR \fITHEME\fR, \fB--theme\fR \fITHEME\fR
+Select HTML theme to use
+.TP
+\fB-C\fR \fIFILE\fR, \fB--config\fR \fIFILE\fR
+File containing config listing photos and videos within directories with captions
+.TP
+\fB-k\fR \fIFILE\fR, \fB--config-skel\fR \fIFILE\fR
+Filename where the script will output a config skeleton
+.TP
+\fB-M\fR \fIFILE\fR, \fB--merge-config\fR \fIFILE\fR
+File containing config listing, where to merge new photos/videos from --source, and change theme info
+.TP
+\fB-O\fR \fIFILE\fR, \fB--merge-config-onedir\fR \fIFILE\fR
+File containing config listing, for merging the subdir specified with --dir
+.TP
+\fB-U\fR \fIFILE\fR, \fB--merge-config-subdirs\fR \fIFILE\fR
+File containing config listing, for merging the new subdirs down the subdir specified with --dir
+.TP
+\fB-D\fR \fIDIR\fR, \fB--dir\fR \fIDIR\fR
+Directory for merge with --merge-config-onedir or --merge-config-subdirs
+.TP
+\fB-u\fR \fIFILE\fR, \fB--use-config\fR \fIFILE\fR
+File containing config listing, where to change theme info
+.TP
+\fB-f\fR, \fB--force\fR
+Force generation of album even if the GUI marked some directories as already generated
+.TP
+\fB-S\fR \fISIZELIST\fR, \fB--sizes\fR \fISIZELIST\fR
+Specify the list of images sizes to use instead of all specified in the theme (this is a comma-separated list)
+.TP
+\fB-L\fR \fILANGUAGES\fR, \fB--multi-languages\fR \fILANGUAGES\fR
+Specify the list of languages to support (uses Apache MultiViews); this is a comma-separated list of supported languages, with last element used as the fallback language; for example: 'fr,eo,en,en'; supported languages: en, de, fr, ja, eo
+.TP
+\fB-T\fR \fINUM\fR, \fB--thumbnails-per-row\fR \fINUM\fR
+Specify the amount of thumbnails per row in the thumbnails page (if applicable in theme)
+.TP
+\fB-p\fR \fINUM\fR, \fB--thumbnails-per-page\fR \fINUM\fR
+Specify the amount of thumbnails per page in the thumbnails page, after which split occurs
+.TP
+\fB-o\fR, \fB--optimize-for-32\fR
+Resize images with optimized sizes for 3/2 aspect ratio rather than 4/3 (typical aspect ratio of photos from point-and-shoot cameras - also called compact cameras - is 4/3, whereas photos from SLR cameras - also called reflex cameras - is 3/2)
+.TP
+\fB-r\fR \fICOMMAND\fR, \fB--transcode-videos\fR \fICOMMAND\fR
+Transcode videos with the specified command; it must contain %f, the placeholder for the input video, %o the placeholder for the output video; it must be prepended by the output video extension followed by a colon; example:
+
+\fIavi:mencoder -nosound -ovc xvid -xvidencopts bitrate=800:me_quality=6 -o %o %f\fR
+.TP
+\fB-l\fR \fIMARKUP\fR, \fB--index-link\fR \fIMARKUP\fR
+Specify the HTML markup to use on the bottom of pages for a small link returning to wherever you see fit in your website (or somewhere else)
+.TP
+\fB-n\fR \fIMARKUP\fR, \fB--made-with\fR \fIMARKUP\fR
+Specify the HTML markup to use on the bottom of pages for a small 'made with' message
+.TP
+\fB-c\fR \fIFORMAT\fR, \fB--comments-format\fR \fIFORMAT\fR
+Specify comments format to use for images instead of only filename when creating new albums; use ImageMagick's format
+.TP
+\fB-m\fR \fINUM\fR, \fB--mproc\fR \fINUM\fR
+Specify the number of processors for multi-processors machines
+.TP
+\fB-g\fR, \fB--for-gui\fR
+Do the minimum work to be able to see the album under the GUI (don't generate all thumbnails)
+.TP
+\fB-v\fR \fINUM\fR, \fB--verbose-level\fR \fINUM\fR
+Set max verbosity level (0: errors, 1: warnings, 2: important messages, 3: other messages)
+.TP
+\fB-i\fR \fIPIPE\fR, \fB--info-pipe\fR \fIPIPE\fR
+Name a file where to write information about what's going on (used by the GUI to update waiting messages etc)
+
+.SH EXAMPLES
+
+Simply generate a web-album out of photos in \fB/tmp/Albums\fR, to the directory \fB/tmp/booh-try\fR:
+.PP
+\fI# booh-backend --source /tmp/Albums --destination /tmp/booh-try\fR
+.PP
+
+The same, but also save the XML "config" file which will contain the list of photos/videos and options for them:
+.PP
+\fI# booh-backend --source /tmp/Albums --destination /tmp/booh-try --config-skel /tmp/myconf.xml\fR
+.PP
+
+If you want to manually change things in the XML "config" file (the GUI is best suited for that, but who knows), then, afterwards, you can regenerate the updated web-album with:
+.PP
+\fI# booh-backend --config /tmp/myconf.xml\fR
+.PP
+
+If you add/remove photos/videos or even whole subdirectories in the source tree /tmp/Albums, you can ask booh to merge differences (and regenerate the config file and the web-album) with:
+.PP
+\fI# booh-backend --merge-config /tmp/myconf.xml\fR
+.PP
+
+.SH AUTHOR
+Written by Guillaume Cottenceau.
+.br
+Visit official homepage: http://booh.org/
+
+.SH SEE ALSO
+.BR booh(1)
+.BR booh-classifier(1)
+
+.SH COPYRIGHT
+Copyright \(co 2005-2008 Guillaume Cottenceau.
+.br
+This is Free Software; this software is licensed under the GPL version 2, as published by the Free Software Foundation.
+There is NO warranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.

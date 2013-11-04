@@ -1,0 +1,70 @@
+                     [[  Booh  ]]
+
+''The Web-Album of choice for discriminating Linux users''
+
+Booh stands for Best web-album Of the world, Or your money back,
+Humerus.
+
+The acronyn sucks, however this is a tribute to Dragon Ball by
+Akira Toriyama, where the last enemy beaten by heroes of Dragon
+Ball is named "Boo". But there was already a free software
+project called Boo, so this one will be it "Booh". Or whatever.
+
+Ah, and this is free software under the GPL license version 2
+(not "or upper"), by the way. 
+
+
+Booh is a static Web-Album generator. It's a program that takes
+one or several series of photos and videos, and automatically
+build static web pages to browse them, creating thumbnails etc.
+
+Check out booh's homepage for more information (just search for
+"booh linux" in google, you should be fine with first match).
+
+
+Highlights:
+
+        backend:
+
+- automatically rotates portrait images thanks to exif info
+- great themability
+- immediate display of next image (preloading of next images)
+- keep position in browser between images (no page load between images)
+- multiproc support (parallelize image creations)
+- advanced videos support (thumbnail, embedded flash playback etc)
+- correctly handle files and directories with spaces and non
+  US-ASCII characters (even if I _don't_ advice you to store
+  files with these)
+- clever use of the whole space of a typical browser window
+- cookie to remember the preferred size of thumbnails accross sub-albums
+- subalbums support (images in any subdirectory depth)
+
+        frontend:
+
+- very advanced capabilities by keyboard shortcuts and mouse gestures
+- input captions, rotate, reorder and remove images FAST
+
+        classifier:
+
+- FAST loading of photos and videos into thumbnails (loads about
+  5 2.4 MB photos per second on a p4)
+- FAST navigation while loading in background, preloading of
+  surrounding thumbnails
+- keyboard shortcuts for navigation and classifying
+
+Performance improvements thanks to SMP support:
+
+        P4 HT 2.8 GHz, Linux 2.6.6 SMP 4G
+
+Regular:    2:10.81
+--mproc 2:  2:01.44
+--mproc 4:  2:02.03
+
+        6-way Pentium-3 Cascades 700 MHz:
+
+Regular:    2:58.07
+--mproc 2:  1:32.48
+--mproc 3:  1:03.34
+--mproc 4:  0:49.12
+--mproc 5:  0:40.86
+--mproc 6:  0:39.03  (I should have killed those useless apache processes!)

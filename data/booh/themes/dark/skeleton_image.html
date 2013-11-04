@@ -1,0 +1,124 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+    <title>~~title~~</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <meta name="author" content="'Dark' theme - Guillaume Cottenceau"/>
+    ~~~image_head_code~~~
+    ~~flowplayer_head_code~~
+    <script type="text/javascript" src="~~pathtobase~~booh.js"></script>
+    <style type="text/css" media="screen">
+    <!--
+body {
+        background-color: #000000;
+        background-image: url(~~pathtobase~~back.gif);
+        background-repeat: repeat;
+        background-attachment: fixed;
+        color: #AEAEAE;
+        font-family: "Bitstream Vera Sans", "Lucida Sans", Geneva, Arial, Helvetica, sans-serif;
+}
+
+a:link {
+        color: #8090A3;
+        text-decoration: none;
+}
+
+a:visited {
+        color: #7B7BA8;
+        text-decoration: none;
+}
+
+a:hover {
+        color: #8090A3;
+        text-decoration: underline;
+}
+
+input {
+        border: solid 1px;
+}
+
+img {
+        border: solid 2px;
+        border-color: #586068;
+}
+
+input {
+        border: solid 1px;
+        color: #5B5B98;
+        background-color: #304149;
+}
+input:hover {
+        color: #7B7BA8;
+        background-color: #384951;
+}
+.disabled {
+        color: #4B4B78;
+        font-style: italic;
+}
+.disabled:hover {
+        color: #4B4B78;
+        background-color: #304149;
+}
+
+a.fullscreenvideolink {
+	margin-left:auto;
+	margin-right:auto;
+}
+    -->
+    </style>
+</head>
+
+<body bgcolor="#FFFFFF" ~~~body_additions~~~>
+
+~~hidden_images_for_remotes~~
+
+<table width="100%">
+<tr>
+    <td width="10%">&nbsp;</td>
+    <td width="1%">~~~button_first~~~</td>
+    <td width="3%">&nbsp;</td>
+    <td width="1%">~~~button_previous~~~</td>
+    <td align="center"><font size="-2">~~sizes~~ | ~~</font></td>
+    <td width="1%">~~~button_next~~~</td>
+    <td width="3%">&nbsp;</td>
+    <td width="1%">~~~button_last~~~</td>
+    <td width="10%">&nbsp;</td>
+</tr>
+</table>
+<table width="100%">
+<!-- <p id="dbg_text">&nbsp;</p> -->
+<tr>
+    <td align="center" colspan="9">
+        ~~~image~~~
+    </td>
+</tr>
+<tr>
+    <td align="center" colspan="9">
+        <font size="+1" ~~~caption_additions~~~>&nbsp;</font>
+        <font size="-2" ~~~image_counter_additions~~~>&nbsp;</font>
+    </td>
+</tr>
+
+~~~body_code~~~
+
+<tr>
+    <td colspan="9" align="center">
+        ~~~button_slideshow~~~
+        ~~~pause_slideshow~~~
+        <br/>
+        <font size="-1">~~previous_album~~ ~~ifprevious_album?~~|~~fi~~ ~~thumbnails~~ ~~ifnext_album?~~|~~fi~~ ~~next_album~~</font>
+    </td>
+</tr>
+</table>
+
+<table width="100%" cellpadding="0" border="0">
+<tr>
+  <td align="left"> <font size="-1"><i>~~indexlink~~</i></font></td>
+  <td align="right"><font size="-1"><i>~~addthis~~</i> </font></td>
+</tr>
+</table>  
+<div style='text-align:right'>~~madewith~~</div>
+
+</body>
+</html>

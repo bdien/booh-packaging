@@ -1,0 +1,66 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+    <title>~~title~~</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <meta name="author" content="'Simple' theme - Guillaume Cottenceau"/>
+    ~~~image_head_code~~~
+    ~~flowplayer_head_code~~
+    <script type="text/javascript" src="~~pathtobase~~booh.js"></script>
+    <link rel="stylesheet" type="text/css" href="~~pathtobase~~booh.css" media="screen" />
+</head>
+
+<body ~~~body_additions~~~>
+
+~~hidden_images_for_remotes~~
+
+<table class='imgnav'>
+  <tr>
+    <td width="10%">&nbsp;</td>
+    <td width="1%">~~~button_first~~~</td>
+    <td width="3%">&nbsp;</td>
+    <td width="1%">~~~button_previous~~~</td>
+    <td class='sizes'>~~sizes~~ | ~~</td>
+    <td width="1%">~~~button_next~~~</td>
+    <td width="3%">&nbsp;</td>
+    <td width="1%">~~~button_last~~~</td>
+    <td width="10%">&nbsp;</td>
+  </tr>
+</table>
+<table class='image'>
+<!-- <p id="dbg_text">&nbsp;</p> -->
+  <tr>
+    <td>
+        ~~~image~~~
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <span class='caption' ~~~caption_additions~~~>&nbsp;</span>
+      <span class='counter' ~~~image_counter_additions~~~>&nbsp;</span>
+    </td>
+  </tr>
+
+~~~body_code~~~
+
+  <tr>
+    <td>
+        ~~~button_slideshow~~~
+        ~~~pause_slideshow~~~
+        <br />
+        <span class='img_alb_nav'>~~previous_album~~ ~~ifprevious_album?~~|~~fi~~ ~~thumbnails~~ ~~ifnext_album?~~|~~fi~~ ~~next_album~~</span>
+    </td>
+  </tr>
+</table>
+
+<table class='footer'>
+  <tr>
+    <td class='left'>~~indexlink~~</td>
+    <td class='right'>~~addthis~~</td>
+  </tr>
+</table>
+<div class='footer right'>~~madewith~~</div>
+
+</body>
+</html>
