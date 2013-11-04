@@ -10,7 +10,7 @@
 # called Boo, so this one will be it "Booh". Or whatever.
 #
 #
-# Copyright (c) 2004-2010 Guillaume Cottenceau <http://zarb.org/~gc/resource/gc_mail.png>
+# Copyright (c) 2004-2013 Guillaume Cottenceau <http://zarb.org/~gc/resource/gc_mail.png>
 #
 # This software may be freely redistributed under the terms of the GNU
 # public license version 2.
@@ -18,6 +18,11 @@
 # You should have received a copy of the GNU General Public License
 # along with this program; if not, write to the Free Software
 # Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA
+
+begin
+    require 'rubygems'
+rescue LoadError
+end
 
 require 'getoptlong'
 require 'tempfile'
@@ -73,7 +78,7 @@ def handle_options
             when '--version'
                 puts _("Booh version %s
 
-Copyright (c) 2005-2010 Guillaume Cottenceau.
+Copyright (c) 2005-2013 Guillaume Cottenceau.
 This is free software; see the source for copying conditions.  There is NO
 warranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.") % $VERSION
 
@@ -893,12 +898,16 @@ def show_popup(parent, msg, *options)
     end
     if options[:okcancel]
         cancel = dialog.add_button(Gtk::Stock::CANCEL, Gtk::Dialog::RESPONSE_CANCEL)
+        dialog.add_button(Gtk::Stock::OK, Gtk::Dialog::RESPONSE_OK)
+    elsif options[:yestoall]
+        cancel = dialog.add_button(Gtk::Stock::NO, Gtk::Dialog::RESPONSE_NO)
         if ! options[:bottomwidget]
             cancel.grab_focus
         end
-        dialog.add_button(Gtk::Stock::OK, Gtk::Dialog::RESPONSE_OK)
+        dialog.add_button(Gtk::Stock::YES, Gtk::Dialog::RESPONSE_YES)
+        dialog.add_button(utf8(_("Yes to all")), Gtk::Dialog::RESPONSE_ACCEPT)
     else
-        ok = dialog.add_button(Gtk::Stock::OK, Gtk::Dialog::RESPONSE_OK).grab_focus
+        ok = dialog.add_button(Gtk::Stock::OK, Gtk::Dialog::RESPONSE_OK)
         if ! options[:bottomwidget]
             ok.grab_focus
         end
@@ -939,6 +948,8 @@ def show_popup(parent, msg, *options)
             dialog.destroy
             if options[:okcancel]
                 return response == Gtk::Dialog::RESPONSE_OK
+            elsif options[:yestoall]
+                return response == Gtk::Dialog::RESPONSE_YES ? 'yes' : response == Gtk::Dialog::RESPONSE_ACCEPT ? 'yestoall' : 'no'
             end
         }
     else
@@ -1322,7 +1333,7 @@ def open_dir(*paths)
         $workingdir = path
         entries = []
         if File.directory?(path)
-            examined_dirs = `find '#{path}' -type d -follow`.sort.collect { |v| v.chomp }
+            examined_dirs = `find '#{path}' -type d -follow`.split("\n").sort.collect { |v| v.chomp }
             #- validate first
             examined_dirs.each { |dir|
                 if dir =~ /'/
@@ -1397,7 +1408,7 @@ def open_dir_popup
     ok = false
     load = false
     while !ok
-        if fc.run == Gtk::Dialog::RESPONSE_ACCEPT
+        if fc.run == Gtk::Dialog::RESPONSE_ACCEPT && fc.filename
             msg = open_dir(fc.filename)
             if msg
                 show_popup(fc, msg)
@@ -1511,7 +1522,7 @@ def execute
                 if lastpath
                     fc.current_folder = lastpath
                 end
-                if fc.run == Gtk::Dialog::RESPONSE_ACCEPT
+                if fc.run == Gtk::Dialog::RESPONSE_ACCEPT && fc.filename
                     pathlabel.text = fc.filename
                     pathlabel.set_alignment(0, 0.5)
                 end
@@ -1589,7 +1600,7 @@ def execute
                         end
                         begin
                             Dir.mkdir(destination)
-                        rescue Errno::EEXIST
+                        rescue
                         end
                         begin
                             st = File.stat(destination)
@@ -1598,7 +1609,7 @@ def execute
                             problem = true
                             break
                         end
-                        if ! st.directory? || ! st.writable?
+                        if ! st.directory? || ! writable(destination)
                             show_popup(dialog, utf8(_("Directory %s, where to move/copy %s, is not valid or not writable.") % [destination, key.name]))
                             problem = true
                             break
@@ -1630,16 +1641,36 @@ def execute
                     begin
                         moved = 0
                         copied = 0
+                        ignored_errors = []
                         stuff.keys.each { |key|
                             if key.is_a?(Label) && stuff[key][:combo] && stuff[key][:combo].active <= 1
                                 destination = stuff[key][:pathlabel].text
                                 label2entries[key].each { |entry|
                                     if stuff[key][:combo].active == 0
-                                        system("cp -dp '#{entry.path}' '#{destination}'") or raise "failed to copy '#{entry.path}'"
-                                        copied += 1
+                                        result = `cp -dp '#{entry.path}' '#{destination}' 2>&1`
                                     elsif stuff[key][:combo].active == 1
-                                        system("mv '#{entry.path}' '#{destination}'") or raise "failed to move '#{entry.path}'"
-                                        moved += 1
+                                        result = `mv '#{entry.path}' '#{destination}' 2>&1`
+                                    end
+                                    if $?.exitstatus > 0
+                                        simplified_error = result.sub(/#{Regexp.quote(destination + '/' + File.basename(entry.path))}/, '').  #'
+                                                                  sub(/#{Regexp.quote(entry.path)}/, '').
+                                                                  sub(/#{Regexp.quote(File.basename(entry.path))}/, '')
+                                        if ! ignored_errors.include?(simplified_error)
+                                            response = show_popup($main_window,
+                                                                  utf8(_("Failure:\n\n%s\nDo you wish to continue?" % result)),
+                                                                  { :yestoall => true })
+                                            if response == 'no'
+                                                raise "failure on '#{entry.path}'"
+                                            elsif response == 'yestoall'
+                                                ignored_errors << simplified_error
+                                            end
+                                        end
+                                    else
+                                        if stuff[key][:combo].active == 0
+                                            copied += 1
+                                        else
+                                            moved += 1
+                                        end
                                     end
                                 }
                             end
@@ -1654,8 +1685,7 @@ def execute
                             }
                         end
                     rescue
-                        msg 1, "woops: #{$!}"
-                        show_popup(dialog, utf8(_("Unexpected error: '%s'.") % $!))
+                        msg 1, "woops: #{$!}\n" + $@.join("\n")
                     end
                     show_popup(dialog, utf8(_("Successfully moved %d files, copied %d file, and removed %d files.") % [ moved, copied, removed ]))
                     dialog.destroy

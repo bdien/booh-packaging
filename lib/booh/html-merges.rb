@@ -34,8 +34,8 @@ $image_head_code = '<meta name="generator" content="Booh-' + $VERSION + <<'EOF'
 var images = new Array(~~images~~);
 var types = new Array(~~types~~);
 var videos = new Array(~~videos~~);
-var videos_widths = new Array(~~videos_widths~~);
-var videos_heights = new Array(~~videos_heights~~);
+var widths = new Array(~~widths~~);
+var heights = new Array(~~heights~~);
 ~~other_images~~
 var thumbnailspages = new Array(~~thumbnailspages~~);
 var other_sizes = new Array(~~other_sizes~~);
@@ -125,8 +125,7 @@ EOF
 
 $preferred_size_reloader = <<'EOF'
 <html>
-    <body>
-    </body>
+    <head>
         <script language="JavaScript1.1" type="text/JavaScript">
 
 var sizes = new Array(~~all_sizes~~);
@@ -153,11 +152,12 @@ function getPreferredSize() {
     return 'thumbnails-~~default_size~~-0~~htmlsuffix~~';
 }
 
-window.location.href = getPreferredSize();
-
         </script>
 
-        <meta http-equiv="refresh" content="0.1;url=thumbnails-~~default_size~~-nojs-0~~htmlsuffix~~">
+        <meta http-equiv="refresh" content="0.1;url=thumbnails-~~default_size~~-nojs-0~~htmlsuffix~~" />
+    </head>
+    <body onload="window.location.href = getPreferredSize()">
+    </body>
 </html>
 EOF
 

@@ -34,6 +34,8 @@
 static VALUE whitebalance(VALUE self, VALUE level) {
         double red_filter[256], blue_filter[256];
         int i, x, y;
+        int maxx = gdk_pixbuf_get_width(_SELF(self));
+        int maxy = gdk_pixbuf_get_height(_SELF(self));
         guchar* pixels = gdk_pixbuf_get_pixels(_SELF(self));
         int rowstride = gdk_pixbuf_get_rowstride(_SELF(self));
 
@@ -47,9 +49,9 @@ static VALUE whitebalance(VALUE self, VALUE level) {
                 blue_filter[i] = pow(((double)i)/255, factor) * 255;
         }
     
-        for (y = 0; y < gdk_pixbuf_get_height(_SELF(self)); y++) {
+        for (y = 0; y < maxy; y++) {
                 guchar* pixline = &(pixels[rowstride*y]);
-                for (x = 0; x < gdk_pixbuf_get_width(_SELF(self)); x++) {
+                for (x = 0; x < maxx; x++) {
                         pixline[x*3]   = (guchar) red_filter[pixline[x*3]];
                         pixline[x*3+2] = (guchar) blue_filter[pixline[x*3+2]];
                 }
@@ -61,6 +63,8 @@ static VALUE whitebalance(VALUE self, VALUE level) {
 static VALUE gammacorrect(VALUE self, VALUE level) {
         double filter[256];
         int i, x, y;
+        int maxx = gdk_pixbuf_get_width(_SELF(self));
+        int maxy = gdk_pixbuf_get_height(_SELF(self));
         guchar* pixels = gdk_pixbuf_get_pixels(_SELF(self));
         int rowstride = gdk_pixbuf_get_rowstride(_SELF(self));
 
@@ -73,9 +77,9 @@ static VALUE gammacorrect(VALUE self, VALUE level) {
                 filter[i] = pow(((double)i)/255, factor) * 255;
         }
     
-        for (y = 0; y < gdk_pixbuf_get_height(_SELF(self)); y++) {
+        for (y = 0; y < maxy; y++) {
                 guchar* pixline = &(pixels[rowstride*y]);
-                for (x = 0; x < gdk_pixbuf_get_width(_SELF(self)); x++) {
+                for (x = 0; x < maxx; x++) {
                         pixline[x*3]   = (guchar) filter[pixline[x*3]];
                         pixline[x*3+1] = (guchar) filter[pixline[x*3+1]];
                         pixline[x*3+2] = (guchar) filter[pixline[x*3+2]];
@@ -94,7 +98,7 @@ static VALUE exif_orientation(VALUE module, VALUE filename) {
                         return Qnil;
                 }
                 Exiv2::ExifData::const_iterator i = exifData.findKey(Exiv2::ExifKey("Exif.Image.Orientation"));
-                if (i != exifData.end()) {
+                if (i != exifData.end() && i->count() > 0) {
                         return INT2NUM(i->value().toLong());
                 }
                 return Qnil;
@@ -128,7 +132,7 @@ static VALUE exif_datetimeoriginal(VALUE module, VALUE filename) {
                         return Qnil;
                 }
                 Exiv2::ExifData::const_iterator i = exifData.findKey(Exiv2::ExifKey("Exif.Photo.DateTimeOriginal"));
-                if (i != exifData.end()) {
+                if (i != exifData.end() && i->count() > 0) {
                         return rb_str_new2(i->value().toString().c_str());
                 }
                 return Qnil;

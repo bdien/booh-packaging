@@ -10,7 +10,7 @@
 # called Boo, so this one will be it "Booh". Or whatever.
 #
 #
-# Copyright (c) 2004-2010 Guillaume Cottenceau <http://zarb.org/~gc/resource/gc_mail.png>
+# Copyright (c) 2004-2013 Guillaume Cottenceau <http://zarb.org/~gc/resource/gc_mail.png>
 #
 # This software may be freely redistributed under the terms of the GNU
 # public license version 2.
@@ -18,6 +18,11 @@
 # You should have received a copy of the GNU General Public License
 # along with this program; if not, write to the Free Software
 # Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA
+
+begin
+    require 'rubygems'
+rescue LoadError
+end
 
 require 'getoptlong'
 begin
@@ -107,7 +112,7 @@ def handle_options
             when '--version'
                 puts _("Booh version %s
 
-Copyright (c) 2005-2010 Guillaume Cottenceau.
+Copyright (c) 2005-2013 Guillaume Cottenceau.
 This is free software; see the source for copying conditions.  There is NO
 warranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.") % $VERSION
 
@@ -310,7 +315,7 @@ warranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.") % 
         die _("Missing --destination parameter.")
     end
     if !$theme
-        $theme = 'simple'
+        $theme = 'gradient'
     end
 
     select_theme($theme, $limit_sizes, $optimize_for_32, $N_per_row)
@@ -638,16 +643,20 @@ end
 def substitute_navigation(html, xmldir)
     if xmldir.parent.name == 'dir'
         nav = ''
+        navtable = ''
         path = '..'
         parent = xmldir.parent
         while parent.name == 'dir'
             parentcaption = parent.attributes['subdirs-caption'] || File.basename(parent.attributes['path'])
             nav = "<a href=\"#{path}/index#{$htmlsuffix}\">#{parentcaption}</a> #{defer_translation(N_(" > "))} #{nav}"
+            navtable = "<td><a href=\"#{path}/index#{$htmlsuffix}\">#{parentcaption}</a></td>#{navtable}"
             path += '/..'
             parent = parent.parent
         end
         html.gsub!(/~~ifnavigation\?~~(.+?)~~fi~~/) { $1 }
         html.gsub!(/~~navigation~~/, nav + (xmldir.attributes['subdirs-caption'] || File.basename(xmldir.attributes['path'])))
+        html.gsub!(/~~navigationtable~~/, '<table id="navigation"><tr>' + navtable + "<td>" +
+                                          (xmldir.attributes['subdirs-caption'] || File.basename(xmldir.attributes['path'])) + "</td></tr></table>")
     else
         html.gsub!(/~~ifnavigation\?~~(.+?)~~fi~~/, '')
     end
@@ -804,9 +813,9 @@ def walk_source_dir
     if $mode == 'merge_config_onedir'
         examined_dirs = [ $onedir ]
     elsif $mode == 'merge_config_subdirs'
-        examined_dirs = `find '#{$onedir}' -type d -follow`.sort.collect { |v| v.chomp }.delete_if { |v| optxpath.has_key?(utf8(v)) }
+        examined_dirs = `find '#{$onedir}' -type d -follow`.split("\n").sort.collect { |v| v.chomp }.delete_if { |v| optxpath.has_key?(utf8(v)) }
     else
-        examined_dirs = `find '#{$source}' -type d -follow`.sort.collect { |v| v.chomp }
+        examined_dirs = `find '#{$source}' -type d -follow`.split("\n").sort.collect { |v| v.chomp }
         if $mode == 'merge_config'
             $xmldoc.elements.each('//dir') { |elem|
                 if ! examined_dirs.include?(elem.attributes['path'])
@@ -934,6 +943,12 @@ def walk_source_dir
         if !$forgui
             ios = File.open("#{dest_dir}/.htaccess", "w")
             ios.write("AddCharset UTF-8 .html\n")
+            ios.write("\n")
+            ios.write("<IfModule mod_expires.c>\n")
+            ios.write(" ExpiresActive On\n")
+            ios.write(" ExpiresDefault A1800\n")
+            ios.write("</IfModule>")
+            ios.write("\n")
             if auth_user_file = xmldir.attributes['password-protect']
                 msg 3, _("\tgenerating password protection file #{dest_dir}/.htaccess")
                 ios.write("AuthType Basic\nAuthName \"protected area\"\nAuthUserFile #{auth_user_file}\nrequire valid-user\n")
@@ -1040,7 +1055,7 @@ def walk_source_dir
                     end
                     thumbnail_dest_img = base_dest_img + "-#{size_thumbnails}.jpg"
                     thumbnail_images[sizeobj['name']] << File.basename(thumbnail_dest_img)
-                    todo << { 'filename' => thumbnail_dest_img,  'size' => size_thumbnails }
+                    todo << { 'filename' => thumbnail_dest_img, 'size' => size_thumbnails }
                 end
                 gen_thumbnails_element("#{dir}/#{img}", elem, true, todo)
                 if $limit_sizes =~ /original/
@@ -1132,7 +1147,7 @@ def walk_source_dir
                      push('.htaccess')
             to_del = Dir.entries(dest_dir).find_all { |e| !File.directory?(File.join(dest_dir, e)) && !all_elements.include?(e) && e !~ /^thumbnails-\w+\.jpg/ }
             if to_del.size > 0
-                msg 3, _("\tcleaning up: #{to_del.join(', ')}")
+                msg 3, _("\tcleaning up: ") + to_del.join(', ')
                 File.delete(*to_del.collect { |e| File.join(dest_dir, e) })
             end
 
@@ -1174,7 +1189,7 @@ def walk_source_dir
                 iterations = {}
                 for i in html
                     i.sub!(/~~title~~/, quote_caption(xmldir.attributes['thumbnails-caption'] || utf8(File.basename(dir))))
-                    i.sub!(/~~flowplayer_head_code~~/, ($flv_generator && videos.size > 0) ? '<script type="text/javascript" src="~~pathtobase~~flowplayer-3.2.2.min.js"></script>' : '')
+                    i.sub!(/~~flowplayer_head_code~~/, ($flv_generator && videos.size > 0) ? '<script type="text/javascript" src="~~pathtobase~~flowplayer-3.2.12.min.js"></script>' : '')
                     discover_iterations(iterations, i)
                 end
                 all_pages = []
@@ -1233,7 +1248,7 @@ def walk_source_dir
                                 image_iteration = '<a href="' + flv_videos[videos[index]] + '" style="display:block;' + sizespec + '"' +
                                                   '   id="player' + index.to_s + '">' + video_preview +
                                                   '<img src="~~pathtobase~~play_video.png" style="position:relative;top:-' + ((size[:y]+48)/2).to_s + 'px;border:0;background-color:transparent"/></a>' +
-                                                  '<script>flowplayer("player' + index.to_s + '", "~~pathtobase~~flowplayer-3.2.2.swf")</script>'
+                                                  '<script>flowplayer("player' + index.to_s + '", "~~pathtobase~~flowplayer-3.2.16.swf")</script>'
                                 html_elem.gsub!(/~~image_iteration~~/, apply_hook(:image_iteration, image_iteration, 'video'))
                             else
                                 html_elem.gsub!(/~~image_iteration~~/,
@@ -1284,6 +1299,11 @@ def walk_source_dir
                     i.gsub!(/~~current_size_js~~/, size2js(sizeobj['name']))
                     i.gsub!(/~~madewith~~/, $madewith || '')
                     i.gsub!(/~~indexlink~~/, $indexlink || '')
+                    if !$indexlink || $indexlink.empty?
+                       i.gsub!(/~~ifindexlink\?~~(.+?)~~fi~~/) { }
+                    else
+                       i.gsub!(/~~ifindexlink\?~~(.+?)~~fi~~/) { $1 }
+                    end
                     substitute_addthis(i)
                     substitute_navigation(i, xmldir)
                 end
@@ -1297,6 +1317,8 @@ def walk_source_dir
                              all_pages.collect_with_index { |p,idx| page == p ? idx + 1 : "<a href=\"thumbnails-#{size2js(sizeobj['name'])}%nojs-#{idx}#{$htmlsuffix}\">#{idx + 1}</a>" }.join(', ') +
                              (pagecount < all_pages.size - 1 ? " <a href=\"thumbnails-#{size2js(sizeobj['name'])}%nojs-#{pagecount + 1}#{$htmlsuffix}\">" + defer_translation(N_("Next ->")) + "</a> " : '')
                     for i in final_html
+                        i.sub!(/~~run_slideshow_link~~/, entries.size <= 1 ? '' : 'image-' + size2js(sizeobj['name']) + $htmlsuffix + '#run_slideshow=1')
+                        i.sub!(/~~run_slideshow_text~~/, defer_translation(N_("Run slideshow!")))
                         i.sub!(/~~run_slideshow~~/,
                                entries.size <= 1 ? '' : '<a href="image-' + size2js(sizeobj['name']) + $htmlsuffix + '#run_slideshow=1">' + defer_translation(N_("Run slideshow!"))+'</a>')
                         i.sub!(/~~thumbnails~~/, html_thumbnails)
@@ -1362,22 +1384,33 @@ def walk_source_dir
 
             for sizeobj in $images_size
                 elements4js = []
-                videoswidths4js = []
-                videosheights4js = []
+                elemswidths4js = []
+                elemsheights4js = []
                 for file in entries
                     type = images.include?(file) ? 'image' : videos.include?(file) ? 'video' : nil
                     if type
                         if type == 'image'
                             index = images.index(file)
                             elements4js << '"' + fullscreen_images[sizeobj['name']][index] + '"'
-                            videoswidths4js << "''"
-                            videosheights4js << "''"
+                            size = get_image_size("#{dest_dir}/#{fullscreen_images[sizeobj['name']][index]}")
+                            if size
+                                elemswidths4js << size[:x].to_s
+                                elemsheights4js << size[:y].to_s
+                            else
+                                elemswidths4js << "''"
+                                elemsheights4js << "''"
+                            end
                         else
                             index = videos.index(file)
                             elements4js << '"' + fullscreen_videos[sizeobj['name']][index] + '"'
                             size = get_image_size("#{dest_dir}/#{fullscreen_videos[sizeobj['name']][index]}")
-                            videoswidths4js << size[:x].to_s
-                            videosheights4js << size[:y].to_s
+                            if size
+                                elemswidths4js << size[:x].to_s
+                                elemsheights4js << size[:y].to_s
+                            else
+                                elemswidths4js << "''"
+                                elemsheights4js << "''"
+                            end
                         end
                     end
                 end
@@ -1409,8 +1442,8 @@ def walk_source_dir
                     i.gsub!(/~~images~~/, elements4js.join(', '))
                     i.gsub!(/~~types~~/, types4js.join(', '))
                     i.gsub!(/~~videos~~/, videos4js.join(', '))
-                    i.gsub!(/~~videos_widths~~/, videoswidths4js.join(', '))
-                    i.gsub!(/~~videos_heights~~/, videosheights4js.join(', '))
+                    i.gsub!(/~~widths~~/, elemswidths4js.join(', '))
+                    i.gsub!(/~~heights~~/, elemsheights4js.join(', '))
                     i.gsub!(/~~hidden_images_for_remotes~~/, hiddenimages4remotes)
                     i.gsub!(/~~other_images~~/, otherelements4js)
                     i.gsub!(/~~thumbnailspages~~/, element2thumbnailpage4js.collect { |e| "\"#{e}\"" }.join(', '))
@@ -1418,7 +1451,7 @@ def walk_source_dir
                     i.gsub!(/~~captions~~/, captions4js.join(', '))
                     i.gsub!(/~~title~~/, quote_caption(xmldir.attributes['thumbnails-caption'] || utf8(File.basename(dir))))
                     if $flv_generator && videos.size > 0
-                        i.sub!(/~~flowplayer_head_code~~/, '<script type="text/javascript" src="~~pathtobase~~flowplayer-3.2.2.min.js"></script>')
+                        i.sub!(/~~flowplayer_head_code~~/, '<script type="text/javascript" src="~~pathtobase~~flowplayer-3.2.12.min.js"></script>')
                         i.sub!(/~~flowplayer_active~~/, 'true')
                     else
                         i.sub!(/~~flowplayer_head_code~~/, '')
@@ -1431,6 +1464,11 @@ def walk_source_dir
                     i.gsub!(/~~htmlsuffix~~/, $htmlsuffix)
                     i.gsub!(/~~madewith~~/, $madewith || '')
                     i.gsub!(/~~indexlink~~/, $indexlink || '')
+                    if !$indexlink || $indexlink.empty?
+                        i.gsub!(/~~ifindexlink\?~~(.+?)~~fi~~/) { }
+                    else
+                        i.gsub!(/~~ifindexlink\?~~(.+?)~~fi~~/) { $1 }
+                    end
                     substitute_addthis(i)
                     substitute_html_sizes(i, sizeobj, 'image', '')
                     substitute_navigation(i, xmldir)
@@ -1582,6 +1620,11 @@ def walk_source_dir
                 i.gsub!(/~~thumbnails~~/, html_index)
                 i.gsub!(/~~madewith~~/, $madewith || '')
                 i.gsub!(/~~indexlink~~/, $indexlink || '')
+                if !$indexlink || $indexlink.empty?
+                   i.gsub!(/~~ifindexlink\?~~(.+?)~~fi~~/) { }
+                else
+                   i.gsub!(/~~ifindexlink\?~~(.+?)~~fi~~/) { $1 }
+                end
                 substitute_addthis(i)
             end
             

@@ -1,0 +1,90 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+    <title>~~title~~</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <meta name="author" content="'Gradient' theme - Benoit Dien"/>
+    <link rel="stylesheet" type="text/css" href="~~pathtobase~~booh.css" media="screen" />
+    ~~~image_head_code~~~
+    ~~flowplayer_head_code~~
+    <script type="text/javascript" src="~~pathtobase~~booh.js"></script>
+</head>
+
+<body ~~~body_additions~~~>
+
+~~hidden_images_for_remotes~~
+
+<div id="navtop">
+~~ifnavigation?~~ ~~navigationtable~~ ~~fi~~
+<div id="navlinks">
+    ~~indexlink~~ ~~ifindexlink?~~-~~fi~~
+    ~~previous_album~~ ~~ifprevious_album?~~-~~fi~~ ~~thumbnails~~ ~~ifnext_album?~~-~~fi~~ ~~next_album~~
+</div>
+</div>
+
+<!-- Addthis button -->
+<div id='addthis'>~~addthis~~</div>
+
+<table class='imgnav'>
+  <tr>
+    <td width="20%">&nbsp;</td>
+    <td width="1%">
+      <form action="fake">
+        <img src="~~pathtobase~~go-first.png" alt="first" onclick="first()" id="img_first"/>
+      </form>
+    </td>
+    <td width="3%">&nbsp;</td>
+    <td width="1%">
+      <form action="fake">
+        <img src="~~pathtobase~~go-previous.png" alt="previous" onclick="previous()" id="img_previous"/>
+      </form>
+    </td>
+    <td id='sizes'>
+      ~~sizes~~ | ~~
+    </td>
+    <td width="1%">
+      <form action="fake">
+        <img src="~~pathtobase~~go-next.png" alt="next" onclick="next()" id="img_next"/>
+      </form>
+    </td>
+    <td width="3%">&nbsp;</td>
+    <td width="1%">
+      <form action="fake">
+        <img src="~~pathtobase~~go-last.png" alt="last" onclick="last()" id="img_last"/>
+      </form>
+    </td>
+    <td width="20%">&nbsp;</td>
+  </tr>
+</table>
+<table align="center">
+  <tr>
+    <td align="center" colspan="9">
+      <br/>
+        ~~~image~~~
+    </td>
+  </tr>
+</table>
+
+<table align="center">
+<tr>
+    <td align="center" colspan="9">
+        <b><span ~~~caption_additions~~~>&nbsp;</span></b>
+        <br/>
+        <font size="-2" ~~~image_counter_additions~~~>&nbsp;</font>
+        <hr width="100%"/>
+    </td>
+</tr>
+
+  <tr>
+    <td colspan="9" align="center">
+        ~~~button_slideshow~~~
+        ~~~pause_slideshow~~~
+    </td>
+  </tr>
+</table>
+
+<div id="logo"><a href="http://booh.org"><img width="91" height="44" src="~~pathtobase~~booh.png" alt="Made with Booh"/></a></div>
+
+</body>
+</html>

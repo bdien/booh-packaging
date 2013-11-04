@@ -19,6 +19,11 @@
 # along with this program; if not, write to the Free Software
 # Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA
 
+begin
+    require 'rubygems'
+rescue LoadError
+end
+
 require 'getoptlong'
 require 'gettext'
 include GetText
@@ -127,7 +132,7 @@ end
 
 def walk_source_dir
 
-    `find #{$source} -type d`.sort.each { |dir|
+    `find #{$source} -type d`.split("\n").sort.each { |dir|
         dir.chomp!
         msg 2, _("Handling %s from config list...") % dir
 

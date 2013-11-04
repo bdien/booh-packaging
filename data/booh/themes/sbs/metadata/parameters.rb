@@ -49,6 +49,7 @@ $images_size = [
         'fullscreen' => '880x660',
         'thumbnails' => '292x219',
         'optimizedforwidth' => '1280',
+        'optional' => true,
     },
     {
         'name' => 'x-large',
@@ -65,7 +66,15 @@ $images_size = [
         'thumbnails' => '368x276',
         'optimizedforwidth' => '1600',
         'optional' => true,
-    }
+    },
+    {
+        'name' => 'widescreen',
+        'description' => _("Sizes that should fit browsers in fullscreen for 1680x1050 screens"),
+        'fullscreen' => '1200x721',
+        'thumbnails' => '390x240',
+        'optimizedforwidth' => '1680',
+        'optional' => true,
+    },
 ]
 
 $allowed_N_values = [ 3, 4, 5, 6, 8, 12 ]

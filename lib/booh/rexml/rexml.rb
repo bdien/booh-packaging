@@ -20,7 +20,7 @@
 # or can be accessed 
 # online[http://www.germane-software.com/software/rexml/docs/tutorial.html]
 module REXML
-	COPYRIGHT = "Copyright © 2001-2006 Sean Russell <ser@germane-software.com>"
+	COPYRIGHT = "Copyright (c) 2001-2006 Sean Russell <ser@germane-software.com>"
   DATE = "2006/335"
   VERSION = "3.1.6_booh_forked"
 

@@ -10,7 +10,7 @@
 # called Boo, so this one will be it "Booh". Or whatever.
 #
 #
-# Copyright (c) 2004-2010 Guillaume Cottenceau <http://zarb.org/~gc/resource/gc_mail.png>
+# Copyright (c) 2004-2013 Guillaume Cottenceau <http://zarb.org/~gc/resource/gc_mail.png>
 #
 # This software may be freely redistributed under the terms of the GNU
 # public license version 2.
@@ -18,6 +18,11 @@
 # You should have received a copy of the GNU General Public License
 # along with this program; if not, write to the Free Software
 # Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA
+
+begin
+    require 'rubygems'
+rescue LoadError
+end
 
 require 'getoptlong'
 require 'tempfile'
@@ -74,7 +79,7 @@ def handle_options
             when '--version'
                 puts _("Booh version %s
 
-Copyright (c) 2005-2010 Guillaume Cottenceau.
+Copyright (c) 2005-2013 Guillaume Cottenceau.
 This is free software; see the source for copying conditions.  There is NO
 warranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.") % $VERSION
 
@@ -90,6 +95,14 @@ warranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.") % 
         usage
         exit(1)
     end
+end
+
+def count_cpus
+    cpus = 0
+    for line in IO.readlines('/proc/cpuinfo') do
+        line =~ /^processor/ and cpus += 1
+    end
+    return cpus
 end
 
 def read_config
@@ -133,10 +146,7 @@ def read_config
         system("mkdir ~/.booh")
     end
     if $config['mproc'].nil?
-        cpus = 0
-        for line in IO.readlines('/proc/cpuinfo') do
-            line =~ /^processor/ and cpus += 1
-        end
+        cpus = count_cpus
         if cpus > 1
             $config['mproc'] = cpus
         end
@@ -188,6 +198,15 @@ It is generally available with the 'ImageMagick' software package.")), { :pos_ce
     end
 
     check_config_preferences_dep
+
+    cpus = count_cpus
+
+    if $config['cpus'] && cpus > $config['cpus'].to_i
+        show_popup($main_window, utf8(_("It seems you now have more CPUs available than last time booh was run.
+You should probably increase the amount of CPUs configured in Edit/Preferences,
+so that web-albums are generated as fast as possible on this computer.")), { :pos_centered => true, :not_transient => true })
+    end
+    $config['cpus'] = cpus
 end
 
 def check_image_editor
@@ -2181,11 +2200,9 @@ end
 
 def call_backend(cmd, waitmsg, mode, params)
     pipe = Tempfile.new("boohpipe")
-    Thread.critical = true
     path = pipe.path
     pipe.close!
     system("mkfifo #{path}")
-    Thread.critical = false
     cmd += " --info-pipe #{path}"
     button, w8 = backend_wait_message($main_window, waitmsg, path, mode)
     pid = nil
@@ -2205,7 +2222,9 @@ def call_backend(cmd, waitmsg, mode, params)
                 #- say nothing, user aborted
             else
                 gtk_thread_protect { show_popup($main_window,
-                                                utf8(_("There was something wrong, sorry:\n\n%s") % $diemsg)) }
+                                                utf8($diemsg ? _("Unexpected internal error, sorry:\n\n%s") % $diemsg :
+                                                               _("Unexpected internal error, sorry.\nCheck console for error message."))) }
+                $diemsg = nil
             end
         else
             exec(cmd)
@@ -2844,7 +2863,7 @@ def theme_choose(current)
 
     dialog.vbox.add(sw = Gtk::ScrolledWindow.new(nil, nil).add(treeview).set_policy(Gtk::POLICY_NEVER, Gtk::POLICY_AUTOMATIC))
 
-    ([ $FPATH + '/themes/simple' ] + (`find '#{$FPATH}/themes' ~/.booh-themes -mindepth 1 -maxdepth 1 -type d 2>/dev/null`.find_all { |e| e !~ /simple$/ }.sort)).each { |dir|
+    ([ $FPATH + '/themes/gradient' ] + (`find '#{$FPATH}/themes' ~/.booh-themes -mindepth 1 -maxdepth 1 -type d 2>/dev/null`.split("\n").find_all { |e| e !~ /\bgradient\b/ }.sort)).each { |dir|
         dir.chomp!
         iter = model.append
         iter[0] = File.basename(dir)
@@ -2984,7 +3003,7 @@ def open_file(filename)
         mark_document_as_dirty
         if $xmldoc.root.attributes['version'] < '0.8.4'
             msg 1, _("File's version prior to 0.8.4, migrating directories and filenames in destination directory if needed")
-            `find '#{source}' -type d -follow`.sort.collect { |v| v.chomp }.each { |dir|
+            `find '#{source}' -type d -follow`.split("\n").sort.collect { |v| v.chomp }.each { |dir|
                 old_dest_dir = make_dest_filename_old(dir.sub(/^#{Regexp.quote(source)}/, dest))
                 new_dest_dir = make_dest_filename(dir.sub(/^#{Regexp.quote(source)}/, dest))
                 if old_dest_dir != new_dest_dir
@@ -3039,12 +3058,10 @@ def open_file_user(filename)
         $orig_filename = $filename
         $main_window.title = 'booh - ' + File.basename($orig_filename)
         tmp = Tempfile.new("boohtemp")
-        Thread.critical = true
         $filename = tmp.path
         tmp.close!
         #- for security
         ios = File.open($filename, File::RDWR|File::CREAT|File::EXCL)
-        Thread.critical = false
         ios.close
         $tempfiles << $filename << "#{$filename}.backup"
     else
@@ -3100,7 +3117,7 @@ def open_file_popup
     }
     ok = false
     while !ok
-        if fc.run == Gtk::Dialog::RESPONSE_ACCEPT
+        if fc.run == Gtk::Dialog::RESPONSE_ACCEPT && fc.filename
             push_mousecursor_wait(fc)
             msg = open_file_user(fc.filename)
             pop_mousecursor(fc)
@@ -3294,7 +3311,7 @@ def new_album
     tooltips = Gtk::Tooltips.new
     frame2 = Gtk::Frame.new(utf8(_("Configuration"))).add(vb = Gtk::VBox.new)
     vb.add(Gtk::HBox.new(false, 3).pack_start(Gtk::Label.new(utf8(_("Theme: "))), false, false, 0).
-                         pack_start(theme_button = Gtk::Button.new($config['default-theme'] || 'simple'), false, false, 0))
+                         pack_start(theme_button = Gtk::Button.new($config['default-theme'] || 'gradient'), false, false, 0))
     vb.add(Gtk::HBox.new(false, 3).pack_start(Gtk::Label.new(utf8(_("Sizes of images to generate: "))), false, false, 0).
                                    pack_start(sizes = Gtk::HBox.new, false, false, 0))
     vb.add(optimize432 = Gtk::CheckButton.new(utf8(_("Optimize for 3/2 aspect ratio"))).set_active($config['default-optimize32'].to_b))
@@ -3427,7 +3444,7 @@ def new_album
                                         nil,
                                         [Gtk::Stock::OPEN, Gtk::Dialog::RESPONSE_ACCEPT], [Gtk::Stock::CANCEL, Gtk::Dialog::RESPONSE_CANCEL])
         fc.transient_for = $main_window
-        if fc.run == Gtk::Dialog::RESPONSE_ACCEPT
+        if fc.run == Gtk::Dialog::RESPONSE_ACCEPT && fc.filename
             src.text = utf8(fc.filename)
             process_src_nb.call
             conf.text = File.expand_path("~/.booh/#{File.basename(src.text)}")
@@ -3442,7 +3459,7 @@ def new_album
                                         nil,
                                         [Gtk::Stock::OPEN, Gtk::Dialog::RESPONSE_ACCEPT], [Gtk::Stock::CANCEL, Gtk::Dialog::RESPONSE_CANCEL])
         fc.transient_for = $main_window
-        if fc.run == Gtk::Dialog::RESPONSE_ACCEPT
+        if fc.run == Gtk::Dialog::RESPONSE_ACCEPT && fc.filename
             dest.text = utf8(fc.filename)
         end
         fc.destroy
@@ -3457,7 +3474,7 @@ def new_album
         fc.transient_for = $main_window
         fc.add_shortcut_folder(File.expand_path("~/.booh"))
         fc.set_current_folder(File.expand_path("~/.booh"))
-        if fc.run == Gtk::Dialog::RESPONSE_ACCEPT
+        if fc.run == Gtk::Dialog::RESPONSE_ACCEPT && fc.filename
             conf.text = utf8(fc.filename)
         end
         fc.destroy
@@ -3908,7 +3925,7 @@ def save_as_do
     fc.add_shortcut_folder(File.expand_path("~/.booh"))
     fc.set_current_folder(File.expand_path("~/.booh"))
     fc.filename = $orig_filename
-    if fc.run == Gtk::Dialog::RESPONSE_ACCEPT
+    if fc.run == Gtk::Dialog::RESPONSE_ACCEPT && fc.filename
         $orig_filename = fc.filename
         if ! save_current_file_user
             fc.destroy
@@ -4260,7 +4277,7 @@ def perform_remote_synchronization(url, detail_label, progressbar_window, dialog
         if ! ok_to_mirror
             gtk_thread_protect {
                 progressbar_window.destroy
-                show_popup(dialog, utf8(_("Specified URL incorrect, please check your input.")), { :pos_centered => true })
+                show_popup(dialog, utf8(_("Failed to connect to specified URL, please check your input.")), { :pos_centered => true })
             }
             return
         end
@@ -4304,7 +4321,7 @@ def remote_synchronization
     remote_synchro = Gtk::Dialog.new(utf8(_("Upload web-album")),
                                      $main_window,
                                      Gtk::Dialog::MODAL | Gtk::Dialog::DESTROY_WITH_PARENT,
-                                     [Gtk::Stock::OK, Gtk::Dialog::RESPONSE_OK])
+                                     [Gtk::Stock::CLOSE, Gtk::Dialog::RESPONSE_OK])
     remote_synchro.vbox.add(Gtk::Label.new.set_markup(utf8(_("<b>Upload web-album.</b>
 
 Mirror web-album into remote repository (lftp URL):

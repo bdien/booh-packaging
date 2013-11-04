@@ -8,7 +8,7 @@
 # called Boo, so this one will be it "Booh". Or whatever.
 #
 #
-# Copyright (c) 2004-2010 Guillaume Cottenceau
+# Copyright (c) 2004-2013 Guillaume Cottenceau
 #
 # This software may be freely redistributed under the terms of the GNU
 # public license version 2.
@@ -32,7 +32,7 @@ require 'booh/config.rb'
 require 'booh/version.rb'
 begin
     require 'gtk2'
-rescue LoadError
+rescue LoadError, Gtk::InitError
     $no_gtk2 = true
 end
 begin
@@ -55,7 +55,7 @@ module Booh
 
     def utf8(string)
         begin
-            return Iconv::iconv("UTF-8", $CURRENT_CHARSET, string).to_s
+            return Iconv.conv("UTF-8", $CURRENT_CHARSET, string)
         rescue
             return "???"
         end
@@ -63,7 +63,7 @@ module Booh
 
     def utf8cut(string, maxlen)
         begin
-            return Iconv::iconv("UTF-8", $CURRENT_CHARSET, string[0..maxlen-1]).to_s
+            return Iconv.conv("UTF-8", $CURRENT_CHARSET, string[0..maxlen-1])
         rescue Iconv::InvalidCharacter
             return utf8cut(string, maxlen-1)
         rescue
@@ -92,12 +92,12 @@ module Booh
     end
     
     def from_utf8(string)
-        return Iconv::iconv($CURRENT_CHARSET, "UTF-8", string).to_s
+        return Iconv.conv($CURRENT_CHARSET, "UTF-8", string)
     end
 
     def from_utf8_safe(string)
         begin
-            return Iconv::iconv($CURRENT_CHARSET, "UTF-8", string).to_s
+            return Iconv.conv($CURRENT_CHARSET, "UTF-8", string)
         rescue Iconv::IllegalSequence
             return ''
         end
@@ -107,14 +107,14 @@ module Booh
         #- we remove non alphanumeric characters but need to do that
         #- cleverly to not end up with two similar dest filenames. we won't
         #- urlencode because urldecode might happen in the browser.
-        return orig_filename.unpack("C*").collect { |v| v.chr =~ /[a-zA-Z\-_0-9\.\/]/ ? v.chr : sprintf("%2X", v) }.to_s
+        return orig_filename.unpack("C*").collect { |v| v.chr =~ /[a-zA-Z\-_0-9\.\/]/ ? v.chr : sprintf("%2X", v) }.join
     end
 
     def make_dest_filename(orig_filename)
         #- we remove non alphanumeric characters but need to do that
         #- cleverly to not end up with two similar dest filenames. we won't
         #- urlencode because urldecode might happen in the browser.
-        return orig_filename.unpack("C*").collect { |v| v.chr =~ /[a-zA-Z\-_0-9\.\/]/ ? v.chr : sprintf("~%02X", v) }.to_s
+        return orig_filename.unpack("C*").collect { |v| v.chr =~ /[a-zA-Z\-_0-9\.\/]/ ? v.chr : sprintf("~%02X", v) }.join
     end
 
     def msg(verbose_level, msg)
@@ -173,10 +173,8 @@ module Booh
 
         if optimizefor32
             $images_size.each { |e|
-                e['fullscreen'].gsub!(/(\d+x)(\d+)/) { $1 + ($2.to_f*8/9).to_i.to_s }
-                e['thumbnails'].gsub!(/(\d+x)(\d+)/) { $1 + ($2.to_f*8/9).to_i.to_s }
+                e['thumbnails'].gsub!(/(\d+x)(\d+)/) { $1 + ($2.to_f*8/9).to_i.to_s }  #- 4/3 / 3/2
             }
-            $albums_thumbnail_size.gsub!(/(\d+x)(\d+)/) { $1 + ($2.to_f*8/9).to_i.to_s }
         end
 
         if nperrow && nperrow != $default_N
@@ -203,7 +201,7 @@ module Booh
         #- /usr/lib/gdk-pixbuf/loaders/libpixbufloader-tiff.so
         #- /usr/lib/gdk-pixbuf/loaders/libpixbufloader-xbm.so
         #- /usr/lib/gdk-pixbuf/loaders/libpixbufloader-xpm.so
-        if entry =~ /\.(bmp|gif|ico|jpg|jpe|png|pnm|tif|xbm|xpm)$/i && entry !~ /['"\[\]]/
+        if entry =~ /\.(bmp|gif|ico|jpg|jpe|jpeg|png|pnm|tif|xbm|xpm)$/i && entry !~ /['"\[\]]/
             return 'image'
         elsif !$ignore_videos && entry =~ /\.(mov|avi|mpg|mpeg|mpe|wmv|asx|3gp|mp4|ogm|ogv|flv|f4v|f4p|dv)$/i && entry !~ /['"\[\]]/
             #- might consider using file magic later..
@@ -341,6 +339,8 @@ module Booh
         gen_thumbnails(orig, allow_background, dests, xmldirorelem, type + '-')
     end
 
+    $video_thumbnail_directory_lock = Monitor.new
+
     def gen_video_thumbnail(orig, colorswap, seektime)
         if colorswap
             #- ignored for the moment. is mplayer subject to blue faces problem?
@@ -348,16 +348,16 @@ module Booh
         #- it's not possible to specify a basename for the output jpeg file with mplayer (file will be named 00000001.jpg); as this can
         #- be called from multiple threads, we must come up with a unique directory where to put the file
         tmpfile = Tempfile.new("boohvideotmp")
-        Thread.critical = true
-        tmpdirname = tmpfile.path
-        tmpfile.close!
-        begin
-            Dir.mkdir(tmpdirname)
-        rescue Errno::EEXIST
-            raise "Tmp directory #{tmpdirname} already exists"
-        ensure
-            Thread.critical = false
-        end
+        tmpdirname = nil
+        $video_thumbnail_directory_lock.synchronize {
+            tmpdirname = tmpfile.path
+            tmpfile.close!
+            begin
+                Dir.mkdir(tmpdirname)
+            rescue Errno::EEXIST
+                raise "Tmp directory #{tmpdirname} already exists"
+            end
+        }
         cmd = "mplayer '#{orig}' -nosound -vo jpeg:outdir='#{tmpdirname}' -frames 1 -ss #{seektime} -slave >/dev/null 2>/dev/null"
         sys(cmd)
         if ! File.exists?("#{tmpdirname}/00000001.jpg")
@@ -511,6 +511,24 @@ module Booh
         end
     end
 
+    def writable(directory)
+        #- File.stat().writable? yields false on sshfs writable directories
+        randfilename = directory + '/' + rand(36**10).to_s(36)
+        begin
+            File.open(randfilename, "w")
+            begin
+                File.delete(randfilename)
+            rescue
+            end
+            return true
+        rescue Errno::EACCES
+            return false
+        rescue
+            puts "Unexpected error for " + directory + ": #{$!}"
+            return false
+        end
+    end
+
     def max(a, b)
         a > b ? a : b
     end
@@ -534,7 +552,7 @@ module Booh
     def substInFile(name)
         newcontent = IO.readlines(name).collect { |l| yield l }
         ios = File.open(name, "w")
-        ios.write(newcontent)
+        ios.write(newcontent.join)
         ios.close
     end
 
@@ -869,7 +887,7 @@ EOF
         Gtk::AboutDialog.set_url_hook { |dialog, url| open_url(url) }
         Gtk::AboutDialog.show($main_window, { :name => 'booh',
                                               :version => $VERSION,
-                                              :copyright => 'Copyright (c) 2005-2010 Guillaume Cottenceau',
+                                              :copyright => 'Copyright (c) 2005-2013 Guillaume Cottenceau',
                                               :license => get_license,
                                               :website => 'http://booh.org/',
                                               :authors => [ 'Guillaume Cottenceau' ],

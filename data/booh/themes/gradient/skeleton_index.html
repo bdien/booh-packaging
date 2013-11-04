@@ -1,0 +1,53 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+    <title>~~title~~</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <meta name="author" content="'Gradient' theme - Benoit Dien"/>
+    ~~~index_head_code~~~
+    <link rel="stylesheet" type="text/css" href="~~pathtobase~~booh.css" media="screen" />
+</head>
+
+<body ~~~body_additions~~~>
+
+<!-- Navigation TOP -->
+
+<div id="navtop">
+~~ifnavigation?~~ ~~navigationtable~~ ~~fi~~
+<div id="navlinks">
+    ~~indexlink~~
+</div>
+</div>
+
+<!-- Addthis button -->
+<div id='addthis'>~~addthis~~</div>
+
+<!-- Content TOP -->
+
+<div id='contenttop'>
+<div id='titletext'>~~title~~</div>
+</div>
+
+<!-- Content -->
+
+<div id='content'>
+<table class='index'>
+~~iterate1_open~~
+<tr>
+    <td class='image'>
+       ~~image_iteration~~
+    </td>
+    <td class='caption'>
+       <p>~~caption_iteration~~</p>
+    </td>
+</tr>
+<tr><td>&nbsp;</td></tr>
+~~iterate1_close~~
+</table>
+</div>
+
+<div id="logo"><a href="http://booh.org"><img width="91" height="44" src="~~pathtobase~~booh.png" alt="Made with Booh"/></a></div>
+
+</body>
+</html>

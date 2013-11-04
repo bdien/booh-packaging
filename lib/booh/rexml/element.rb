@@ -551,9 +551,13 @@ module REXML
 		#################################################
 
 		def attribute( name, namespace=nil )
-			prefix = nil
-      prefix = namespaces.index(namespace) if namespace
-			attributes.get_attribute( "#{prefix ? prefix + ':' : ''}#{name}" )
+                    prefix = nil
+                    if namespaces.respond_to? :key
+                        prefix = namespaces.key(namespace) if namespace
+                    else
+                        prefix = namespaces.index(namespace) if namespace
+                    end
+                    attributes.get_attribute( "#{prefix ? prefix + ':' : ''}#{name}" )
 		end
 
 		# Evaluates to +true+ if this element has any attributes set, false

@@ -1,0 +1,67 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+    <title>~~title~~</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <meta name="author" content="'Gradient' theme - Benoit Dien"/>
+    ~~~thumbnails_head_code~~~
+    ~~flowplayer_head_code~~
+    <link rel="stylesheet" type="text/css" href="~~pathtobase~~booh.css" media="screen" />
+</head>
+
+<body>
+
+<!-- Navigation TOP -->
+
+<div id="navtop">
+~~ifnavigation?~~ ~~navigationtable~~ ~~fi~~
+<div id="navlinks">
+    ~~indexlink~~ ~~ifindexlink?~~-~~fi~~
+    ~~previous_album~~ ~~ifprevious_album?~~-~~fi~~
+    ~~return_to_albums~~ ~~ifnext_album?~~-~~fi~~
+    ~~next_album~~
+</div>
+</div>
+
+<!-- Addthis button -->
+<div id='addthis'>~~addthis~~</div>
+
+<!-- Content TOP -->
+
+<div id='contenttop'>
+  <div id='titletext'>~~title~~</div> 
+
+  <div id="tools">
+    <a href="~~run_slideshow_link~~"><img width="40" height="32" src="~~pathtobase~~slideshow_32s.png" alt="~~run_slideshow_text~~"/></a>
+    &nbsp;
+    <span id="sizes">~~sizes~~ | ~~</span>
+  </div> 
+</div>
+
+~~ifmultiplepages?~~<p align="center"><font size="-1">~~multiplepagesstuff~~</font></p>~~fi~~
+
+<!-- Content -->
+
+<div id='content'>
+
+<table width="100%" id="thumbnails">
+~~iterate1_open~~
+<tr>
+    ~~iterate2_open_maxN~~
+    <td align="center" valign="top" ~~colspan~~ ~~homogeinize_width~~>
+      <div>~~image_iteration~~</div>
+       ~~ifimage?~~<br/>~~fi~~ ~~caption_iteration~~
+    </td>
+    ~~iterate2_close~~
+</tr>
+~~iterate1_close~~
+</table>
+</div>
+
+~~ifmultiplepages?~~<p align="center"><font size="+1">~~multiplepagesstuff~~</font></p>~~fi~~
+
+<div id="logo"><a href="http://booh.org"><img width="91" height="44" src="~~pathtobase~~booh.png" alt="Made with Booh"/></a></div>
+
+</body>
+</html>
