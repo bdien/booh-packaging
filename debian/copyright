@@ -1,6 +1,6 @@
 This work was packaged for Debian by:
 
-    Benoit Dien <benoit.dien@gmail.com> on Tue, 16 Nov 2010 23:24:52 +0100
+    Benoit Dien <benoit.dien@gmail.com> on Mon, 04 Nov 2013 13:54:52 +0100
 
 It was downloaded from:
 
@@ -12,7 +12,7 @@ Upstream Author(s):
 
 Copyright:
 
-    Copyright (C) 2005-2010 Guillaume Cottenceau
+    Copyright (C) 2005-2013 Guillaume Cottenceau
 
 License:
 
@@ -28,7 +28,7 @@ Public License version 2 can be found in "/usr/share/common-licenses/GPL-2".
 
 The Debian packaging is:
 
-    Copyright (C) 2010 Benoit Dien <benoit.dien@gmail.com>
+    Copyright (C) 2010-2013 Benoit Dien <benoit.dien@gmail.com>
 
 you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
