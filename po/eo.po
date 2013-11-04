@@ -6,7 +6,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: eo\n"
-"POT-Creation-Date: 2010-05-26 23:24+0200\n"
+"POT-Creation-Date: 2011-07-17 22:24+0200\n"
 "PO-Revision-Date: 2008-05-25 14:13+0200\n"
 "Last-Translator: Stéphane Fillod <f8cfe@free.fr>\n"
 "Language-Team: Esperanto <kde-i18n-eo@kde.org>\n"
@@ -39,7 +39,7 @@ msgstr "Uzo: %s [OPCIO]   "
 msgid ""
 "Booh version %s\n"
 "\n"
-"Copyright (c) 2005-2010 Guillaume Cottenceau.\n"
+"Copyright (c) 2005-2013 Guillaume Cottenceau.\n"
 "This is free software; see the source for copying conditions.  There is NO\n"
 "warranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE."
 msgstr ""
@@ -144,7 +144,7 @@ msgstr "turnu kontraŭhorloĝe"
 msgid "flip upside-down"
 msgstr "Spegulu vertikale"
 
-#: ../bin/booh:578 ../bin/booh:4304
+#: ../bin/booh:578
 msgid "Change seek time"
 msgstr "Ŝanĝu serĉ-tempon"
 
@@ -231,7 +231,7 @@ msgstr "Ludu videon"
 msgid "View EXIF data"
 msgstr "Rigardu EXIF-an datumon"
 
-#: ../bin/booh:959 ../bin/booh-classifier:953
+#: ../bin/booh:959 ../bin/booh-classifier:959
 msgid "EXIF data of %s"
 msgstr "EXIF datumo de %s"
 
@@ -331,7 +331,7 @@ msgstr ""
 msgid "enhance"
 msgstr "plistarigu"
 
-#: ../bin/booh:1459 ../bin/booh:5030
+#: ../bin/booh:1459 ../bin/booh:5028
 msgid ""
 "Do you confirm this subalbum needs to be completely removed? This operation "
 "cannot be undone."
@@ -383,7 +383,7 @@ msgstr "Konservu antaŭ fino?"
 msgid "Do you want to save your changes before quitting?"
 msgstr "Ĉu vi volas konservi viajn ŝanĝojn antaŭ la fino?"
 
-#: ../bin/booh:1992 ../bin/booh-classifier:867 ../bin/booh-classifier:1433
+#: ../bin/booh:1992 ../bin/booh-classifier:867 ../bin/booh-classifier:1439
 msgid "Booh message"
 msgstr "Booh mesaĝo"
 
@@ -403,7 +403,7 @@ msgstr "ne lanĉita"
 msgid "HTML pages"
 msgstr "HTML-paĝoj"
 
-#: ../bin/booh:2092 ../bin/booh:2323 ../bin/booh:4327
+#: ../bin/booh:2092 ../bin/booh:2323 ../bin/booh:4325
 msgid "_Abort"
 msgstr "_Haltigu"
 
@@ -411,15 +411,18 @@ msgstr "_Haltigu"
 msgid "finished"
 msgstr "finita"
 
-#: ../bin/booh:2208
+#: ../bin/booh:2206
 msgid ""
-"There was something wrong, sorry:\n"
+"Unexpected internal error, sorry:\n"
 "\n"
 "%s"
 msgstr ""
-"Ion fuŝis, pardonu:\n"
-"\n"
-"%s"
+
+#: ../bin/booh:2207
+msgid ""
+"Unexpected internal error, sorry.\n"
+"Check console for error message."
+msgstr ""
 
 #: ../bin/booh:2321
 msgid "Scanning sub-album looking for EXIF dates..."
@@ -493,19 +496,19 @@ msgstr ""
 "Dosiero versio antaŭ 0.8.4, migradigante dosierujojn kaj dosiernomojn en "
 "cela dosierujoj se necesas"
 
-#: ../bin/booh:3057 ../bin/booh:3259 ../bin/booh:4586
+#: ../bin/booh:3055 ../bin/booh:3257 ../bin/booh:4584
 msgid "Save this album?"
 msgstr "Konservu tiun albumon?"
 
-#: ../bin/booh:3058 ../bin/booh:3260 ../bin/booh:4587
+#: ../bin/booh:3056 ../bin/booh:3258 ../bin/booh:4585
 msgid "Do you want to save the changes to this album?"
 msgstr "Ĉu vi volas konservi la ŝanĝojn de tiu albumo?"
 
-#: ../bin/booh:3062
+#: ../bin/booh:3060
 msgid "Open file"
 msgstr "Malfermu dosieron"
 
-#: ../bin/booh:3095
+#: ../bin/booh:3093
 msgid ""
 "<i>Source:</i> %s\n"
 "<i>Destination:</i> %s\n"
@@ -514,11 +517,11 @@ msgid ""
 "<i>Videos:</i> %s"
 msgstr ""
 
-#: ../bin/booh:3141
+#: ../bin/booh:3139
 msgid "Multi-languages support"
 msgstr "Plurlingvoj uzo"
 
-#: ../bin/booh:3149
+#: ../bin/booh:3147
 msgid ""
 "You can choose to activate <b>multi-languages</b> support for this web-"
 "album\n"
@@ -533,82 +536,82 @@ msgid ""
 "navigation in their language (if language is available).\n"
 msgstr ""
 
-#: ../bin/booh:3158
+#: ../bin/booh:3156
 msgid "Disabled"
 msgstr "Malŝaltita"
 
-#: ../bin/booh:3159
+#: ../bin/booh:3157
 msgid "Enabled"
 msgstr "Ŝaltita"
 
-#: ../bin/booh:3163
+#: ../bin/booh:3161
 msgid "Pick languages to support"
 msgstr "Elektu lingvojn uzendajn"
 
-#: ../bin/booh:3170
+#: ../bin/booh:3168
 msgid "Select the languages to support:"
 msgstr "Elektu lingvojn uzendajn:"
 
-#: ../bin/booh:3181
+#: ../bin/booh:3179
 msgid "Select the fallback language:"
 msgstr "Elektu retropaŝan lingvon:"
 
-#: ../bin/booh:3207 ../bin/booh:3222
+#: ../bin/booh:3205 ../bin/booh:3220
 msgid "Languages: %s. Fallback: %s."
 msgstr "Lingvoj: %s. Rotropaŝo: %s."
 
-#: ../bin/booh:3264
+#: ../bin/booh:3262
 msgid "Create a new album"
 msgstr "Kreu novan albumon"
 
-#: ../bin/booh:3270 ../bin/booh:3644
+#: ../bin/booh:3268 ../bin/booh:3642
 msgid "Locations"
 msgstr "Situoj"
 
-#: ../bin/booh:3271
+#: ../bin/booh:3269
 msgid "Directory of photos/videos: "
 msgstr "Dosierujo de bildoj/videoj: "
 
-#: ../bin/booh:3275 ../bin/booh:3285 ../bin/booh:3291
+#: ../bin/booh:3273 ../bin/booh:3283 ../bin/booh:3289
 msgid "browse..."
 msgstr "rigardu..."
 
-#: ../bin/booh:3277
+#: ../bin/booh:3275
 msgid ""
 "<span size='small'><i>number of photos/videos down this directory:</i></"
 "span> "
 msgstr ""
 "<span size='small'><i>numbro da bildoj/videoj sub tiu dosierujo:</i></span> "
 
-#: ../bin/booh:3279 ../bin/booh:3413
+#: ../bin/booh:3277 ../bin/booh:3411
 msgid "<span size='small'><i>N/A</i></span>"
 msgstr "<span size='small'><i>n/h</i></span>"
 
-#: ../bin/booh:3281
+#: ../bin/booh:3279
 msgid "Directory where to put the web-album: "
 msgstr "Dosierujo por la TTT-albumo: "
 
-#: ../bin/booh:3287
+#: ../bin/booh:3285
 msgid "Filename to store this album's properties: "
 msgstr "Dosiernomo por konservi tiu albumo ecoj: "
 
-#: ../bin/booh:3295 ../bin/booh:3658
+#: ../bin/booh:3293 ../bin/booh:3656
 msgid "Configuration"
 msgstr "Agordo"
 
-#: ../bin/booh:3296 ../bin/booh:3659
+#: ../bin/booh:3294 ../bin/booh:3657
 msgid "Theme: "
 msgstr "Etoso: "
 
-#: ../bin/booh:3298 ../bin/booh:3661
+#: ../bin/booh:3296 ../bin/booh:3659
 msgid "Sizes of images to generate: "
 msgstr "Generotaj bildoj grandecoj: "
 
-#: ../bin/booh:3300 ../bin/booh:3663
+#: ../bin/booh:3298 ../bin/booh:3661
 msgid "Optimize for 3/2 aspect ratio"
 msgstr ""
 
-#: ../bin/booh:3301 ../bin/booh:3664 ../bin/booh-backend:65
+#: ../bin/booh:3299 ../bin/booh:3662 ../bin/booh-backend:65
 msgid ""
 "Resize images with optimized sizes for 3/2 aspect ratio rather than 4/3 "
 "(typical aspect ratio of photos from point-and-shoot cameras - also called "
@@ -616,23 +619,23 @@ msgid ""
 "reflex cameras - is 3/2)"
 msgstr ""
 
-#: ../bin/booh:3302 ../bin/booh:3665
+#: ../bin/booh:3300 ../bin/booh:3663
 msgid "Number of thumbnails per row: "
 msgstr "Nombro da miniaturoj je linio: "
 
-#: ../bin/booh:3305 ../bin/booh:3668
+#: ../bin/booh:3303 ../bin/booh:3666
 msgid "Number of thumbnails per page: "
 msgstr "Nombro da miniaturoj je paĝo: "
 
-#: ../bin/booh:3310 ../bin/booh:3673
+#: ../bin/booh:3308 ../bin/booh:3671
 msgid "<i>None - all thumbnails in one page</i>"
 msgstr ""
 
-#: ../bin/booh:3320 ../bin/booh:3687
+#: ../bin/booh:3318 ../bin/booh:3685
 msgid "Configure multi-languages"
 msgstr ""
 
-#: ../bin/booh:3321 ../bin/booh:3688
+#: ../bin/booh:3319 ../bin/booh:3686
 msgid ""
 "When disabled, the web-album will be generated with navigation in your "
 "desktop language. When enabled, the web-album will be generated with "
@@ -640,91 +643,91 @@ msgid ""
 "album on an Apache web-server for that feature to work."
 msgstr ""
 
-#: ../bin/booh:3328 ../bin/booh:3335 ../bin/booh:3691
+#: ../bin/booh:3326 ../bin/booh:3333 ../bin/booh:3689
 msgid "Multi-languages: enabled."
 msgstr "Plurlingvoj: ŝaltita."
 
-#: ../bin/booh:3330 ../bin/booh:3337 ../bin/booh:3693
+#: ../bin/booh:3328 ../bin/booh:3335 ../bin/booh:3691
 msgid "Multi-languages: disabled."
 msgstr "Plurlingvoj: malŝaltita."
 
-#: ../bin/booh:3340 ../bin/booh:3705
+#: ../bin/booh:3338 ../bin/booh:3703
 msgid "'Return to your website' link on pages bottom: "
 msgstr ""
 
-#: ../bin/booh:3342 ../bin/booh:3710
+#: ../bin/booh:3340 ../bin/booh:3708
 msgid ""
 "Optional HTML markup to use on pages bottom for a small link returning to "
 "wherever you see fit in your website (or somewhere else)"
 msgstr ""
 
-#: ../bin/booh:3343 ../bin/booh:3711
+#: ../bin/booh:3341 ../bin/booh:3709
 msgid "'Made with' markup on pages bottom: "
 msgstr "'Farita per' markaĵo plejmalsupre de paĝoj: "
 
-#: ../bin/booh:3344
+#: ../bin/booh:3342
 msgid "made with <a href=%booh>booh</a>!"
 msgstr "farita per <a href=%booh>booh</a>!"
 
-#: ../bin/booh:3345 ../bin/booh:3716
+#: ../bin/booh:3343 ../bin/booh:3714
 msgid ""
 "Optional HTML markup to use on pages bottom for a small 'made with' label; %"
 "booh is replaced by the website of booh;\n"
 "for example: made with <a href=%booh>booh</a>!"
 msgstr ""
 
-#: ../bin/booh:3346 ../bin/booh:3717 ../bin/booh-backend:69
+#: ../bin/booh:3344 ../bin/booh:3715 ../bin/booh-backend:69
 msgid "Include the 'addthis' bookmarking and sharing button"
 msgstr ""
 
-#: ../bin/booh:3347 ../bin/booh:3718 ../bin/booh-backend:71
+#: ../bin/booh:3345 ../bin/booh:3716 ../bin/booh-backend:71
 msgid "Quote HTML markup in captions"
 msgstr ""
 
-#: ../bin/booh:3348 ../bin/booh:3719
+#: ../bin/booh:3346 ../bin/booh:3717
 msgid ""
 "If checked, text using markup special characters such as '<grin>' will be "
 "shown properly; if unchecked, markup such as '<a href..' links will be "
 "interpreted by the browser properly"
 msgstr ""
 
-#: ../bin/booh:3363
+#: ../bin/booh:3361
 msgid "<span size='small'><i>invalid source directory</i></span>"
 msgstr "<span size='small'><i>malvalida fonta dosierujo</i></span>"
 
-#: ../bin/booh:3375
+#: ../bin/booh:3373
 msgid "<span size='small'><i>processing...</i></span>"
 msgstr "<span size='small'><i>traktante...</i></span>"
 
-#: ../bin/booh:3398
+#: ../bin/booh:3396
 msgid "<span size='small'><i>%s photos and %s videos</i></span>"
 msgstr "<span size='small'><i>%s bildoj kaj %s videoj</i></span>"
 
-#: ../bin/booh:3410
+#: ../bin/booh:3408
 msgid "<span size='small'><i>permission denied</i></span>"
 msgstr "<span size='small'><i>mankas permeso</i></span>"
 
-#: ../bin/booh:3424
+#: ../bin/booh:3422
 msgid "Select the directory of photos/videos"
 msgstr "Elektu la dosierujon de la bildoj/videoj"
 
-#: ../bin/booh:3439
+#: ../bin/booh:3437
 msgid "Select a new directory where to put the web-album"
 msgstr "Elektu la novan dosierujon por la TTT-albumo"
 
-#: ../bin/booh:3452
+#: ../bin/booh:3450
 msgid "Select a new file to store this album's properties"
 msgstr "Elektu la novan dosieron por la albumo ecoj"
 
-#: ../bin/booh:3480 ../bin/booh:3742 ../lib/booh/booh-lib.rb:78
+#: ../bin/booh:3478 ../bin/booh:3740 ../lib/booh/booh-lib.rb:78
 msgid "original"
 msgstr "originalo"
 
-#: ../bin/booh:3482 ../bin/booh:3744
+#: ../bin/booh:3480 ../bin/booh:3742
 msgid "Include original photo in web-album"
 msgstr "Enmetu originalan bildon en TTT-albumon"
 
-#: ../bin/booh:3495 ../bin/booh:3760
+#: ../bin/booh:3493 ../bin/booh:3758
 msgid ""
 "Set the number of thumbnails per row of the 'thumbnails' pages (if chosen "
 "theme uses a row arrangement)"
@@ -732,29 +735,29 @@ msgstr ""
 "Donu la nombron da miniaturoj je linio de la 'miniaturoj' paĝoj (se elektita "
 "etoso uzas linioaranĝon)"
 
-#: ../bin/booh:3525
+#: ../bin/booh:3523
 msgid "The directory of photos/videos is invalid. Please check your input."
 msgstr ""
 "La dosierujo de bildoj/videoj estas malvalida. Bonvolu kontroli vian enigon."
 
-#: ../bin/booh:3528
+#: ../bin/booh:3526
 msgid "The directory of photos/videos doesn't exist. Please check your input."
 msgstr ""
 "La dosierujo de bildoj/videoj ne ekzistas. Bonvolu kontroli via enigon."
 
-#: ../bin/booh:3531
+#: ../bin/booh:3529
 msgid "The destination directory is invalid. Please check your input."
 msgstr ""
 "La cela dosierujo de bildoj/videoj estas malvalida. Bonvolu kontroli vian "
 "enigon."
 
-#: ../bin/booh:3534 ../bin/booh-backend:127
+#: ../bin/booh:3532 ../bin/booh-backend:127
 msgid ""
 "Sorry, destination directory can't contain non simple alphanumeric "
 "characters."
 msgstr "Pardonu, la cela dosierujo ne haveblas malsimpla literoj kaj ciferoj. "
 
-#: ../bin/booh:3537
+#: ../bin/booh:3535
 msgid ""
 "The destination directory already exists. All existing files and "
 "directories\n"
@@ -762,17 +765,17 @@ msgid ""
 "Are you sure you want to continue?"
 msgstr ""
 
-#: ../bin/booh:3542
+#: ../bin/booh:3540
 msgid ""
 "There is already a file by the name of the destination directory. Please "
 "choose another one."
 msgstr ""
 
-#: ../bin/booh:3545
+#: ../bin/booh:3543
 msgid "Please specify a filename to store the album's properties."
 msgstr "Bonvolu indiki dosiernomon por konservi la albumo-ecojn."
 
-#: ../bin/booh:3548
+#: ../bin/booh:3546
 msgid ""
 "The filename to store the album's properties is invalid. Please check your "
 "input."
@@ -780,7 +783,7 @@ msgstr ""
 "La indikita dosiernomo por konservi la albumo-ecojn estas malvalida. Bonvolu "
 "kontroli vian enigon."
 
-#: ../bin/booh:3551
+#: ../bin/booh:3549
 msgid ""
 "Sorry, the filename specified to store the album's properties is an existing "
 "directory. Please choose another one."
@@ -788,52 +791,52 @@ msgstr ""
 "Pardonu, la indikita dosiernomo por konservi la albumo-ecojn estas "
 "ekzistanta dosierujo. Bonvolu elekti alian."
 
-#: ../bin/booh:3554 ../bin/booh:3790
+#: ../bin/booh:3552 ../bin/booh:3788
 msgid "You need to select at least one size (not counting original)."
 msgstr "Vi elektendas almenaŭ unu grandecon (sen nombrante la originalon)."
 
-#: ../bin/booh:3558
+#: ../bin/booh:3556
 msgid "Could not create destination directory. Permission denied?"
 msgstr "Ne kreeblis celan dosierujon. Neniu permseo?"
 
-#: ../bin/booh:3611 ../bin/booh:3835 ../bin/booh:3855 ../bin/booh:3872
-#: ../bin/booh:3892
+#: ../bin/booh:3609 ../bin/booh:3833 ../bin/booh:3853 ../bin/booh:3870
+#: ../bin/booh:3890
 msgid "Please wait while scanning source directory..."
 msgstr "Bonvolu atendi dum trarigardo de font-dosierujo..."
 
-#: ../bin/booh:3621
+#: ../bin/booh:3619
 msgid "Properties of your album"
 msgstr "Ecoj de via albumo"
 
-#: ../bin/booh:3645
+#: ../bin/booh:3643
 msgid "Directory of source photos/videos: "
 msgstr "Dosierujo de fontaj bildoj/videoj: "
 
-#: ../bin/booh:3649
+#: ../bin/booh:3647
 msgid "Directory where the web-album is created: "
 msgstr "Dosierujo por krei la TTT-albumo: "
 
-#: ../bin/booh:3653
+#: ../bin/booh:3651
 msgid "Filename where this album's properties are stored: "
 msgstr "Dosiernomo pro tiu albumo-ecoj: "
 
-#: ../bin/booh:3902
+#: ../bin/booh:3900
 msgid "Select a new filename to store this album's properties"
 msgstr "Elektu novan dosiernomon por tiu albumo-ecoj"
 
-#: ../bin/booh:3924 ../bin/booh-classifier:1746
+#: ../bin/booh:3922 ../bin/booh-classifier:1771
 msgid "Edit preferences"
 msgstr "Redaktu ecojn"
 
-#: ../bin/booh:3932
+#: ../bin/booh:3930
 msgid "Options"
 msgstr "Opcioj"
 
-#: ../bin/booh:3933 ../bin/booh-classifier:1757
+#: ../bin/booh:3931 ../bin/booh-classifier:1782
 msgid "Command for watching videos: "
 msgstr "Komando por spekti videojn: "
 
-#: ../bin/booh:3938 ../bin/booh-classifier:1761
+#: ../bin/booh:3936 ../bin/booh-classifier:1786
 msgid ""
 "Use %f to specify the filename;\n"
 "for example: /usr/bin/mplayer %f"
@@ -841,11 +844,11 @@ msgstr ""
 "Uzu %f por indiki dosiernomon;\n"
 " ekzemple: /usr/bin/mplayer %f"
 
-#: ../bin/booh:3942
+#: ../bin/booh:3940
 msgid "Command for editing images: "
 msgstr "Komando por redakti bildojn: "
 
-#: ../bin/booh:3946
+#: ../bin/booh:3944
 msgid ""
 "Use %f to specify the filename;\n"
 "for example: /usr/bin/gimp-remote %f"
@@ -853,11 +856,11 @@ msgstr ""
 "Uzu %f por indiki dosiernomon;\n"
 "ekzemple: /usr/bin/gimp-remote %f"
 
-#: ../bin/booh:3950 ../bin/booh-classifier:1764
+#: ../bin/booh:3948 ../bin/booh-classifier:1789
 msgid "Browser's command: "
 msgstr "TTT-legilo komando: "
 
-#: ../bin/booh:3954 ../bin/booh-classifier:1768
+#: ../bin/booh:3952 ../bin/booh-classifier:1793
 msgid ""
 "Use %f to specify the filename;\n"
 "for example: /usr/bin/mozilla-firefox -remote 'openURL(%f,new-window)' || /"
@@ -867,17 +870,17 @@ msgstr ""
 "ekzemple: /usr/bin/mozilla-firefox -remote 'openURL(%f,new-window)' || /usr/"
 "bin/mozilla-firefox %f"
 
-#: ../bin/booh:3958
+#: ../bin/booh:3956
 msgid ""
 "Use embedded flash player for videos,\n"
 "and use this .flv generator:"
 msgstr ""
 
-#: ../bin/booh:3962
+#: ../bin/booh:3960
 msgid "Flowplayer will be used for embedded video playback"
 msgstr ""
 
-#: ../bin/booh:3963
+#: ../bin/booh:3961
 #, fuzzy
 msgid ""
 "Use %f to specify the input filename, %o the output filename;\n"
@@ -886,37 +889,37 @@ msgstr ""
 "Uzu %f por indiki dosiernomon;\n"
 " ekzemple: /usr/bin/mplayer %f"
 
-#: ../bin/booh:3967
+#: ../bin/booh:3965
 msgid "Use symmetric multi-processing"
 msgstr ""
 
-#: ../bin/booh:3969
+#: ../bin/booh:3967
 msgid "processors"
 msgstr "proceziloj"
 
-#: ../bin/booh:3971
+#: ../bin/booh:3969
 msgid ""
 "When activated, this option allows the thumbnails creation to run faster. "
 "However, if you don't have a multi-processor machine, this will only slow "
 "down processing!"
 msgstr ""
 
-#: ../bin/booh:3974
+#: ../bin/booh:3972
 msgid "Disable mouse gestures"
 msgstr "Neebligu musgestojn"
 
-#: ../bin/booh:3976
+#: ../bin/booh:3974
 msgid ""
 "Mouse gestures are 'unusual' mouse movements triggering special actions, and "
 "are great for speeding up your editions. Get details on available mouse "
 "gestures from the Help menu."
 msgstr ""
 
-#: ../bin/booh:3979
+#: ../bin/booh:3977
 msgid "Delete original photos/videos as well"
 msgstr "Forigu originalajn bildojn/videojn ankaŭ"
 
-#: ../bin/booh:3981
+#: ../bin/booh:3979
 msgid ""
 "Normally, deleting a photo or video in booh only removes it from the web-"
 "album. If you check this option, the original file in source directory will "
@@ -928,23 +931,23 @@ msgstr ""
 "forigita ankaŭ. Malfareblas, ĉar aktuala forigo estas farita nur kiam la TTT-"
 "albumo estas konservita."
 
-#: ../bin/booh:3999
+#: ../bin/booh:3997
 msgid "Advanced"
 msgstr "Plie"
 
-#: ../bin/booh:4000
+#: ../bin/booh:3998
 msgid ""
 "Options to pass to <i>convert</i> when\n"
 "performing 'enhance contrast': "
 msgstr ""
 
-#: ../bin/booh:4004
+#: ../bin/booh:4002
 msgid ""
 "Format to use for comments of \n"
 "photos in new albums:"
 msgstr ""
 
-#: ../bin/booh:4010
+#: ../bin/booh:4008
 msgid ""
 "Normally, filenames without extension are used as comments for photos and "
 "videos in new albums. Use this entry to use something else."
@@ -952,21 +955,21 @@ msgstr ""
 "Ĝenerale, dosiernomoj sen sufikso estas uzitaj kiel komentoj por bildoj kaj "
 "videoj en novaj albumoj. Elektu tion ĉi por uzi alian."
 
-#: ../bin/booh:4153 ../bin/booh-classifier:1815
+#: ../bin/booh:4151 ../bin/booh-classifier:1840
 msgid "Update file's EXIF orientation when rotating a picture"
 msgstr ""
 
-#: ../bin/booh:4155 ../bin/booh-classifier:1817
+#: ../bin/booh:4153 ../bin/booh-classifier:1842
 msgid ""
 "When rotating a picture (Alt-Right/Left), also update EXIF orientation in "
 "the file itself"
 msgstr ""
 
-#: ../bin/booh:4157
+#: ../bin/booh:4155
 msgid "Transcode videos"
 msgstr "Transkodi videojn"
 
-#: ../bin/booh:4162
+#: ../bin/booh:4160
 msgid ""
 "Whether to transcode videos into the web-album instead of using the original "
 "videos directly (can be an interesting disk space saver!). First put the "
@@ -976,7 +979,7 @@ msgid ""
 "me_quality=6 -o %o %f"
 msgstr ""
 
-#: ../bin/booh:4223
+#: ../bin/booh:4221
 msgid ""
 "<b>One-Click tools.</b>\n"
 "\n"
@@ -991,27 +994,32 @@ msgid ""
 "with One-Click tools.\n"
 msgstr ""
 
-#: ../bin/booh:4236
+#: ../bin/booh:4234
 msgid "Logging into remote site..."
 msgstr ""
 
-#: ../bin/booh:4263
+#: ../bin/booh:4261
 msgid "Specified URL incorrect, please check your input."
 msgstr ""
 
-#: ../bin/booh:4270
+#: ../bin/booh:4268
 msgid "Mirroring data..."
 msgstr ""
 
-#: ../bin/booh:4291
+#: ../bin/booh:4289
 msgid "Successfully mirrored into remote repository."
 msgstr ""
 
-#: ../bin/booh:4293
+#: ../bin/booh:4291
 msgid "Failed to mirror into remote repository."
 msgstr ""
 
-#: ../bin/booh:4308
+#: ../bin/booh:4302 ../bin/booh:4430
+#, fuzzy
+msgid "Upload web-album"
+msgstr "Kreu TTT-albumon"
+
+#: ../bin/booh:4306
 msgid ""
 "<b>Upload web-album.</b>\n"
 "\n"
@@ -1019,54 +1027,54 @@ msgid ""
 "<i>The destination directory '%s' will be created/updated there.</i>"
 msgstr ""
 
-#: ../bin/booh:4313
+#: ../bin/booh:4311
 msgid "Upload"
 msgstr ""
 
-#: ../bin/booh:4324
+#: ../bin/booh:4322
 msgid "Please wait, mirroring..."
 msgstr ""
 
-#: ../bin/booh:4325
+#: ../bin/booh:4323
 msgid "Initialization..."
 msgstr ""
 
-#: ../bin/booh:4389
+#: ../bin/booh:4387
 msgid "Failed to execute 'lftp' program."
 msgstr ""
 
-#: ../bin/booh:4405 ../bin/booh-classifier:1861
+#: ../bin/booh:4403 ../bin/booh-classifier:1886
 msgid "_File"
 msgstr "_Dosiero"
 
-#: ../bin/booh:4414
+#: ../bin/booh:4412
 msgid "Merge new/removed photos/videos in current subalbum"
 msgstr "Kunfandu novajn/forigajn bildojn/videojn en nuna subalbumo"
 
-#: ../bin/booh:4416
+#: ../bin/booh:4414
 msgid ""
 "Take into account new/removed photos/videos in currently viewed subalbum"
 msgstr ""
 "Konsideru novajn/forigajn bildojn/videojn en la nuna rigardata subalbumo"
 
-#: ../bin/booh:4417
+#: ../bin/booh:4415
 msgid "Merge new subalbums (subdirectories) in current subalbum"
 msgstr "Kunfandu novajn subalbumojn (subdosierujojn) en nuna subalbumo"
 
-#: ../bin/booh:4419
+#: ../bin/booh:4417
 msgid ""
 "Take into account new subalbums in currently viewed subalbum (and only here)"
 msgstr ""
 "Konsideru novajn subalbumojn en nuna rigardata subalbumo (ja nur ĉi tie)"
 
-#: ../bin/booh:4420
+#: ../bin/booh:4418
 msgid ""
 "Scan source directory to merge new subalbums and new/removed photos/videos"
 msgstr ""
 "Rigardadu fontodosierujon por kunfandi novajn subalbumojn kaj novajn/"
 "forigajn bildojn/videojn."
 
-#: ../bin/booh:4422
+#: ../bin/booh:4420
 msgid ""
 "Take into account new/removed subalbums (subdirectories) and new/removed "
 "photos/videos in existing subalbums (anywhere)"
@@ -1074,38 +1082,33 @@ msgstr ""
 "Konsideru novajn/forigajn subalbumojn (subdosierujojn) kaj novajn/forigajn "
 "bildojn/videojn en ekzistanta subalbumojn (ie ajn)"
 
-#: ../bin/booh:4424
+#: ../bin/booh:4422
 #, fuzzy
 msgid "Extend album..."
 msgstr "sekva albumo"
 
-#: ../bin/booh:4427
+#: ../bin/booh:4425
 msgid "Generate web-album"
 msgstr "Kreu TTT-albumon"
 
-#: ../bin/booh:4429
+#: ../bin/booh:4427
 msgid ""
 "(Re)generate web-album from latest changes into the destination directory"
 msgstr "(Re)kreu TTT-albumon el lastaj ŝanĝoj al cela dosierujo"
 
-#: ../bin/booh:4430
+#: ../bin/booh:4428
 msgid "View web-album with browser"
 msgstr "Rigardu TTT-albumon per TTT-legilo"
 
-#: ../bin/booh:4432
-#, fuzzy
-msgid "Upload web-album"
-msgstr "Kreu TTT-albumon"
-
-#: ../bin/booh:4436
+#: ../bin/booh:4434
 msgid "View and modify properties of the web-album"
 msgstr "Rigardu kaj ŝanĝu ecojn de la TTT-albumo"
 
-#: ../bin/booh:4452
+#: ../bin/booh:4450
 msgid "Notice: flash videos normally don't play locally.\n"
 msgstr ""
 
-#: ../bin/booh:4454
+#: ../bin/booh:4452
 msgid ""
 "Please wait while generating web-album...\n"
 "This may take a while, please be patient."
@@ -1113,7 +1116,7 @@ msgstr ""
 "Bonvolu atendi dum rekreiĝas TTT-albumo...\n"
 "Longtempa eblas, bonvolu pacienci."
 
-#: ../bin/booh:4457
+#: ../bin/booh:4455
 #, fuzzy
 msgid ""
 "Your web-album is now ready in directory '%s'.\n"
@@ -1124,7 +1127,7 @@ msgstr ""
 "Tamen, pro la ŝalto de plurlingva uzo, vi ne kapablos vidi ĝin\n"
 "komforte per via TTT-legilo."
 
-#: ../bin/booh:4460
+#: ../bin/booh:4458
 #, fuzzy
 msgid ""
 "Your web-album is now ready in directory '%s'.\n"
@@ -1134,27 +1137,27 @@ msgstr ""
 "Vian TTT-albumo disponeblas nun en dosierujo '%s'.\n"
 "Klaku por rigardi ĝin per via TTT-legilo:"
 
-#: ../bin/booh:4483 ../bin/booh:4495
+#: ../bin/booh:4481 ../bin/booh:4493
 msgid "Seems like you should generate the web-album first."
 msgstr "Ŝajnas ke vi kreendas unue la TTT-albumon."
 
-#: ../bin/booh:4490
+#: ../bin/booh:4488
 msgid "The program 'lftp' is needed to upload web-albums. Please install it."
 msgstr ""
 
-#: ../bin/booh:4502 ../bin/booh-classifier:1875
+#: ../bin/booh:4500 ../bin/booh-classifier:1900
 msgid "_Edit"
 msgstr "_Redakto"
 
-#: ../bin/booh:4507
+#: ../bin/booh:4505
 msgid "Sort by EXIF date"
 msgstr "Ordigu laŭ EXIF-dato"
 
-#: ../bin/booh:4509
+#: ../bin/booh:4507
 msgid "Remove all captions in this sub-album"
 msgstr "Forigu ĉiujn titolojn el tiu subalbumo"
 
-#: ../bin/booh:4511
+#: ../bin/booh:4509
 msgid ""
 "Mainly useful when you don't want to type any caption, that will remove "
 "default captions made of filenames"
@@ -1162,27 +1165,27 @@ msgstr ""
 "Ĝenerale uzata kiam vi ne volas tajpi titolon, tio forigos apriorajn "
 "titolojn faritajn el dosiernomoj"
 
-#: ../bin/booh:4522 ../bin/booh-classifier:1888
+#: ../bin/booh:4520 ../bin/booh-classifier:1913
 msgid "_Help"
 msgstr "_Helpo"
 
-#: ../bin/booh:4524
+#: ../bin/booh:4522
 msgid "One-click tools"
 msgstr "Sola-klako iloj"
 
-#: ../bin/booh:4526
+#: ../bin/booh:4524
 msgid "Speedup: key shortcuts and mouse gestures"
 msgstr "Rapidigo: klavkombinoj kaj musgestoj"
 
-#: ../bin/booh:4528 ../bin/booh-classifier:1893
+#: ../bin/booh:4526 ../bin/booh-classifier:1918
 msgid "Online tutorials (opens a web-browser)"
 msgstr "Retaj instrukcioj (malfermas TTT-legilon)"
 
-#: ../bin/booh:4536
+#: ../bin/booh:4534
 msgid "One-Click tools are available in the toolbar."
 msgstr "Unu-klakaj iloj disponeblas illistele."
 
-#: ../bin/booh:4540
+#: ../bin/booh:4538
 msgid ""
 "<span size='large' weight='bold'>Key shortcuts:</span>\n"
 "\n"
@@ -1220,35 +1223,35 @@ msgid ""
 "span>: redo\n"
 msgstr ""
 
-#: ../bin/booh:4576
+#: ../bin/booh:4574
 msgid "Open"
 msgstr "Malfermu"
 
-#: ../bin/booh:4608 ../bin/booh:4611
+#: ../bin/booh:4606 ../bin/booh:4609
 msgid "Rotate"
 msgstr "Rotaciu"
 
-#: ../bin/booh:4614
+#: ../bin/booh:4612
 msgid "Enhance"
 msgstr "Elstarigu"
 
-#: ../bin/booh:4616
+#: ../bin/booh:4614
 msgid "Delete"
 msgstr "Forigu"
 
-#: ../bin/booh:4619
+#: ../bin/booh:4617
 msgid "None"
 msgstr "Neniu"
 
-#: ../bin/booh:4634
+#: ../bin/booh:4632
 msgid "You have just clicked on a One-Click tool."
 msgstr "Vi ĵus klakis Unu-klakan ilon."
 
-#: ../bin/booh:4743
+#: ../bin/booh:4741
 msgid "Password protect this sub-album"
 msgstr "Pasvorte protektu tiun subalbumo"
 
-#: ../bin/booh:4751
+#: ../bin/booh:4749
 msgid ""
 "You can choose to <b>password protect</b> the sub-album '%s' (only "
 "available\n"
@@ -1262,23 +1265,23 @@ msgid ""
 "block access.\n"
 msgstr ""
 
-#: ../bin/booh:4759
+#: ../bin/booh:4757
 msgid "free access"
 msgstr "libera aliro"
 
-#: ../bin/booh:4760
+#: ../bin/booh:4758
 msgid "password protect with password file:"
 msgstr "pasvorte protektu per pasvorto dosiero"
 
-#: ../bin/booh:4762
+#: ../bin/booh:4760
 msgid "help about password file"
 msgstr "helpo pri pasvorto dosiero"
 
-#: ../bin/booh:4764
+#: ../bin/booh:4762
 msgid "generate a password file"
 msgstr "kreu pasvortdosieron"
 
-#: ../bin/booh:4776
+#: ../bin/booh:4774
 msgid ""
 "Password protection proposed here uses the .htaccess/.htpasswd features\n"
 "proposed by Apache. So first, be sure you will publish your web-album on an\n"
@@ -1293,11 +1296,11 @@ msgid ""
 "Document Root of the Apache configuration."
 msgstr ""
 
-#: ../bin/booh:4787
+#: ../bin/booh:4785
 msgid "Generate a password file"
 msgstr "Kreu pasvortdosieron"
 
-#: ../bin/booh:4795
+#: ../bin/booh:4793
 msgid ""
 "I can generate a password file (.htpasswd for Apache) for you. Just type\n"
 "the username and password you wish to put in it below and validate."
@@ -1305,15 +1308,15 @@ msgstr ""
 "Kreeblas pasvortdosieron (.htpasswd pro Apaŝo) pro vi. Nur tajpu sube\n"
 "la uzantonomon kaj pasvorton vi deziras enmeti kaj konfirmu."
 
-#: ../bin/booh:4798
+#: ../bin/booh:4796
 msgid "Username:"
 msgstr "Uzantonomo:"
 
-#: ../bin/booh:4800
+#: ../bin/booh:4798
 msgid "Password:"
 msgstr "Pasvorton:"
 
-#: ../bin/booh:4819
+#: ../bin/booh:4817
 msgid ""
 "The file <b>%s</b> now contains the username and the crypted password. Now\n"
 "copy it to a suitable location on the machine hosting the Apache web-server "
@@ -1322,25 +1325,25 @@ msgid ""
 "dialog."
 msgstr ""
 
-#: ../bin/booh:4841
+#: ../bin/booh:4839
 msgid "set password protection for %s"
 msgstr "Igu pasvortoprotekto por %s"
 
-#: ../bin/booh:4862
+#: ../bin/booh:4860
 msgid "Save modifications?"
 msgstr ""
 
-#: ../bin/booh:4863
+#: ../bin/booh:4861
 #, fuzzy
 msgid "You need to save or discard your changes before extending the album."
 msgstr "Ĉu vi volas konservi viajn ŝanĝojn antaŭ la fino?"
 
-#: ../bin/booh:4872
+#: ../bin/booh:4870
 #, fuzzy
 msgid "Extend the album"
 msgstr "Konservu tiun albumon?"
 
-#: ../bin/booh:4880
+#: ../bin/booh:4878
 msgid ""
 "If you want this album to be part of a larger album, you can choose to\n"
 "<b>extend</b> it. This album will become a sub-album of the larger album.\n"
@@ -1358,50 +1361,50 @@ msgid ""
 "there."
 msgstr ""
 
-#: ../bin/booh:4915
+#: ../bin/booh:4913
 msgid "New layout: "
 msgstr ""
 
-#: ../bin/booh:4918
+#: ../bin/booh:4916
 msgid "Directory name:"
 msgstr ""
 
-#: ../bin/booh:4933 ../bin/booh-classifier:1329 ../bin/booh-backend:823
+#: ../bin/booh:4931 ../bin/booh-classifier:1335 ../bin/booh-backend:827
 msgid ""
 "Source directory or sub-directories can't contain a single-quote character, "
 "sorry: %s"
 msgstr ""
 "Fontodosierujo aŭ subdosierujoj ne rajtas enhavi simplan citilon, pardonu: %s"
 
-#: ../bin/booh:4940 ../bin/booh:4948
+#: ../bin/booh:4938 ../bin/booh:4946
 msgid "%s already exists."
 msgstr ""
 
-#: ../bin/booh:4944
+#: ../bin/booh:4942
 msgid "No write access to '%s'."
 msgstr ""
 
-#: ../bin/booh:4957
+#: ../bin/booh:4955
 msgid "Erroneous name."
 msgstr ""
 
-#: ../bin/booh:5021
+#: ../bin/booh:5019
 msgid "Password protect"
 msgstr "Pasvorte protektu"
 
-#: ../bin/booh:5024
+#: ../bin/booh:5022
 msgid "Restore deleted photos/videos/subalbums"
 msgstr "Malforigu bildojn/videojn/subalbumojn"
 
-#: ../bin/booh:5049
+#: ../bin/booh:5047
 msgid "Sub-albums page"
 msgstr "Sub-albumoj paĝo"
 
-#: ../bin/booh:5051
+#: ../bin/booh:5049
 msgid "Thumbnails page"
 msgstr "Miniaturoj paĝo"
 
-#: ../bin/booh:5116
+#: ../bin/booh:5114
 msgid "Ready."
 msgstr "Preta."
 
@@ -1426,209 +1429,217 @@ msgstr "%s (%sx%s, %s KB)"
 msgid "Selected %s"
 msgstr "Elektita %s"
 
-#: ../bin/booh-classifier:1026
+#: ../bin/booh-classifier:903
+msgid "Yes to all"
+msgstr ""
+
+#: ../bin/booh-classifier:1032
 msgid ""
 "Notice: no write access to '%s', permission will be denied at execute step."
 msgstr ""
 
-#: ../bin/booh-classifier:1035
+#: ../bin/booh-classifier:1041
 msgid "set for removal"
 msgstr ""
 
-#: ../bin/booh-classifier:1059
+#: ../bin/booh-classifier:1065
 msgid "Cleared label"
 msgstr "Forviŝita etikedo"
 
-#: ../bin/booh-classifier:1061
+#: ../bin/booh-classifier:1067
 msgid "Cleared set for removal"
 msgstr ""
 
-#: ../bin/booh-classifier:1128
+#: ../bin/booh-classifier:1134
 msgid ""
 "You typed the text character '%s', which is not associated with a label.\n"
 "Type in the full name of the label below to create a new one."
 msgstr ""
 
-#: ../bin/booh-classifier:1160
+#: ../bin/booh-classifier:1166
 msgid "set label"
 msgstr "difinu etikedon"
 
-#: ../bin/booh-classifier:1233
+#: ../bin/booh-classifier:1239
 msgid "Loading images..."
 msgstr "Ŝargante bildojn..."
 
-#: ../bin/booh-classifier:1235 ../bin/booh-classifier:1287
-#: ../bin/booh-classifier:2004
+#: ../bin/booh-classifier:1241 ../bin/booh-classifier:1293
+#: ../bin/booh-classifier:2029
 msgid "Loading... %d%"
 msgstr "Ŝargante... %d%"
 
-#: ../bin/booh-classifier:1300
+#: ../bin/booh-classifier:1306
 msgid "%d images of total %s kB loaded in %3.2f seconds."
 msgstr "%d bildoj (%s kB) ŝargitaj dum %3.2f sekundoj."
 
-#: ../bin/booh-classifier:1317 ../bin/booh-classifier:1353
+#: ../bin/booh-classifier:1323 ../bin/booh-classifier:1359
 #, fuzzy
 msgid "Scanning source directory... %s"
 msgstr "Trarigardo de font-dosierujo..."
 
-#: ../bin/booh-classifier:1334
+#: ../bin/booh-classifier:1340
 msgid "Videos can't contain a single quote character ('), sorry: %s"
 msgstr "Videoj ne rajtas enhavi citilan signon ('), pardonu: %s"
 
-#: ../bin/booh-classifier:1345 ../bin/booh-backend:836
+#: ../bin/booh-classifier:1351 ../bin/booh-backend:840
 msgid ""
 "Ignoring directory %s, begins with a dot (indicating a hidden directory)"
 msgstr "Ignoru dosierujon %s, komencas per punkto (indikante kaŝita dosierujo)"
 
-#: ../bin/booh-classifier:1353
+#: ../bin/booh-classifier:1359
 msgid "%d entries found"
 msgstr ""
 
-#: ../bin/booh-classifier:1388
+#: ../bin/booh-classifier:1394
 msgid "Specify the directory to work with"
 msgstr "Indiku la dosierujon uzendan"
 
-#: ../bin/booh-classifier:1421
+#: ../bin/booh-classifier:1427
 msgid ""
 "You have not executed the classification. Are you sure you want to quit?"
 msgstr ""
 
-#: ../bin/booh-classifier:1436
+#: ../bin/booh-classifier:1442
 msgid ""
 "You're about to <b>execute</b> actions on the marked images.\n"
 "Please confirm below the actions. You cannot undo this operation!"
 msgstr ""
 
-#: ../bin/booh-classifier:1444
+#: ../bin/booh-classifier:1450
 msgid "<b>Label name:</b>"
 msgstr "<b>Etikedo nomo:</b>"
 
-#: ../bin/booh-classifier:1445
+#: ../bin/booh-classifier:1451
 msgid "<b>Amount of pictures:</b>"
 msgstr "<b>Kvanto da bildoj:</b>"
 
-#: ../bin/booh-classifier:1446
+#: ../bin/booh-classifier:1452
 msgid "<b>Pictures examples:</b>"
 msgstr "<b>Bildaj ekzamploj:</b>"
 
-#: ../bin/booh-classifier:1447
+#: ../bin/booh-classifier:1453
 msgid "<b>Action to perform:</b>"
 msgstr "<b>Ago efektivigenda:</b>"
 
-#: ../bin/booh-classifier:1482
+#: ../bin/booh-classifier:1488
 msgid "Copy to:"
 msgstr "Kopiu al:"
 
-#: ../bin/booh-classifier:1485
+#: ../bin/booh-classifier:1491
 msgid "Move to:"
 msgstr "Movu al:"
 
-#: ../bin/booh-classifier:1488
+#: ../bin/booh-classifier:1494
 msgid "Permanently remove"
 msgstr ""
 
-#: ../bin/booh-classifier:1492
+#: ../bin/booh-classifier:1498
 msgid "Do nothing"
 msgstr "Faru nenion"
 
-#: ../bin/booh-classifier:1503
+#: ../bin/booh-classifier:1509
 msgid "<i>(unset)</i>"
 msgstr "<i>(nedifinita)</i>"
 
-#: ../bin/booh-classifier:1505
+#: ../bin/booh-classifier:1511
 msgid "Specify the directory where to move the pictures to"
 msgstr "Elektu la celan dosierujon por la bildojn"
 
-#: ../bin/booh-classifier:1535 ../bin/booh-classifier:1959
+#: ../bin/booh-classifier:1541 ../bin/booh-classifier:1984
 msgid "<i>to remove</i>"
 msgstr "<i>forigenda</i>"
 
-#: ../bin/booh-classifier:1541
+#: ../bin/booh-classifier:1547
 msgid ""
 "I have noticed I am about to permanently remove the %d above mentioned "
 "pictures (total %s kB)."
 msgstr ""
 
-#: ../bin/booh-classifier:1565
+#: ../bin/booh-classifier:1571
 msgid ""
 "You have not confirmed that you noticed the permanent removal of the "
 "pictures marked for deletion."
 msgstr ""
 
-#: ../bin/booh-classifier:1572
+#: ../bin/booh-classifier:1578
 msgid "Sorry, permission denied to remove '%s'."
 msgstr ""
 
-#: ../bin/booh-classifier:1586
+#: ../bin/booh-classifier:1592
 msgid "You have not selected a directory where to move/copy %s."
 msgstr ""
 
-#: ../bin/booh-classifier:1597
+#: ../bin/booh-classifier:1603
 msgid "Directory %s, where to move/copy %s, is not valid or not createable."
 msgstr ""
 
-#: ../bin/booh-classifier:1602
+#: ../bin/booh-classifier:1608
 msgid "Directory %s, where to move/copy %s, is not valid or not writable."
 msgstr ""
 
-#: ../bin/booh-classifier:1609
+#: ../bin/booh-classifier:1615
 msgid "Sorry, a file '%s' already exists in directory '%s'."
 msgstr ""
 
-#: ../bin/booh-classifier:1618
+#: ../bin/booh-classifier:1624
 msgid "Sorry, permission denied to move '%s'."
 msgstr ""
 
-#: ../bin/booh-classifier:1658
-msgid "Unexpected error: '%s'."
+#: ../bin/booh-classifier:1655
+msgid ""
+"Failure:\n"
+"\n"
+"%s\n"
+"Do you wish to continue?"
 msgstr ""
 
-#: ../bin/booh-classifier:1660
+#: ../bin/booh-classifier:1685
 msgid "Successfully moved %d files, copied %d file, and removed %d files."
 msgstr ""
 
-#: ../bin/booh-classifier:1771
+#: ../bin/booh-classifier:1796
 msgid "Thumbnails height: "
 msgstr ""
 
-#: ../bin/booh-classifier:1775
+#: ../bin/booh-classifier:1800
 msgid ""
 "The desired height of the thumbnails in the thumbnails line of the bottom"
 msgstr ""
 
-#: ../bin/booh-classifier:1778
+#: ../bin/booh-classifier:1803
 msgid "Preloading distance: "
 msgstr ""
 
-#: ../bin/booh-classifier:1782
+#: ../bin/booh-classifier:1807
 msgid "Amount of pictures preloaded left and right to the currently shown"
 msgstr ""
 
-#: ../bin/booh-classifier:1785
+#: ../bin/booh-classifier:1810
 msgid "Cache memory use: "
 msgstr ""
 
-#: ../bin/booh-classifier:1791
+#: ../bin/booh-classifier:1816
 msgid "% of free memory"
 msgstr ""
 
-#: ../bin/booh-classifier:1793
+#: ../bin/booh-classifier:1818
 msgid "Percentage of free memory (+ buffers/cache) measured at startup"
 msgstr ""
 
-#: ../bin/booh-classifier:1796
+#: ../bin/booh-classifier:1821
 msgid "MB"
 msgstr "MB"
 
-#: ../bin/booh-classifier:1807
+#: ../bin/booh-classifier:1832
 msgid "Amount of memory in megabytes"
 msgstr ""
 
-#: ../bin/booh-classifier:1891
+#: ../bin/booh-classifier:1916
 msgid "Speedup: key shortcuts"
 msgstr "Rapidigo: klavkombinoj"
 
-#: ../bin/booh-classifier:1901
+#: ../bin/booh-classifier:1926
 msgid ""
 "<span size='large' weight='bold'>Help</span>\n"
 "\n"
@@ -1663,7 +1674,7 @@ msgid ""
 "defined.\n"
 msgstr ""
 
-#: ../bin/booh-classifier:1923
+#: ../bin/booh-classifier:1948
 msgid ""
 "<span size='large' weight='bold'>Key shortcuts</span>\n"
 "\n"
@@ -1685,16 +1696,16 @@ msgid ""
 "current image.\n"
 msgstr ""
 
-#: ../bin/booh-classifier:1950
+#: ../bin/booh-classifier:1975
 msgid "Labels list:"
 msgstr "Etikedo listo:"
 
-#: ../bin/booh-classifier:1953
+#: ../bin/booh-classifier:1978
 msgid "<i>unlabelled</i>"
 msgstr ""
 
 #: ../lib/booh/html-merges.rb:54 ../lib/booh/html-merges.rb:88
-#: ../bin/booh-backend:1301
+#: ../bin/booh-backend:1310 ../bin/booh-backend:1312
 msgid "Run slideshow!"
 msgstr "Eku bildprezenton!"
 
@@ -1706,11 +1717,11 @@ msgstr "Haltigu bildprezenton"
 msgid "<<- First"
 msgstr "<<- Unua"
 
-#: ../lib/booh/html-merges.rb:70 ../bin/booh-backend:1296
+#: ../lib/booh/html-merges.rb:70 ../bin/booh-backend:1305
 msgid "<- Previous"
 msgstr "<- Antaŭa"
 
-#: ../lib/booh/html-merges.rb:76 ../bin/booh-backend:1298
+#: ../lib/booh/html-merges.rb:76 ../bin/booh-backend:1307
 msgid "Next ->"
 msgstr "Sekva ->"
 
@@ -1980,11 +1991,11 @@ msgstr ""
 msgid "No '%s' found for substitution"
 msgstr "Ne trovita '%s' por anstataŭo"
 
-#: ../bin/booh-backend:657
+#: ../bin/booh-backend:661
 msgid "Bookmark and Share"
 msgstr ""
 
-#: ../bin/booh-backend:813
+#: ../bin/booh-backend:817
 msgid ""
 "Merging config: removing directory %s from config, isn't on filesystem "
 "anymore"
@@ -1992,23 +2003,23 @@ msgstr ""
 "Kunfandante agordo: forigante dosierujo %s el agordo, ne plu estas ĉe "
 "dosiersistemo"
 
-#: ../bin/booh-backend:828
+#: ../bin/booh-backend:832
 msgid "Files can't contain any of the characters ', \", [ or ], sorry: %s"
 msgstr "Dosieroj ne rajtas enhavi iu ajn signojn ', \", [ aŭ ], pardonu: %s"
 
-#: ../bin/booh-backend:878
+#: ../bin/booh-backend:882
 msgid "Handling %s from config list..."
 msgstr "Traktante %s el agordolisto..."
 
-#: ../bin/booh-backend:885
+#: ../bin/booh-backend:889
 msgid "Examining %s..."
 msgstr "Ekzamenante %s..."
 
-#: ../bin/booh-backend:890
+#: ../bin/booh-backend:894
 msgid "Ignoring %s, contains one of forbidden characters: '\"[]"
 msgstr "Ignorante %s, enhavas unu el malpermesitaj signoj: '\"[]"
 
-#: ../bin/booh-backend:911
+#: ../bin/booh-backend:915
 msgid ""
 "Config merge: removing %s from config; use the backup file to retrieve "
 "caption info if this was a mistake"
@@ -2016,76 +2027,76 @@ msgstr ""
 "Agordo kunfando: forigante %s el agordo; uzu la sekurkopia dosiero por "
 "elpreni titoloinformon se vi maltrafis"
 
-#: ../bin/booh-backend:926
+#: ../bin/booh-backend:930
 msgid "\t%s photos"
 msgstr "\t%s bildoj"
 
-#: ../bin/booh-backend:928
+#: ../bin/booh-backend:932
 msgid "\t%s videos"
 msgstr "\t%s videoj"
 
-#: ../bin/booh-backend:999
+#: ../bin/booh-backend:1003
 msgid "Outputting in %s..."
 msgstr "Eligante al %s..."
 
-#: ../bin/booh-backend:1019
+#: ../bin/booh-backend:1023
 msgid "\tcreating photos thumbnails..."
 msgstr "\tkreante bildaj miniaturoj..."
 
-#: ../bin/booh-backend:1063
+#: ../bin/booh-backend:1067
 msgid "\tcreating videos thumbnails..."
 msgstr "\tkreante videoj miniaturoj..."
 
-#: ../bin/booh-backend:1163
+#: ../bin/booh-backend:1167
 msgid "\tgenerating HTML pages..."
 msgstr "\tkreante HTML-a paĝoj..."
 
-#: ../bin/booh-backend:1224
+#: ../bin/booh-backend:1228
 msgid "(no preview)"
 msgstr "(neniu antaŭrigardo)"
 
-#: ../bin/booh-backend:1295
+#: ../bin/booh-backend:1304
 msgid "Pages: "
 msgstr "Paĝoj: "
 
-#: ../bin/booh-backend:1315
+#: ../bin/booh-backend:1326
 msgid "<i>Click on an image to view it larger</i>"
 msgstr "<i>Klaku bildon por vidi ĝin pli granda</i>"
 
-#: ../bin/booh-backend:1428
+#: ../bin/booh-backend:1444
 msgid "return to thumbnails"
 msgstr "reen al miniaturoj"
 
-#: ../bin/booh-backend:1448
+#: ../bin/booh-backend:1469
 msgid "\tfixating configuration file..."
 msgstr "\tkorektante agordodosiero..."
 
-#: ../bin/booh-backend:1480
+#: ../bin/booh-backend:1501
 msgid "\t\tremoving %s, no element in it"
 msgstr "\t\tforigante %s, neniu elemento ene"
 
-#: ../bin/booh-backend:1513
+#: ../bin/booh-backend:1534
 #, fuzzy
 msgid "completed necessary stuff for GUI, exiting."
 msgstr " elfaris necesan aĵon por GUI, finante."
 
-#: ../bin/booh-backend:1519
+#: ../bin/booh-backend:1540
 msgid "\trescanning directories to generate all 'index.html' files..."
 msgstr "\tretrarigardante dosierujojn por krei ĉiujn 'index.html' dosierojn..."
 
-#: ../bin/booh-backend:1609
+#: ../bin/booh-backend:1635
 msgid "return to albums"
 msgstr "reen al albumoj"
 
-#: ../bin/booh-backend:1610 ../bin/booh-backend:1628
+#: ../bin/booh-backend:1636 ../bin/booh-backend:1654
 msgid "previous album"
 msgstr "antaŭa albumo"
 
-#: ../bin/booh-backend:1611 ../bin/booh-backend:1629
+#: ../bin/booh-backend:1637 ../bin/booh-backend:1655
 msgid "next album"
 msgstr "sekva albumo"
 
-#: ../bin/booh-backend:1640
+#: ../bin/booh-backend:1666
 msgid " all done."
 msgstr " ĉio farita."
 
@@ -2162,7 +2173,7 @@ msgstr "Ne daŭrigeblas, neniu valida grandeco elektita."
 msgid ","
 msgstr "."
 
-#: ../lib/booh/booh-lib.rb:364
+#: ../lib/booh/booh-lib.rb:366
 msgid ""
 "specified seektime too large? that may also be another probleme. try another "
 "value."
@@ -2170,7 +2181,7 @@ msgstr ""
 "indikita serĉotempo tro granda? povas esti alia problemo. Provu alian "
 "valoron."
 
-#: ../lib/booh/booh-lib.rb:563
+#: ../lib/booh/booh-lib.rb:583
 msgid ""
 "The configured browser seems to be unavailable.\n"
 "You should fix this in Edit/Preferences so that you can open URLs.\n"
@@ -2178,11 +2189,11 @@ msgid ""
 "Problem was: '%s' is not an executable file."
 msgstr ""
 
-#: ../lib/booh/booh-lib.rb:877
+#: ../lib/booh/booh-lib.rb:897
 msgid "''The Web-Album of choice for discriminating Linux users''"
 msgstr "\"La elektinda TTT-Albumo por diskriminaciantaj Linukso uzantoj\""
 
-#: ../lib/booh/booh-lib.rb:878
+#: ../lib/booh/booh-lib.rb:898
 msgid ""
 "Esperanto: Stephane Fillod\n"
 "Japanese: Masao Mutoh\n"
@@ -2204,6 +2215,7 @@ msgstr "Refaru %s."
 
 #: ../data/booh/themes/cardu/metadata/parameters.rb:32
 #: ../data/booh/themes/dark/metadata/parameters.rb:32
+#: ../data/booh/themes/gradient/metadata/parameters.rb:32
 #: ../data/booh/themes/sbs/metadata/parameters.rb:32
 #: ../data/booh/themes/simple/metadata/parameters.rb:32
 msgid "Sizes that should fit browsers in fullscreen for 800x600 screens"
@@ -2211,6 +2223,7 @@ msgstr "Grandecoj kiuj adaptus retumilojn tutekrane por 800x600 ekranoj"
 
 #: ../data/booh/themes/cardu/metadata/parameters.rb:40
 #: ../data/booh/themes/dark/metadata/parameters.rb:40
+#: ../data/booh/themes/gradient/metadata/parameters.rb:40
 #: ../data/booh/themes/sbs/metadata/parameters.rb:40
 #: ../data/booh/themes/simple/metadata/parameters.rb:40
 msgid "Sizes that should fit browsers in fullscreen for 1024x768 screens"
@@ -2218,6 +2231,7 @@ msgstr "Grandecoj kiuj adaptus retumilojn tutekrane por 1024x768 ekranoj"
 
 #: ../data/booh/themes/cardu/metadata/parameters.rb:48
 #: ../data/booh/themes/dark/metadata/parameters.rb:48
+#: ../data/booh/themes/gradient/metadata/parameters.rb:48
 #: ../data/booh/themes/sbs/metadata/parameters.rb:48
 #: ../data/booh/themes/simple/metadata/parameters.rb:48
 msgid "Sizes that should fit browsers in fullscreen for 1280x1024 screens"
@@ -2225,6 +2239,7 @@ msgstr "Grandecoj kiuj adaptus retumilojn tutekrane por 1280x1024 ekranoj"
 
 #: ../data/booh/themes/cardu/metadata/parameters.rb:55
 #: ../data/booh/themes/dark/metadata/parameters.rb:55
+#: ../data/booh/themes/gradient/metadata/parameters.rb:55
 #: ../data/booh/themes/sbs/metadata/parameters.rb:55
 #: ../data/booh/themes/simple/metadata/parameters.rb:55
 msgid "Sizes that should fit browsers in fullscreen for 1400x1050 screens"
@@ -2232,10 +2247,29 @@ msgstr "Grandecoj kiuj adaptus retumilojn tutekrane por 1400x1050 ekranoj"
 
 #: ../data/booh/themes/cardu/metadata/parameters.rb:63
 #: ../data/booh/themes/dark/metadata/parameters.rb:63
+#: ../data/booh/themes/gradient/metadata/parameters.rb:63
 #: ../data/booh/themes/sbs/metadata/parameters.rb:63
 #: ../data/booh/themes/simple/metadata/parameters.rb:63
 msgid "Sizes that should fit browsers in fullscreen for 1600x1200 screens"
 msgstr "Grandecoj kiuj adaptus retumilojn tutekrane por 1600x1200 ekranoj"
+
+#: ../data/booh/themes/cardu/metadata/parameters.rb:71
+#: ../data/booh/themes/dark/metadata/parameters.rb:71
+#: ../data/booh/themes/gradient/metadata/parameters.rb:71
+#: ../data/booh/themes/sbs/metadata/parameters.rb:71
+#: ../data/booh/themes/simple/metadata/parameters.rb:71
+#, fuzzy
+msgid "Sizes that should fit browsers in fullscreen for 1680x1050 screens"
+msgstr "Grandecoj kiuj adaptus retumilojn tutekrane por 1400x1050 ekranoj"
+
+#~ msgid ""
+#~ "There was something wrong, sorry:\n"
+#~ "\n"
+#~ "%s"
+#~ msgstr ""
+#~ "Ion fuŝis, pardonu:\n"
+#~ "\n"
+#~ "%s"
 
 #~ msgid "Are you sure you want to quit?"
 #~ msgstr "Ĉu finu?"

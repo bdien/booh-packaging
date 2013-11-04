@@ -33,6 +33,11 @@
 # 	$ recode ISO-8859-1..UTF-8 captions.txt
 #
 
+begin
+    require 'rubygems'
+rescue LoadError
+end
+
 require 'getoptlong'
 require 'gettext'
 include GetText
@@ -134,7 +139,7 @@ end
 
 def walk_source_dir
 
-    `find #{$source} -type d`.sort.each { |dir|
+    `find #{$source} -type d`.split("\n").sort.each { |dir|
         dir.chomp!
         msg 2, _("Handling %s from config list...") % dir
 

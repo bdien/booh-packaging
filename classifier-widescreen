@@ -1,0 +1,92 @@
+diff --git a/bin/booh-classifier b/bin/booh-classifier
+index aa34ed6..a173274 100644
+--- a/bin/booh-classifier
++++ b/bin/booh-classifier
+@@ -836,26 +836,26 @@ class MainView < Gtk::DrawingArea
+ end
+ 
+ def autoscroll_if_needed(button, center)
+-    xpos_left = button.allocation.x
+-    xpos_right = button.allocation.x + button.allocation.width
+-    hadj = $imagesline_sw.hadjustment
+-    current_minx_visible = hadj.value
+-    current_maxx_visible = hadj.value + hadj.page_size
++    ypos_left = button.allocation.y
++    ypos_right = button.allocation.y + button.allocation.height
++    vadj = $imagesline_sw.vadjustment
++    current_miny_visible = vadj.value
++    current_maxy_visible = vadj.value + vadj.page_size
+     if ! center
+-        if xpos_left < current_minx_visible
++        if ypos_left < current_miny_visible
+             #- autoscroll left
+-            newval = hadj.value - (current_minx_visible - xpos_left)
+-            hadj.value = newval
+-        elsif xpos_right > current_maxx_visible
++            newval = vadj.value - (current_miny_visible - ypos_left)
++            vadj.value = newval
++        elsif ypos_right > current_maxy_visible
+             #- autoscroll right
+-            newval = hadj.value + (xpos_right - current_maxx_visible)
+-            if newval > hadj.upper - hadj.page_size
+-                newval = hadj.upper - hadj.page_size
++            newval = vadj.value + (ypos_right - current_maxy_visible)
++            if newval > vadj.upper - vadj.page_size
++                newval = vadj.upper - vadj.page_size
+             end
+-            hadj.value = newval
++            vadj.value = newval
+         end
+     else
+-        hadj.value = clamp((xpos_left + xpos_right) / 2 - hadj.page_size / 2, 0, hadj.upper - hadj.page_size)
++        vadj.value = clamp((ypos_left + ypos_right) / 2 - vadj.page_size / 2, 0, vadj.upper - vadj.page_size)
+     end
+ end
+ 
+@@ -1216,12 +1216,12 @@ def show_entry(entry, i, tips)
+         entry.button = Gtk::Button.new.add(entry.image)
+     end
+     tips.set_tip(entry.button, entry.get_beautified_name, nil)
+-    $imagesline.pack_start(entry.alignment = Gtk::Alignment.new(0.5, 1, 0, 0).add(entry.button).show_all, false, false)
++    $imagesline.pack_start(entry.alignment = Gtk::Alignment.new(1, 0.5, 0, 0).add(entry.button).show_all, false, false)
+     entry.button.signal_connect('clicked') {
+         shown = $mainview.get_shown_entry
+         if shown != entry
+-            shown and shown.alignment.set(0.5, 1, 0, 0)
+-            entry.alignment.set(0.5, 0, 0, 0)
++            shown and shown.alignment.set(1, 0.5, 0, 0)
++            entry.alignment.set(0, 0.5, 0, 0)
+             autoscroll_if_needed(entry.button, false)
+             $mainview.set_shown_entry(entry)
+         end
+@@ -1822,7 +1822,7 @@ def preferences
+     cache_memfree_spin.signal_connect('value-changed') { cache_memfree_radio.active = true }
+     tooltips.set_tip(cache_memfree_spin, utf8(_("Percentage of free memory (+ buffers/cache) measured at startup")), nil)
+     cache_vbox.pack_start(Gtk::HBox.new(false, 0).pack_start(cache_specify_radio = Gtk::RadioButton.new(cache_memfree_radio, ''), false, false).
+-                                                  pack_start(cache_specify_spin = Gtk::SpinButton.new(0, 4000, 50), false, false).
++                                                  pack_start(cache_specify_spin = Gtk::SpinButton.new(0, 8000, 50), false, false).
+                                                   pack_start(cache_specify_label = Gtk::Label.new(utf8(_("MB"))).set_sensitive(false), false, false), false, false)
+     cache_specify_spin.signal_connect('value-changed') { cache_specify_radio.active = true }
+     cache_memfree_radio.signal_connect('toggled') {
+@@ -2016,7 +2016,7 @@ def reset_thumbnails
+ end
+ 
+ def set_imagesline_size_request
+-    $imagesline.set_size_request(-1, Gtk::Button.new.size_request[1] + Entry.thumbnails_height + Entry.thumbnails_height/4)
++    $imagesline.set_size_request(Gtk::Button.new.size_request[0] + Entry.thumbnails_height * 2, -1)
+ end
+ 
+ def create_main_window
+@@ -2035,9 +2035,9 @@ def create_main_window
+     mainview_hbox.pack_start($mainview = MainView.new, true, true)
+     main_vbox.pack_start(mainview_hbox, true, true)
+     $imagesline_sw = Gtk::ScrolledWindow.new(nil, nil)
+-    $imagesline_sw.set_policy(Gtk::POLICY_ALWAYS, Gtk::POLICY_NEVER)
+-    $imagesline_sw.add_with_viewport($imagesline = Gtk::HBox.new(false, 0).show)
+-    main_vbox.pack_start($imagesline_sw, false, false)
++    $imagesline_sw.set_policy(Gtk::POLICY_NEVER, Gtk::POLICY_ALWAYS)
++    $imagesline_sw.add_with_viewport($imagesline = Gtk::VBox.new(false, 0).show)
++    mainview_hbox.pack_end($imagesline_sw, false, false)
+     main_vbox.pack_end($statusbar = Gtk::Statusbar.new, false, false)
+ 
+     set_imagesline_size_request

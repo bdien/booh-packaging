@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: booh-0.8.99.8\n"
-"POT-Creation-Date: 2010-05-26 23:24+0200\n"
-"PO-Revision-Date: 2010-06-15 00:09+0100\n"
+"POT-Creation-Date: 2011-07-17 22:24+0200\n"
+"PO-Revision-Date: 2011-06-15 00:09+0100\n"
 "Last-Translator: Roland Eckert <roland.eckert@gmail.com>\n"
 "Language-Team: Roland Eckert <roland.eckert@gmail.com>\n"
 "MIME-Version: 1.0\n"
@@ -11,48 +11,43 @@ msgstr ""
 "X-Poedit-Language: German\n"
 "X-Poedit-Country: GERMANY\n"
 
-#: ../bin/booh:44
-#: ../bin/booh-classifier:42
-#: ../bin/booh-backend:45
+#: ../bin/booh:44 ../bin/booh-classifier:42 ../bin/booh-backend:45
 msgid "Get help message"
 msgstr "Hilfe dazu anfordern"
 
-#: ../bin/booh:45
-#: ../bin/booh-classifier:44
-#: ../bin/booh-backend:78
-msgid "Set max verbosity level (0: errors, 1: warnings, 2: important messages, 3: other messages)"
-msgstr "Setze max. Log-Umfang (0: Fehler, 1: Warnungen, 2: wichtige Meldungen, 3: andere Meldungen)"
+#: ../bin/booh:45 ../bin/booh-classifier:44 ../bin/booh-backend:78
+msgid ""
+"Set max verbosity level (0: errors, 1: warnings, 2: important messages, 3: "
+"other messages)"
+msgstr ""
+"Setze max. Log-Umfang (0: Fehler, 1: Warnungen, 2: wichtige Meldungen, 3: "
+"andere Meldungen)"
 
-#: ../bin/booh:46
-#: ../bin/booh-classifier:45
-#: ../bin/booh-backend:46
+#: ../bin/booh:46 ../bin/booh-classifier:45 ../bin/booh-backend:46
 msgid "Print version and exit"
 msgstr "Version anzeigen und beenden"
 
-#: ../bin/booh:58
-#: ../bin/booh-classifier:51
-#: ../bin/booh-backend:91
+#: ../bin/booh:58 ../bin/booh-classifier:51 ../bin/booh-backend:91
 msgid "Usage: %s [OPTION]..."
 msgstr "Benutzung: %s [OPTION]..."
 
-#: ../bin/booh:75
-#: ../bin/booh-classifier:74
-#: ../bin/booh-backend:108
+#: ../bin/booh:75 ../bin/booh-classifier:74 ../bin/booh-backend:108
 msgid ""
 "Booh version %s\n"
 "\n"
-"Copyright (c) 2005-2010 Guillaume Cottenceau.\n"
+"Copyright (c) 2005-2013 Guillaume Cottenceau.\n"
 "This is free software; see the source for copying conditions.  There is NO\n"
 "warranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE."
 msgstr ""
 "Booh Version %s\n"
 "\n"
-"Copyright (c) 2005-2010 Guillaume Cottenceau.\n"
-"Dies ist freie Software; siehe die Quellen für die Kopier-Bedingungen. Damit ist KEINE\n"
-"Garantie verbunden; nicht einmal für GEBRAUCHSTAUGLICHKEIT oder EIGNUNG FÜR EINE BESTIMMTE ANWENDUNG."
+"Copyright (c) 2005-2013 Guillaume Cottenceau.\n"
+"Dies ist freie Software; siehe die Quellen für die Kopier-Bedingungen. Damit "
+"ist KEINE\n"
+"Garantie verbunden; nicht einmal für GEBRAUCHSTAUGLICHKEIT oder EIGNUNG FÜR "
+"EINE BESTIMMTE ANWENDUNG."
 
-#: ../bin/booh:152
-#: ../bin/booh-classifier:171
+#: ../bin/booh:152 ../bin/booh-classifier:171
 msgid ""
 "The configured video viewer seems to be unavailable.\n"
 "You should fix this in Edit/Preferences so that you can view videos.\n"
@@ -62,7 +57,8 @@ msgid ""
 "e.g. '/usr/bin/mplayer' is correct but 'mplayer' only is not."
 msgstr ""
 "Der angegebene Video-Player scheint nicht verfügbar zu sein.\n"
-"Sie sollten das in Editieren/Eigenschaften beheben, damit Videos angezeigt werden.\n"
+"Sie sollten das in Editieren/Eigenschaften beheben, damit Videos angezeigt "
+"werden.\n"
 "\n"
 "Das Problem war: '%s' ist keine ausführbare Datei.\n"
 "Hinweis: Vergessen Sie nicht, den vollen Pfad zu der Applikation anzugeben,\n"
@@ -79,7 +75,8 @@ msgid ""
 "e.g. '/usr/bin/ffmpeg' is correct but 'ffmpeg' only is not."
 msgstr ""
 "Der angegebene Video-Player scheint nicht verfügbar zu sein.\n"
-"Sie sollten das in Editieren/Eigenschaften beheben, damit Videos angezeigt werden.\n"
+"Sie sollten das in Editieren/Eigenschaften beheben, damit Videos angezeigt "
+"werden.\n"
 "\n"
 "Das Problem war: '%s' ist keine ausführbare Datei.\n"
 "Hinweis: Vergessen Sie nicht, den vollen Pfad zu der Applikation anzugeben,\n"
@@ -95,33 +92,41 @@ msgstr ""
 
 #: ../bin/booh:179
 msgid ""
-"The program 'identify' is needed to get photos sizes and EXIF data. Please install it.\n"
+"The program 'identify' is needed to get photos sizes and EXIF data. Please "
+"install it.\n"
 "It is generally available with the 'ImageMagick' software package."
 msgstr ""
-"Das Programm 'identify' wird benötigt um Bild-Größen und EXIF-Daten zu ermitteln. Bitte installieren Sie es.\n"
+"Das Programm 'identify' wird benötigt um Bild-Größen und EXIF-Daten zu "
+"ermitteln. Bitte installieren Sie es.\n"
 "Es ist üblicherweise in dem 'ImageMagick'-Paket enthalten."
 
-#: ../bin/booh:183
-#: ../bin/booh-classifier:167
+#: ../bin/booh:183 ../bin/booh-classifier:167
 msgid "The program 'exif' is needed to view EXIF data. Please install it."
-msgstr "Das Programm 'exif' wird benötigt um EXIF-Daten anzuzeigen. Bitte installieren Sie es."
+msgstr ""
+"Das Programm 'exif' wird benötigt um EXIF-Daten anzuzeigen. Bitte "
+"installieren Sie es."
 
-#: ../bin/booh:187
-#: ../bin/booh-classifier:163
-msgid "The following program(s) are needed to handle videos: '%s'. Videos will be ignored."
-msgstr "Die folgenden Programme werden benötigt, um Videos zu verarbeiten: '%s'. Videos werden nicht verarbeitet."
+#: ../bin/booh:187 ../bin/booh-classifier:163
+msgid ""
+"The following program(s) are needed to handle videos: '%s'. Videos will be "
+"ignored."
+msgstr ""
+"Die folgenden Programme werden benötigt, um Videos zu verarbeiten: '%s'. "
+"Videos werden nicht verarbeitet."
 
 #: ../bin/booh:195
 msgid ""
 "The configured image editor seems to be unavailable.\n"
-"You should fix this in Edit/Preferences so that you can edit photos externally.\n"
+"You should fix this in Edit/Preferences so that you can edit photos "
+"externally.\n"
 "\n"
 "Problem was: '%s' is not an executable file.\n"
 "Hint: don't forget to specify the full path to the executable,\n"
 "e.g. '/usr/bin/gimp-remote' is correct but 'gimp-remote' only is not."
 msgstr ""
 "Der angegebene Bild-Editor scheint nicht verfügbar zu sein.\n"
-"Sie sollten das in Editieren/Eigenschaften beheben, damit Sie Bilder extern bearbeiten können.\n"
+"Sie sollten das in Editieren/Eigenschaften beheben, damit Sie Bilder extern "
+"bearbeiten können.\n"
 "\n"
 "Das Problem war: '%s' ist keine ausführbare Datei.\n"
 "Hinweis: Vergessen Sie nicht, den vollen Pfad zu der Applikation anzugeben,\n"
@@ -139,8 +144,7 @@ msgstr "Seitenverhältnis: unbekannt"
 msgid "Aspect: %s"
 msgstr "Seitenverhältnis: %s"
 
-#: ../bin/booh:348
-#: ../bin/booh:1682
+#: ../bin/booh:348 ../bin/booh:1682
 msgid "Mouse gesture: delete."
 msgstr "Maus-Geste: Löschen"
 
@@ -161,7 +165,6 @@ msgid "flip upside-down"
 msgstr "horizontal spiegeln"
 
 #: ../bin/booh:578
-#: ../bin/booh:4304
 msgid "Change seek time"
 msgstr "Ändere Vorspul-Dauer"
 
@@ -170,7 +173,8 @@ msgid ""
 "Please specify the <b>seek time</b> of the video, to take the thumbnail\n"
 "from, in seconds.\n"
 msgstr ""
-"Bitte die <b>Vorspul-Dauer</b> des Videos in Sekunden angeben, von dem die Vorschau\n"
+"Bitte die <b>Vorspul-Dauer</b> des Videos in Sekunden angeben, von dem die "
+"Vorschau\n"
 "erstellt werden soll.\n"
 
 #: ../bin/booh:639
@@ -179,21 +183,32 @@ msgstr "Panorama-Breite angeben"
 
 #: ../bin/booh:647
 msgid ""
-"Please specify the <b>panorama 'amount'</b> of the image, which indicates the width\n"
-"of this panorama image compared to other regular images. For example, if the panorama\n"
-"was taken out of four photos on one row, counting the necessary overlap, the width of\n"
-"this panorama image should probably be roughly three times the width of regular images.\n"
+"Please specify the <b>panorama 'amount'</b> of the image, which indicates "
+"the width\n"
+"of this panorama image compared to other regular images. For example, if the "
+"panorama\n"
+"was taken out of four photos on one row, counting the necessary overlap, the "
+"width of\n"
+"this panorama image should probably be roughly three times the width of "
+"regular images.\n"
 "\n"
-"With this information, booh will be able to generate panorama thumbnails looking\n"
-"the right 'size', since the height of the thumbnail for this image will be similar\n"
+"With this information, booh will be able to generate panorama thumbnails "
+"looking\n"
+"the right 'size', since the height of the thumbnail for this image will be "
+"similar\n"
 "to the height of other thumbnails.\n"
 msgstr ""
-"Bitte geben Sie die <b>Panorama-\"Breite\"</b> des Bildes an, welche die Breite dieses Panorama-\n"
-"Bildes im Vergleich zu anderen normalen Bildern angibt. Zum Beispiel bedeutet das für ein Panorama,\n"
-"das aus vier Bildern in einer Reihe besteht, bei Berücksichtigung der notwendigen Überlappungen\n"
-"eine wahrscheinliche Breite des Panoramas von ungefähr drei mal der Breite der Einzelbilder.\n"
+"Bitte geben Sie die <b>Panorama-\"Breite\"</b> des Bildes an, welche die "
+"Breite dieses Panorama-\n"
+"Bildes im Vergleich zu anderen normalen Bildern angibt. Zum Beispiel "
+"bedeutet das für ein Panorama,\n"
+"das aus vier Bildern in einer Reihe besteht, bei Berücksichtigung der "
+"notwendigen Überlappungen\n"
+"eine wahrscheinliche Breite des Panoramas von ungefähr drei mal der Breite "
+"der Einzelbilder.\n"
 "\n"
-"Mit dieser Information ist Booh in der Lage, Panorama-Vorschauen in der richtigen Breite herzustellen,\n"
+"Mit dieser Information ist Booh in der Lage, Panorama-Vorschauen in der "
+"richtigen Breite herzustellen,\n"
 "die Höhe der Vorschauen wird ähnlich der Höhe der anderen Vorschauen sein.\n"
 
 #: ../bin/booh:657
@@ -214,26 +229,33 @@ msgstr "Weißabgleich festlegen"
 
 #: ../bin/booh:737
 msgid ""
-"You can fix the <b>white balance</b> of the image, if your image is too blue\n"
-"or too yellow because the recorder didn't detect the light correctly. Drag the\n"
-"slider below the image to the left for more blue, to the right for more yellow.\n"
+"You can fix the <b>white balance</b> of the image, if your image is too "
+"blue\n"
+"or too yellow because the recorder didn't detect the light correctly. Drag "
+"the\n"
+"slider below the image to the left for more blue, to the right for more "
+"yellow.\n"
 msgstr ""
-"Sie können den <b>Weißabgleich</b> des Bildes verändern, wenn das Bild zu blau\n"
-" oder zu gelb erscheint und die Kamera das Licht nicht korrekt eingestellt hat. Ziehen\n"
-"Sie den Schieberegler unterhalb des Bildes nach links für mehr Blautöne und nach\n"
+"Sie können den <b>Weißabgleich</b> des Bildes verändern, wenn das Bild zu "
+"blau\n"
+" oder zu gelb erscheint und die Kamera das Licht nicht korrekt eingestellt "
+"hat. Ziehen\n"
+"Sie den Schieberegler unterhalb des Bildes nach links für mehr Blautöne und "
+"nach\n"
 "rechts für mehr Gelb.\n"
 
-#: ../bin/booh:819
-#: ../bin/booh:1039
+#: ../bin/booh:819 ../bin/booh:1039
 msgid "Gamma correction"
 msgstr "Gamma-Korrektur"
 
 #: ../bin/booh:827
 msgid ""
-"You can perform <b>gamma correction</b> of the image, if your image is too dark\n"
+"You can perform <b>gamma correction</b> of the image, if your image is too "
+"dark\n"
 "or too bright. Drag the slider below the image.\n"
 msgstr ""
-"Sie können eine <b>Gamma-Korrektur</b> des Bildes vornehmen, wenn das Bild zu dunkel\n"
+"Sie können eine <b>Gamma-Korrektur</b> des Bildes vornehmen, wenn das Bild "
+"zu dunkel\n"
 "oder zu hell ist. Verwenden Sie dazu den Schieberegler unter dem Bild.\n"
 
 #: ../bin/booh:936
@@ -252,8 +274,7 @@ msgstr "Video abspielen"
 msgid "View EXIF data"
 msgstr "EXIF-Daten anzeigen"
 
-#: ../bin/booh:959
-#: ../bin/booh-classifier:953
+#: ../bin/booh:959 ../bin/booh-classifier:959
 msgid "EXIF data of %s"
 msgstr "EXIF-Daten von %s"
 
@@ -321,8 +342,7 @@ msgstr "Als Panorama festlegen"
 msgid "Edit image"
 msgstr "Bild bearbeiten"
 
-#: ../bin/booh:1199
-#: ../bin/booh-classifier:408
+#: ../bin/booh:1199 ../bin/booh-classifier:408
 msgid "%s (video - %s KB)"
 msgstr "%s (Video - %s KB)"
 
@@ -330,13 +350,11 @@ msgstr "%s (Video - %s KB)"
 msgid "move %s"
 msgstr "verschiebe %s"
 
-#: ../bin/booh:1281
-#: ../bin/booh:2623
+#: ../bin/booh:1281 ../bin/booh:2623
 msgid "color swap"
 msgstr "Farben tauschen"
 
-#: ../bin/booh:1306
-#: ../bin/booh:2642
+#: ../bin/booh:1306 ../bin/booh:2642
 msgid "specify seektime"
 msgstr "Vorspul-Dauer angeben"
 
@@ -344,25 +362,25 @@ msgstr "Vorspul-Dauer angeben"
 msgid "change panorama amount"
 msgstr "Panorama-Breite verändern"
 
-#: ../bin/booh:1372
-#: ../bin/booh:2667
+#: ../bin/booh:1372 ../bin/booh:2667
 msgid "fix white balance"
 msgstr "Weissabgleich festlegen"
 
-#: ../bin/booh:1407
-#: ../bin/booh:2692
+#: ../bin/booh:1407 ../bin/booh:2692
 msgid "gamma correction"
 msgstr "Gamma-Korrektur"
 
-#: ../bin/booh:1443
-#: ../bin/booh:2712
+#: ../bin/booh:1443 ../bin/booh:2712
 msgid "enhance"
 msgstr "aufhellen"
 
-#: ../bin/booh:1459
-#: ../bin/booh:5030
-msgid "Do you confirm this subalbum needs to be completely removed? This operation cannot be undone."
-msgstr "Soll dieses Sub-Album komplett entfernt werden? Diese Aktion kann nicht rückgängig gemacht werden."
+#: ../bin/booh:1459 ../bin/booh:5028
+msgid ""
+"Do you confirm this subalbum needs to be completely removed? This operation "
+"cannot be undone."
+msgstr ""
+"Soll dieses Sub-Album komplett entfernt werden? Diese Aktion kann nicht "
+"rückgängig gemacht werden."
 
 #: ../bin/booh:1484
 msgid "delete"
@@ -408,9 +426,7 @@ msgstr "Abspeichern vor dem Beenden?"
 msgid "Do you want to save your changes before quitting?"
 msgstr "Wollen Sie ihre Änderungen vor dem Beenden speichern?"
 
-#: ../bin/booh:1992
-#: ../bin/booh-classifier:867
-#: ../bin/booh-classifier:1433
+#: ../bin/booh:1992 ../bin/booh-classifier:867 ../bin/booh-classifier:1439
 msgid "Booh message"
 msgstr "Booh Meldung"
 
@@ -422,8 +438,7 @@ msgstr "Vorschau"
 msgid "Scanning photos and videos..."
 msgstr "Bilder und Videos werden eingelesen"
 
-#: ../bin/booh:2084
-#: ../bin/booh:2088
+#: ../bin/booh:2084 ../bin/booh:2088
 msgid "not started"
 msgstr "nicht gestartet"
 
@@ -431,9 +446,7 @@ msgstr "nicht gestartet"
 msgid "HTML pages"
 msgstr "HTML-Seiten"
 
-#: ../bin/booh:2092
-#: ../bin/booh:2323
-#: ../bin/booh:4327
+#: ../bin/booh:2092 ../bin/booh:2323 ../bin/booh:4325
 msgid "_Abort"
 msgstr "_Abbrechen"
 
@@ -441,15 +454,19 @@ msgstr "_Abbrechen"
 msgid "finished"
 msgstr "beendet"
 
-#: ../bin/booh:2208
+#: ../bin/booh:2206
+#, fuzzy
 msgid ""
-"There was something wrong, sorry:\n"
+"Unexpected internal error, sorry:\n"
 "\n"
 "%s"
+msgstr "Unerwarteter Fehler: '%s'."
+
+#: ../bin/booh:2207
+msgid ""
+"Unexpected internal error, sorry.\n"
+"Check console for error message."
 msgstr ""
-"Es ist leider ein Fehler aufgetreten:\n"
-"\n"
-"%s"
 
 #: ../bin/booh:2321
 msgid "Scanning sub-album looking for EXIF dates..."
@@ -491,10 +508,7 @@ msgstr "Aussehen der Vorschau-Seite"
 msgid "Fullscreen page look"
 msgstr "Aussehen Vollbild"
 
-#: ../bin/booh:2908
-#: ../bin/booh:2971
-#: ../bin/booh:2975
-#: ../bin/booh:2979
+#: ../bin/booh:2908 ../bin/booh:2971 ../bin/booh:2975 ../bin/booh:2979
 msgid "Corrupted booh file..."
 msgstr "Beschädigte Booh-Datei..."
 
@@ -515,7 +529,8 @@ msgid ""
 msgstr ""
 "Keine Booh-Datei!\n"
 "\n"
-"Hinweis: Ein Bild oder Video läßt sich nicht direkt mit Datei/öffnen importieren.\n"
+"Hinweis: Ein Bild oder Video läßt sich nicht direkt mit Datei/öffnen "
+"importieren.\n"
 "Wählen Sie Datei/Neu um ein neues Album zu erstellen."
 
 #: ../bin/booh:2983
@@ -523,26 +538,26 @@ msgid "File's version %s, booh version now %s, marking dirty"
 msgstr "Datei-Version jetzt %s, boohs Version jetzt %s, markiere als verändert"
 
 #: ../bin/booh:2986
-msgid "File's version prior to 0.8.4, migrating directories and filenames in destination directory if needed"
-msgstr "Dateiversion vor 0.8.4, migriere Verzeichnisse und Dateinamen im Zielverzeichnis wenn notwendig"
+msgid ""
+"File's version prior to 0.8.4, migrating directories and filenames in "
+"destination directory if needed"
+msgstr ""
+"Dateiversion vor 0.8.4, migriere Verzeichnisse und Dateinamen im "
+"Zielverzeichnis wenn notwendig"
 
-#: ../bin/booh:3057
-#: ../bin/booh:3259
-#: ../bin/booh:4586
+#: ../bin/booh:3055 ../bin/booh:3257 ../bin/booh:4584
 msgid "Save this album?"
 msgstr "Dieses Album speichern?"
 
-#: ../bin/booh:3058
-#: ../bin/booh:3260
-#: ../bin/booh:4587
+#: ../bin/booh:3056 ../bin/booh:3258 ../bin/booh:4585
 msgid "Do you want to save the changes to this album?"
 msgstr "Wollen Sie die Änderungen speichern?"
 
-#: ../bin/booh:3062
+#: ../bin/booh:3060
 msgid "Open file"
 msgstr "Datei öffnen"
 
-#: ../bin/booh:3095
+#: ../bin/booh:3093
 msgid ""
 "<i>Source:</i> %s\n"
 "<i>Destination:</i> %s\n"
@@ -556,258 +571,280 @@ msgstr ""
 "<i>Bilder:</i> %s\n"
 "<i>Filme:</i> %s"
 
-#: ../bin/booh:3141
+#: ../bin/booh:3139
 msgid "Multi-languages support"
 msgstr "Mehrsprachigkeit"
 
-#: ../bin/booh:3149
+#: ../bin/booh:3147
 msgid ""
-"You can choose to activate <b>multi-languages</b> support for this web-album\n"
-"(it will work only if you publish your web-album on an Apache web-server). This will\n"
-"use the MultiViews feature of Apache; the pages will be served according to the\n"
-"value of the Accept-Language HTTP header sent by the web browsers, so that people\n"
-"with different languages preferences will be able to browse your web-album with\n"
+"You can choose to activate <b>multi-languages</b> support for this web-"
+"album\n"
+"(it will work only if you publish your web-album on an Apache web-server). "
+"This will\n"
+"use the MultiViews feature of Apache; the pages will be served according to "
+"the\n"
+"value of the Accept-Language HTTP header sent by the web browsers, so that "
+"people\n"
+"with different languages preferences will be able to browse your web-album "
+"with\n"
 "navigation in their language (if language is available).\n"
 msgstr ""
 "Sie können <b>Mehrsprachigkeit</b> für dieses Web-Album einschalten\n"
-"(das funktioniert nur wenn Sie das Web-Album auf einem Apache Webserver veröffentlichen).\n"
-"Dabei wird das MultiViews-Feature des Apache verwendet, die Seiten werden in der Sprache \n"
-"ausgeliefert, die der Browser als HTTP-Header Accept-Language sendet, so dass Besucher\n"
-"mit anderen Sprach-Einstellungen Ihr Web-Album in ihrer Sprache sehen (falls diese vorhanden ist).\n"
+"(das funktioniert nur wenn Sie das Web-Album auf einem Apache Webserver "
+"veröffentlichen).\n"
+"Dabei wird das MultiViews-Feature des Apache verwendet, die Seiten werden in "
+"der Sprache \n"
+"ausgeliefert, die der Browser als HTTP-Header Accept-Language sendet, so "
+"dass Besucher\n"
+"mit anderen Sprach-Einstellungen Ihr Web-Album in ihrer Sprache sehen (falls "
+"diese vorhanden ist).\n"
 
-#: ../bin/booh:3158
+#: ../bin/booh:3156
 msgid "Disabled"
 msgstr "Nicht verfügbar"
 
-#: ../bin/booh:3159
+#: ../bin/booh:3157
 msgid "Enabled"
 msgstr "Verfügbar"
 
-#: ../bin/booh:3163
+#: ../bin/booh:3161
 msgid "Pick languages to support"
 msgstr "Wählen Sie die zu unterstützenden Sprachen"
 
-#: ../bin/booh:3170
+#: ../bin/booh:3168
 msgid "Select the languages to support:"
 msgstr "Wählen Sie die zu unterstützenden Sprachen"
 
-#: ../bin/booh:3181
+#: ../bin/booh:3179
 msgid "Select the fallback language:"
 msgstr "Wählen Sie die Sprache"
 
-#: ../bin/booh:3207
-#: ../bin/booh:3222
+#: ../bin/booh:3205 ../bin/booh:3220
 msgid "Languages: %s. Fallback: %s."
 msgstr "Sprachen: %s. Ersatz: %s."
 
-#: ../bin/booh:3264
+#: ../bin/booh:3262
 msgid "Create a new album"
 msgstr "Neues Album"
 
-#: ../bin/booh:3270
-#: ../bin/booh:3644
+#: ../bin/booh:3268 ../bin/booh:3642
 msgid "Locations"
 msgstr "Verzeichnisse"
 
-#: ../bin/booh:3271
+#: ../bin/booh:3269
 msgid "Directory of photos/videos: "
 msgstr "Verzeichnis von Bilder/Videos:"
 
-#: ../bin/booh:3275
-#: ../bin/booh:3285
-#: ../bin/booh:3291
+#: ../bin/booh:3273 ../bin/booh:3283 ../bin/booh:3289
 msgid "browse..."
 msgstr "auswählen..."
 
-#: ../bin/booh:3277
-msgid "<span size='small'><i>number of photos/videos down this directory:</i></span> "
-msgstr "<span size='small'><i>Anzahl der Bilder/Videos in diesem Verzeichnis:</i></span> "
+#: ../bin/booh:3275
+msgid ""
+"<span size='small'><i>number of photos/videos down this directory:</i></"
+"span> "
+msgstr ""
+"<span size='small'><i>Anzahl der Bilder/Videos in diesem Verzeichnis:</i></"
+"span> "
 
-#: ../bin/booh:3279
-#: ../bin/booh:3413
+#: ../bin/booh:3277 ../bin/booh:3411
 msgid "<span size='small'><i>N/A</i></span>"
 msgstr "<span size='small'><i>N/A</i></span>"
 
-#: ../bin/booh:3281
+#: ../bin/booh:3279
 msgid "Directory where to put the web-album: "
 msgstr "Verzeichnis für das Web-Album:"
 
-#: ../bin/booh:3287
+#: ../bin/booh:3285
 msgid "Filename to store this album's properties: "
 msgstr "Dateiname um die Eigenschaften dieses Web-Albums abzuspeichern:"
 
-#: ../bin/booh:3295
-#: ../bin/booh:3658
+#: ../bin/booh:3293 ../bin/booh:3656
 msgid "Configuration"
 msgstr "Konfiguration"
 
-#: ../bin/booh:3296
-#: ../bin/booh:3659
+#: ../bin/booh:3294 ../bin/booh:3657
 msgid "Theme: "
 msgstr "Theme:"
 
-#: ../bin/booh:3298
-#: ../bin/booh:3661
+#: ../bin/booh:3296 ../bin/booh:3659
 msgid "Sizes of images to generate: "
 msgstr "Größe der zu erzeugenden Bilder:"
 
-#: ../bin/booh:3300
-#: ../bin/booh:3663
+#: ../bin/booh:3298 ../bin/booh:3661
 msgid "Optimize for 3/2 aspect ratio"
 msgstr "Für 3/2-Seitenverhältnis optimieren"
 
-#: ../bin/booh:3301
-#: ../bin/booh:3664
-#: ../bin/booh-backend:65
-msgid "Resize images with optimized sizes for 3/2 aspect ratio rather than 4/3 (typical aspect ratio of photos from point-and-shoot cameras - also called compact cameras - is 4/3, whereas photos from SLR cameras - also called reflex cameras - is 3/2)"
-msgstr "Bilder auf optimierte Größen für 3/2-Seitenverhältnis erzeugen anstatt für 4/3 (das normale Seitenverhältnis von Draufhalten und-abdrücken-Kameras - auch genannt Kompakt-Kameras - beträgt 4/3, das von SLR-Kameras - auch Spiegelreflex-Kameras genannt - beträgt 3/2)"
+#: ../bin/booh:3299 ../bin/booh:3662 ../bin/booh-backend:65
+msgid ""
+"Resize images with optimized sizes for 3/2 aspect ratio rather than 4/3 "
+"(typical aspect ratio of photos from point-and-shoot cameras - also called "
+"compact cameras - is 4/3, whereas photos from SLR cameras - also called "
+"reflex cameras - is 3/2)"
+msgstr ""
+"Bilder auf optimierte Größen für 3/2-Seitenverhältnis erzeugen anstatt für "
+"4/3 (das normale Seitenverhältnis von Draufhalten und-abdrücken-Kameras - "
+"auch genannt Kompakt-Kameras - beträgt 4/3, das von SLR-Kameras - auch "
+"Spiegelreflex-Kameras genannt - beträgt 3/2)"
 
-#: ../bin/booh:3302
-#: ../bin/booh:3665
+#: ../bin/booh:3300 ../bin/booh:3663
 msgid "Number of thumbnails per row: "
 msgstr "Anzahl der Vorschau-Bilder pro Spalte:"
 
-#: ../bin/booh:3305
-#: ../bin/booh:3668
+#: ../bin/booh:3303 ../bin/booh:3666
 msgid "Number of thumbnails per page: "
 msgstr "Anzahl der Vorschau-Bilder pro Seite:"
 
-#: ../bin/booh:3310
-#: ../bin/booh:3673
+#: ../bin/booh:3308 ../bin/booh:3671
 msgid "<i>None - all thumbnails in one page</i>"
 msgstr "<i>Keine - alle Vorschaubilder auf einer Seite</i>"
 
-#: ../bin/booh:3320
-#: ../bin/booh:3687
+#: ../bin/booh:3318 ../bin/booh:3685
 msgid "Configure multi-languages"
 msgstr "Konfiguriere Mehrsprachigkeit"
 
-#: ../bin/booh:3321
-#: ../bin/booh:3688
-msgid "When disabled, the web-album will be generated with navigation in your desktop language. When enabled, the web-album will be generated with navigation in all languages you select, but you have to publish your web-album on an Apache web-server for that feature to work."
-msgstr "Wenn nicht gewählt, wird das Web-Album mit Navigation in Ihrer System-Sprache generiert. Wenn ausgewählt, wird das Web-Album mit Navigation in allen gewählten Sprachen erstellt, allerdings muß dafür das Album auf einem Apache Webserver veröffentlicht werden."
+#: ../bin/booh:3319 ../bin/booh:3686
+msgid ""
+"When disabled, the web-album will be generated with navigation in your "
+"desktop language. When enabled, the web-album will be generated with "
+"navigation in all languages you select, but you have to publish your web-"
+"album on an Apache web-server for that feature to work."
+msgstr ""
+"Wenn nicht gewählt, wird das Web-Album mit Navigation in Ihrer System-"
+"Sprache generiert. Wenn ausgewählt, wird das Web-Album mit Navigation in "
+"allen gewählten Sprachen erstellt, allerdings muß dafür das Album auf einem "
+"Apache Webserver veröffentlicht werden."
 
-#: ../bin/booh:3328
-#: ../bin/booh:3335
-#: ../bin/booh:3691
+#: ../bin/booh:3326 ../bin/booh:3333 ../bin/booh:3689
 msgid "Multi-languages: enabled."
 msgstr "Mehrsprachigkeit: ausgewählt"
 
-#: ../bin/booh:3330
-#: ../bin/booh:3337
-#: ../bin/booh:3693
+#: ../bin/booh:3328 ../bin/booh:3335 ../bin/booh:3691
 msgid "Multi-languages: disabled."
 msgstr "Mehrsprachigkeit: nicht ausgewählt"
 
-#: ../bin/booh:3340
-#: ../bin/booh:3705
+#: ../bin/booh:3338 ../bin/booh:3703
 msgid "'Return to your website' link on pages bottom: "
 msgstr "'Zurück zu Ihrer Webseite'-Hinweis unten:"
 
-#: ../bin/booh:3342
-#: ../bin/booh:3710
-msgid "Optional HTML markup to use on pages bottom for a small link returning to wherever you see fit in your website (or somewhere else)"
-msgstr "Optionaler HTML-Markup zur Verwendung am unteren Ende der Seiten für einen kleinen Link, um eine geeignete Zurück-Seite zu verlinken (oder ein anderes Ziel)"
+#: ../bin/booh:3340 ../bin/booh:3708
+msgid ""
+"Optional HTML markup to use on pages bottom for a small link returning to "
+"wherever you see fit in your website (or somewhere else)"
+msgstr ""
+"Optionaler HTML-Markup zur Verwendung am unteren Ende der Seiten für einen "
+"kleinen Link, um eine geeignete Zurück-Seite zu verlinken (oder ein anderes "
+"Ziel)"
 
-#: ../bin/booh:3343
-#: ../bin/booh:3711
+#: ../bin/booh:3341 ../bin/booh:3709
 msgid "'Made with' markup on pages bottom: "
 msgstr "'Erstellt mit'-Hinweis unten:"
 
-#: ../bin/booh:3344
+#: ../bin/booh:3342
 msgid "made with <a href=%booh>booh</a>!"
 msgstr "Erstellt mit <a href=%booh>booh</a>!"
 
-#: ../bin/booh:3345
-#: ../bin/booh:3716
+#: ../bin/booh:3343 ../bin/booh:3714
 msgid ""
-"Optional HTML markup to use on pages bottom for a small 'made with' label; %booh is replaced by the website of booh;\n"
+"Optional HTML markup to use on pages bottom for a small 'made with' label; %"
+"booh is replaced by the website of booh;\n"
 "for example: made with <a href=%booh>booh</a>!"
 msgstr ""
-"Optionaler HTML-Markup für das Seitenende für einen kleinen 'erstellt mit'-Hinweis; %booh wird ersetzt durch boohs Webseite;\n"
+"Optionaler HTML-Markup für das Seitenende für einen kleinen 'erstellt mit'-"
+"Hinweis; %booh wird ersetzt durch boohs Webseite;\n"
 "zum Beispiel: erstellt mit <a href=%booh>booh</a>!"
 
-#: ../bin/booh:3346
-#: ../bin/booh:3717
-#: ../bin/booh-backend:69
+#: ../bin/booh:3344 ../bin/booh:3715 ../bin/booh-backend:69
 msgid "Include the 'addthis' bookmarking and sharing button"
 msgstr "Den 'Hinzufügen' Bookmark- und Share-Button hinzufügen"
 
-#: ../bin/booh:3347
-#: ../bin/booh:3718
-#: ../bin/booh-backend:71
+#: ../bin/booh:3345 ../bin/booh:3716 ../bin/booh-backend:71
 msgid "Quote HTML markup in captions"
 msgstr "HTML-Code in Bildunterschriften in Anführungszeichen setzen"
 
-#: ../bin/booh:3348
-#: ../bin/booh:3719
-msgid "If checked, text using markup special characters such as '<grin>' will be shown properly; if unchecked, markup such as '<a href..' links will be interpreted by the browser properly"
-msgstr "Wenn gesetzt, wird Text mit einem speziellen Codes wie etwa '<grin>' richtig angezeigt; wenn nicht gesetzt, wird Text mit Code wie '<a href...' vom Browser korrekt interpretiert."
+#: ../bin/booh:3346 ../bin/booh:3717
+msgid ""
+"If checked, text using markup special characters such as '<grin>' will be "
+"shown properly; if unchecked, markup such as '<a href..' links will be "
+"interpreted by the browser properly"
+msgstr ""
+"Wenn gesetzt, wird Text mit einem speziellen Codes wie etwa '<grin>' richtig "
+"angezeigt; wenn nicht gesetzt, wird Text mit Code wie '<a href...' vom "
+"Browser korrekt interpretiert."
 
-#: ../bin/booh:3363
+#: ../bin/booh:3361
 msgid "<span size='small'><i>invalid source directory</i></span>"
 msgstr "<span size='small'><i>ungültiges Quell-Verzeichnis</i></span>"
 
-#: ../bin/booh:3375
+#: ../bin/booh:3373
 msgid "<span size='small'><i>processing...</i></span>"
 msgstr "<span size='small'><i>verarbeite...</i></span>"
 
-#: ../bin/booh:3398
+#: ../bin/booh:3396
 msgid "<span size='small'><i>%s photos and %s videos</i></span>"
 msgstr "<span size='small'><i>%s Bilder und %s Videos</i></span>"
 
-#: ../bin/booh:3410
+#: ../bin/booh:3408
 msgid "<span size='small'><i>permission denied</i></span>"
 msgstr "<span size='small'><i>keine Berechtigung</i></span>"
 
-#: ../bin/booh:3424
+#: ../bin/booh:3422
 msgid "Select the directory of photos/videos"
 msgstr "Verzeichnis mit Bildern/Videos auswählen"
 
-#: ../bin/booh:3439
+#: ../bin/booh:3437
 msgid "Select a new directory where to put the web-album"
 msgstr "Verzeichnis auswählen, in dem das Web-Album erzeugt werden soll."
 
-#: ../bin/booh:3452
+#: ../bin/booh:3450
 msgid "Select a new file to store this album's properties"
-msgstr "Datei auswählen, in der die Album-Einstellungen gespeichert werden sollen"
+msgstr ""
+"Datei auswählen, in der die Album-Einstellungen gespeichert werden sollen"
 
-#: ../bin/booh:3480
-#: ../bin/booh:3742
-#: ../lib/booh/booh-lib.rb:78
+#: ../bin/booh:3478 ../bin/booh:3740 ../lib/booh/booh-lib.rb:78
 msgid "original"
 msgstr "Original"
 
-#: ../bin/booh:3482
-#: ../bin/booh:3744
+#: ../bin/booh:3480 ../bin/booh:3742
 msgid "Include original photo in web-album"
 msgstr "Original-Bild in Web-Album einfügen"
 
-#: ../bin/booh:3495
-#: ../bin/booh:3760
-msgid "Set the number of thumbnails per row of the 'thumbnails' pages (if chosen theme uses a row arrangement)"
-msgstr "Angabe der Vorschau-Bilder pro Zeile auf der Vorschau-Seite (falls das verwendete Schema ein Zeilenanordnung nutzt)"
+#: ../bin/booh:3493 ../bin/booh:3758
+msgid ""
+"Set the number of thumbnails per row of the 'thumbnails' pages (if chosen "
+"theme uses a row arrangement)"
+msgstr ""
+"Angabe der Vorschau-Bilder pro Zeile auf der Vorschau-Seite (falls das "
+"verwendete Schema ein Zeilenanordnung nutzt)"
 
-#: ../bin/booh:3525
+#: ../bin/booh:3523
 msgid "The directory of photos/videos is invalid. Please check your input."
-msgstr "Das Bilder-/Video-Verzeichnis ist ungültig. Bitte überprüfen Sie Ihre Eingaben."
+msgstr ""
+"Das Bilder-/Video-Verzeichnis ist ungültig. Bitte überprüfen Sie Ihre "
+"Eingaben."
 
-#: ../bin/booh:3528
+#: ../bin/booh:3526
 msgid "The directory of photos/videos doesn't exist. Please check your input."
-msgstr "Das Bilder-/Videos-Verzeichnis existiert nicht. Bitte überprüfen Sie Ihre Eingaben."
+msgstr ""
+"Das Bilder-/Videos-Verzeichnis existiert nicht. Bitte überprüfen Sie Ihre "
+"Eingaben."
 
-#: ../bin/booh:3531
+#: ../bin/booh:3529
 msgid "The destination directory is invalid. Please check your input."
 msgstr "Das Zielverzeichnis ist ungültig. Bitte überprüfen Sie Ihre Eingaben."
 
-#: ../bin/booh:3534
-#: ../bin/booh-backend:127
-msgid "Sorry, destination directory can't contain non simple alphanumeric characters."
-msgstr "Das Zielverzeichnis kann leider keine komplexen alphanumerischen Zeichen enthalten."
-
-#: ../bin/booh:3537
+#: ../bin/booh:3532 ../bin/booh-backend:127
 msgid ""
-"The destination directory already exists. All existing files and directories\n"
+"Sorry, destination directory can't contain non simple alphanumeric "
+"characters."
+msgstr ""
+"Das Zielverzeichnis kann leider keine komplexen alphanumerischen Zeichen "
+"enthalten."
+
+#: ../bin/booh:3535
+msgid ""
+"The destination directory already exists. All existing files and "
+"directories\n"
 "inside it will be permanently removed before creating the web-album!\n"
 "Are you sure you want to continue?"
 msgstr ""
@@ -815,85 +852,95 @@ msgstr ""
 "Verzeichnisse werden vor der Erstellung des Web-Albums dauerhaft\n"
 "enfernt! Sind Sie sicher dass Sie fortfahren wollen?"
 
-#: ../bin/booh:3542
-msgid "There is already a file by the name of the destination directory. Please choose another one."
-msgstr "Es existiert bereits eine Datei mit dem Namen des Zielverzeichnisses. Bitte wählen Sie einen anderen Namen."
+#: ../bin/booh:3540
+msgid ""
+"There is already a file by the name of the destination directory. Please "
+"choose another one."
+msgstr ""
+"Es existiert bereits eine Datei mit dem Namen des Zielverzeichnisses. Bitte "
+"wählen Sie einen anderen Namen."
 
-#: ../bin/booh:3545
+#: ../bin/booh:3543
 msgid "Please specify a filename to store the album's properties."
-msgstr "Bitte die Datei auswählen, in der die Album-Einstellungen gespeichert werden sollen"
+msgstr ""
+"Bitte die Datei auswählen, in der die Album-Einstellungen gespeichert werden "
+"sollen"
 
-#: ../bin/booh:3548
-msgid "The filename to store the album's properties is invalid. Please check your input."
-msgstr "Der Dateinamen um die Album-Eigenschaften zu speichern ist ungültig. Bitte überprüfen Sie ihre Eingaben."
+#: ../bin/booh:3546
+msgid ""
+"The filename to store the album's properties is invalid. Please check your "
+"input."
+msgstr ""
+"Der Dateinamen um die Album-Eigenschaften zu speichern ist ungültig. Bitte "
+"überprüfen Sie ihre Eingaben."
 
-#: ../bin/booh:3551
-msgid "Sorry, the filename specified to store the album's properties is an existing directory. Please choose another one."
-msgstr "Es existiert bereits eine Datei mit dem Namen des Zielverzeichnisses um die Album-Eigenschaften zu speichern. Bitte wählen Sie einen anderen Namen."
+#: ../bin/booh:3549
+msgid ""
+"Sorry, the filename specified to store the album's properties is an existing "
+"directory. Please choose another one."
+msgstr ""
+"Es existiert bereits eine Datei mit dem Namen des Zielverzeichnisses um die "
+"Album-Eigenschaften zu speichern. Bitte wählen Sie einen anderen Namen."
 
-#: ../bin/booh:3554
-#: ../bin/booh:3790
+#: ../bin/booh:3552 ../bin/booh:3788
 msgid "You need to select at least one size (not counting original)."
 msgstr "Sie müssen mindestens eine Größe auswählen (ohne die Originalgröße)"
 
-#: ../bin/booh:3558
+#: ../bin/booh:3556
 msgid "Could not create destination directory. Permission denied?"
-msgstr "Das Zielverzeichnis konnte nicht erstellt werden. Berechtigung verweigert?"
+msgstr ""
+"Das Zielverzeichnis konnte nicht erstellt werden. Berechtigung verweigert?"
 
-#: ../bin/booh:3611
-#: ../bin/booh:3835
-#: ../bin/booh:3855
-#: ../bin/booh:3872
-#: ../bin/booh:3892
+#: ../bin/booh:3609 ../bin/booh:3833 ../bin/booh:3853 ../bin/booh:3870
+#: ../bin/booh:3890
 msgid "Please wait while scanning source directory..."
 msgstr "Bitte warten solange das Quell-Verzeichnis gelesen wird."
 
-#: ../bin/booh:3621
+#: ../bin/booh:3619
 msgid "Properties of your album"
 msgstr "Eigenschaften des Web-Albums"
 
-#: ../bin/booh:3645
+#: ../bin/booh:3643
 msgid "Directory of source photos/videos: "
 msgstr "Verzeichnis der Quell-Bilder/-Videos"
 
-#: ../bin/booh:3649
+#: ../bin/booh:3647
 msgid "Directory where the web-album is created: "
 msgstr "Verzeichnis, in dem das Web-Album erzeugt wird"
 
-#: ../bin/booh:3653
+#: ../bin/booh:3651
 msgid "Filename where this album's properties are stored: "
-msgstr "Dateiname in dem die Eigenschaften dieses Web-Albums gespeichert werden:"
+msgstr ""
+"Dateiname in dem die Eigenschaften dieses Web-Albums gespeichert werden:"
 
-#: ../bin/booh:3902
+#: ../bin/booh:3900
 msgid "Select a new filename to store this album's properties"
 msgstr "Wählen Sie einen neuen Dateinamen für die Eigenschaften dieses Albums"
 
-#: ../bin/booh:3924
-#: ../bin/booh-classifier:1746
+#: ../bin/booh:3922 ../bin/booh-classifier:1771
 msgid "Edit preferences"
 msgstr "Eigenschaften bearbeiten"
 
-#: ../bin/booh:3932
+#: ../bin/booh:3930
 msgid "Options"
 msgstr "Optionen"
 
-#: ../bin/booh:3933
-#: ../bin/booh-classifier:1757
+#: ../bin/booh:3931 ../bin/booh-classifier:1782
 msgid "Command for watching videos: "
 msgstr "Befehlszeile um Videos anzusehen"
 
-#: ../bin/booh:3938
-#: ../bin/booh-classifier:1761
+#: ../bin/booh:3936 ../bin/booh-classifier:1786
 msgid ""
 "Use %f to specify the filename;\n"
 "for example: /usr/bin/mplayer %f"
-msgstr "Verwenden Sie %f um den Dateinamen anzugeben; z. B. /usr/bin/mplayer %f"
+msgstr ""
+"Verwenden Sie %f um den Dateinamen anzugeben; z. B. /usr/bin/mplayer %f"
 
-#: ../bin/booh:3942
+#: ../bin/booh:3940
 msgid "Command for editing images: "
 msgstr "Befehlszeile um Bilder zu editieren:"
 
-#: ../bin/booh:3946
+#: ../bin/booh:3944
 msgid ""
 "Use %f to specify the filename;\n"
 "for example: /usr/bin/gimp-remote %f"
@@ -901,21 +948,21 @@ msgstr ""
 "Verwenden Sie %f um den Dateinamen anzugeben;\n"
 "z. B.: /usr/bin/gimp-remote %f"
 
-#: ../bin/booh:3950
-#: ../bin/booh-classifier:1764
+#: ../bin/booh:3948 ../bin/booh-classifier:1789
 msgid "Browser's command: "
 msgstr "Browser-Befehl:"
 
-#: ../bin/booh:3954
-#: ../bin/booh-classifier:1768
+#: ../bin/booh:3952 ../bin/booh-classifier:1793
 msgid ""
 "Use %f to specify the filename;\n"
-"for example: /usr/bin/mozilla-firefox -remote 'openURL(%f,new-window)' || /usr/bin/mozilla-firefox %f"
+"for example: /usr/bin/mozilla-firefox -remote 'openURL(%f,new-window)' || /"
+"usr/bin/mozilla-firefox %f"
 msgstr ""
 "Verwenden Sie %f um den Dateinamen anzugeben;\n"
-"z. B. /usr/bin/mozilla-firefox -remote 'openURL(%f,new-window)' || /usr/bin/mozilla-firefox %f"
+"z. B. /usr/bin/mozilla-firefox -remote 'openURL(%f,new-window)' || /usr/bin/"
+"mozilla-firefox %f"
 
-#: ../bin/booh:3958
+#: ../bin/booh:3956
 msgid ""
 "Use embedded flash player for videos,\n"
 "and use this .flv generator:"
@@ -923,11 +970,11 @@ msgstr ""
 "Den internen Flash Player für Videos verwenden\n"
 "und diesen .flv Generator verwenden:"
 
-#: ../bin/booh:3962
+#: ../bin/booh:3960
 msgid "Flowplayer will be used for embedded video playback"
 msgstr "Flowplayer wird für die Video Anzeige verwendet"
 
-#: ../bin/booh:3963
+#: ../bin/booh:3961
 msgid ""
 "Use %f to specify the input filename, %o the output filename;\n"
 "for example: /usr/bin/ffmpeg -i %f -b ${i}k -ar 22050 -ab 32k %o"
@@ -935,39 +982,59 @@ msgstr ""
 "Verwenden Sie %f um die Quelle anzugeben, %o für das Ziel;\n"
 "z. B. /usr/bin/ffmpeg -i %f -b ${i}k -ar 22050 -ab 32k %o"
 
-#: ../bin/booh:3967
+#: ../bin/booh:3965
 msgid "Use symmetric multi-processing"
 msgstr "Symmetrisches Multi-Processing verwenden"
 
-#: ../bin/booh:3969
+#: ../bin/booh:3967
 msgid "processors"
 msgstr "Prozessoren"
 
-#: ../bin/booh:3971
-msgid "When activated, this option allows the thumbnails creation to run faster. However, if you don't have a multi-processor machine, this will only slow down processing!"
-msgstr "Wenn diese Option aktiviert ist, kann die Vorschau-Erstellung schneller ablaufen. Allerdings: falls Sie keinen Mehr-Prozessor-PC besitzen, wird die Erzeugung langsamer!"
+#: ../bin/booh:3969
+msgid ""
+"When activated, this option allows the thumbnails creation to run faster. "
+"However, if you don't have a multi-processor machine, this will only slow "
+"down processing!"
+msgstr ""
+"Wenn diese Option aktiviert ist, kann die Vorschau-Erstellung schneller "
+"ablaufen. Allerdings: falls Sie keinen Mehr-Prozessor-PC besitzen, wird die "
+"Erzeugung langsamer!"
 
-#: ../bin/booh:3974
+#: ../bin/booh:3972
 msgid "Disable mouse gestures"
 msgstr "Maus-Gesten deaktivieren"
 
-#: ../bin/booh:3976
-msgid "Mouse gestures are 'unusual' mouse movements triggering special actions, and are great for speeding up your editions. Get details on available mouse gestures from the Help menu."
-msgstr "Maus-Gesten sind \"ungewöhnliche\" Maus-Bewegungen und sind gut geeignet, um den Editierprozess zu beschleunigen. Einzelheiten über verfügbare Maus-Gesten erhalten Sie in der Hilfe."
+#: ../bin/booh:3974
+msgid ""
+"Mouse gestures are 'unusual' mouse movements triggering special actions, and "
+"are great for speeding up your editions. Get details on available mouse "
+"gestures from the Help menu."
+msgstr ""
+"Maus-Gesten sind \"ungewöhnliche\" Maus-Bewegungen und sind gut geeignet, um "
+"den Editierprozess zu beschleunigen. Einzelheiten über verfügbare Maus-"
+"Gesten erhalten Sie in der Hilfe."
 
-#: ../bin/booh:3979
+#: ../bin/booh:3977
 msgid "Delete original photos/videos as well"
 msgstr "Original-Bilder/-Videos ebenfalls löschen"
 
-#: ../bin/booh:3981
-msgid "Normally, deleting a photo or video in booh only removes it from the web-album. If you check this option, the original file in source directory will be removed as well. Undo is possible, since actual deletion is performed only when web-album is saved."
-msgstr "Normalerweise bedeutet das Löschen eines Bildes oder Videos in booh nur das Entfernen aus dem Web-Album. Wenn Sie diese Option wählen, wird die Original-Datei ebenfalls entfernt. Das kann rückgängig gemacht werden, da die Aktion nur ausgeführt wird, wenn das Web-Album gespeichert wird."
+#: ../bin/booh:3979
+msgid ""
+"Normally, deleting a photo or video in booh only removes it from the web-"
+"album. If you check this option, the original file in source directory will "
+"be removed as well. Undo is possible, since actual deletion is performed "
+"only when web-album is saved."
+msgstr ""
+"Normalerweise bedeutet das Löschen eines Bildes oder Videos in booh nur das "
+"Entfernen aus dem Web-Album. Wenn Sie diese Option wählen, wird die Original-"
+"Datei ebenfalls entfernt. Das kann rückgängig gemacht werden, da die Aktion "
+"nur ausgeführt wird, wenn das Web-Album gespeichert wird."
 
-#: ../bin/booh:3999
+#: ../bin/booh:3997
 msgid "Advanced"
 msgstr "Erweitert"
 
-#: ../bin/booh:4000
+#: ../bin/booh:3998
 msgid ""
 "Options to pass to <i>convert</i> when\n"
 "performing 'enhance contrast': "
@@ -975,7 +1042,7 @@ msgstr ""
 "Optionen für <i>convert</i>, wenn\n"
 "'Kontrast verstärken' ausgeführt wird:"
 
-#: ../bin/booh:4004
+#: ../bin/booh:4002
 msgid ""
 "Format to use for comments of \n"
 "photos in new albums:"
@@ -983,71 +1050,99 @@ msgstr ""
 "Zu verwendendes Format für \n"
 "Bild-Kommentare in neuen Alben:"
 
-#: ../bin/booh:4010
-msgid "Normally, filenames without extension are used as comments for photos and videos in new albums. Use this entry to use something else."
-msgstr "Normalerweise werden Dateinamen ohne Endung als Kommentare für neue Alben verwendet. Verwenden Sie diese Option, wenn Sie etwas anderes verwenden wollen."
+#: ../bin/booh:4008
+msgid ""
+"Normally, filenames without extension are used as comments for photos and "
+"videos in new albums. Use this entry to use something else."
+msgstr ""
+"Normalerweise werden Dateinamen ohne Endung als Kommentare für neue Alben "
+"verwendet. Verwenden Sie diese Option, wenn Sie etwas anderes verwenden "
+"wollen."
 
-#: ../bin/booh:4153
-#: ../bin/booh-classifier:1815
+#: ../bin/booh:4151 ../bin/booh-classifier:1840
 msgid "Update file's EXIF orientation when rotating a picture"
 msgstr "Aktualisiere die EXIF-Ausrichtung beim Drehen eines Bildes"
 
-#: ../bin/booh:4155
-#: ../bin/booh-classifier:1817
-msgid "When rotating a picture (Alt-Right/Left), also update EXIF orientation in the file itself"
-msgstr "Wenn ein Bild gedreht wird (Alt-Rechts/Links), wird auch die Ausrichtung in den EXIF-Daten in der Datei gespeichert."
+#: ../bin/booh:4153 ../bin/booh-classifier:1842
+msgid ""
+"When rotating a picture (Alt-Right/Left), also update EXIF orientation in "
+"the file itself"
+msgstr ""
+"Wenn ein Bild gedreht wird (Alt-Rechts/Links), wird auch die Ausrichtung in "
+"den EXIF-Daten in der Datei gespeichert."
 
-#: ../bin/booh:4157
+#: ../bin/booh:4155
 msgid "Transcode videos"
 msgstr "Filme umkonvertieren"
 
-#: ../bin/booh:4162
+#: ../bin/booh:4160
 msgid ""
-"Whether to transcode videos into the web-album instead of using the original videos directly (can be an interesting disk space saver!). First put the extension of the output video and a colon; then use %f to specify the input and %o the output;\n"
-"for example: avi:mencoder -nosound -ovc xvid -xvidencopts bitrate=800:me_quality=6 -o %o %f"
+"Whether to transcode videos into the web-album instead of using the original "
+"videos directly (can be an interesting disk space saver!). First put the "
+"extension of the output video and a colon; then use %f to specify the input "
+"and %o the output;\n"
+"for example: avi:mencoder -nosound -ovc xvid -xvidencopts bitrate=800:"
+"me_quality=6 -o %o %f"
 msgstr ""
-"Sollen die Videos im Web-Album transcodiert werden anstatt die originalen Videos direkt zu verwenden (dass kann eine Möglcihkeit zum Speicherplatz sparen sein!). Zuerst geben Sie die Erweiterung des Ausgabe-Videos an und einen Doppelpunkt, dann verwenden Sie %f um die Eingabe und %o um die Ausgabe festzulegen;\n"
-"zum Beispiel: avi:mencoder -nosound -ovc xvid -xvidencopts bitrate=800:me_quality=6 -o %o %f"
+"Sollen die Videos im Web-Album transcodiert werden anstatt die originalen "
+"Videos direkt zu verwenden (dass kann eine Möglcihkeit zum Speicherplatz "
+"sparen sein!). Zuerst geben Sie die Erweiterung des Ausgabe-Videos an und "
+"einen Doppelpunkt, dann verwenden Sie %f um die Eingabe und %o um die "
+"Ausgabe festzulegen;\n"
+"zum Beispiel: avi:mencoder -nosound -ovc xvid -xvidencopts bitrate=800:"
+"me_quality=6 -o %o %f"
 
-#: ../bin/booh:4223
+#: ../bin/booh:4221
 msgid ""
 "<b>One-Click tools.</b>\n"
 "\n"
 "%s When such a tool is activated\n"
-"(<span foreground='darkblue'>Rotate clockwise</span>, <span foreground='darkblue'>Rotate counter-clockwise</span>, <span foreground='darkblue'>Enhance</span> or <span foreground='darkblue'>Delete</span>), clicking\n"
+"(<span foreground='darkblue'>Rotate clockwise</span>, <span "
+"foreground='darkblue'>Rotate counter-clockwise</span>, <span "
+"foreground='darkblue'>Enhance</span> or <span foreground='darkblue'>Delete</"
+"span>), clicking\n"
 "on a thumbnail will immediately apply the desired action.\n"
 "\n"
-"Click the <span foreground='darkblue'>None</span> icon when you're finished with One-Click tools.\n"
+"Click the <span foreground='darkblue'>None</span> icon when you're finished "
+"with One-Click tools.\n"
 msgstr ""
 "<b>Ein-Klick-Werkzeuge.</b>\n"
 "\n"
 "%s Wenn eins dieser Werkzeuge ausgewählt\n"
-"wird (<span foreground='darkblue'>Im Uhrzeigersinn drehen</span>, <span foreground='darkblue'>Gegen den Uhrzeigersinn drehen</span>, <span foreground='darkblue'>Aufhellen</span> or <span foreground='darkblue'>Löschen</span>), wird\n"
+"wird (<span foreground='darkblue'>Im Uhrzeigersinn drehen</span>, <span "
+"foreground='darkblue'>Gegen den Uhrzeigersinn drehen</span>, <span "
+"foreground='darkblue'>Aufhellen</span> or <span "
+"foreground='darkblue'>Löschen</span>), wird\n"
 "beim Klick auf ein Vorschau-Bild die gewünschte Aktion durchgeführt.\n"
 "\n"
-"Wählen Sie das <span foreground='darkblue'>Keine Auswahl</span>-Icon, wenn Sie mit den Ein-Klick-Werkzeugen fertig sind.\n"
+"Wählen Sie das <span foreground='darkblue'>Keine Auswahl</span>-Icon, wenn "
+"Sie mit den Ein-Klick-Werkzeugen fertig sind.\n"
 
-#: ../bin/booh:4236
+#: ../bin/booh:4234
 msgid "Logging into remote site..."
 msgstr "Zugriff auf die externe Webseite..."
 
-#: ../bin/booh:4263
+#: ../bin/booh:4261
 msgid "Specified URL incorrect, please check your input."
 msgstr "Angegebene URL nicht korrekt, bitte überprüfen Sie Ihre Eingabe."
 
-#: ../bin/booh:4270
+#: ../bin/booh:4268
 msgid "Mirroring data..."
 msgstr "Daten spiegeln..."
 
-#: ../bin/booh:4291
+#: ../bin/booh:4289
 msgid "Successfully mirrored into remote repository."
 msgstr "Die Daten wurden erfolgreich in den externen Speicherort gespiegelt."
 
-#: ../bin/booh:4293
+#: ../bin/booh:4291
 msgid "Failed to mirror into remote repository."
 msgstr "Konnte Kopiervorgang nicht abschließen."
 
-#: ../bin/booh:4308
+#: ../bin/booh:4302 ../bin/booh:4430
+msgid "Upload web-album"
+msgstr "Web-Album hochladen"
+
+#: ../bin/booh:4306
 msgid ""
 "<b>Upload web-album.</b>\n"
 "\n"
@@ -1059,80 +1154,89 @@ msgstr ""
 "Das Web-Album auf einen anderen Server kopieren (lftp URL):\n"
 "<i>Das Zielverzeichnis '%s' wir erzeugt bzw. aktualisiert.</i>"
 
-#: ../bin/booh:4313
+#: ../bin/booh:4311
 msgid "Upload"
 msgstr "Hochladen"
 
-#: ../bin/booh:4324
+#: ../bin/booh:4322
 msgid "Please wait, mirroring..."
 msgstr "Kopieren läuft, bitte warten"
 
-#: ../bin/booh:4325
+#: ../bin/booh:4323
 msgid "Initialization..."
 msgstr "Initialisierung..."
 
-#: ../bin/booh:4389
+#: ../bin/booh:4387
 msgid "Failed to execute 'lftp' program."
 msgstr "Konnte das 'lftp'-Programm nicht starten."
 
-#: ../bin/booh:4405
-#: ../bin/booh-classifier:1861
+#: ../bin/booh:4403 ../bin/booh-classifier:1886
 msgid "_File"
 msgstr "_Datei"
 
-#: ../bin/booh:4414
+#: ../bin/booh:4412
 msgid "Merge new/removed photos/videos in current subalbum"
 msgstr "Neue/entfernte Bilder/Videos im aktuellen Sub-Album zusammenführen"
 
-#: ../bin/booh:4416
-msgid "Take into account new/removed photos/videos in currently viewed subalbum"
-msgstr "Neue/entfernte Bilder/Videos im aktuell angezeigten Sub-Album berücksichtigen"
+#: ../bin/booh:4414
+msgid ""
+"Take into account new/removed photos/videos in currently viewed subalbum"
+msgstr ""
+"Neue/entfernte Bilder/Videos im aktuell angezeigten Sub-Album berücksichtigen"
+
+#: ../bin/booh:4415
+msgid "Merge new subalbums (subdirectories) in current subalbum"
+msgstr ""
+"Neue Sub-Alben (Unterverzeichnisse) im aktuellen Sub-Album zusammenführen"
 
 #: ../bin/booh:4417
-msgid "Merge new subalbums (subdirectories) in current subalbum"
-msgstr "Neue Sub-Alben (Unterverzeichnisse) im aktuellen Sub-Album zusammenführen"
+msgid ""
+"Take into account new subalbums in currently viewed subalbum (and only here)"
+msgstr ""
+"Neue Sub-Alben im aktuell angezeigten Sub-Album (und nur hier) "
+"berücksichtigen"
 
-#: ../bin/booh:4419
-msgid "Take into account new subalbums in currently viewed subalbum (and only here)"
-msgstr "Neue Sub-Alben im aktuell angezeigten Sub-Album (und nur hier) berücksichtigen"
+#: ../bin/booh:4418
+msgid ""
+"Scan source directory to merge new subalbums and new/removed photos/videos"
+msgstr ""
+"Das Quellverzeichnis auf neue Unterverzeichnisse und neue/entfernte Bilder/"
+"Videos untersuchen"
 
 #: ../bin/booh:4420
-msgid "Scan source directory to merge new subalbums and new/removed photos/videos"
-msgstr "Das Quellverzeichnis auf neue Unterverzeichnisse und neue/entfernte Bilder/Videos untersuchen"
+msgid ""
+"Take into account new/removed subalbums (subdirectories) and new/removed "
+"photos/videos in existing subalbums (anywhere)"
+msgstr ""
+"Neue/entfernte Sub-Alben (Unterverzeichnisse) und neue/entfernte Bilder/"
+"Videos in bestehenden Sub-Alben berücksichtigen (überall)"
 
 #: ../bin/booh:4422
-msgid "Take into account new/removed subalbums (subdirectories) and new/removed photos/videos in existing subalbums (anywhere)"
-msgstr "Neue/entfernte Sub-Alben (Unterverzeichnisse) und neue/entfernte Bilder/Videos in bestehenden Sub-Alben berücksichtigen (überall)"
-
-#: ../bin/booh:4424
 msgid "Extend album..."
 msgstr " Album erweitern..."
 
-#: ../bin/booh:4427
+#: ../bin/booh:4425
 msgid "Generate web-album"
 msgstr "Web-Album erzeugen"
 
-#: ../bin/booh:4429
-msgid "(Re)generate web-album from latest changes into the destination directory"
+#: ../bin/booh:4427
+msgid ""
+"(Re)generate web-album from latest changes into the destination directory"
 msgstr "Web-Album mit den letzten Änderungen im Zielverzeichnis (neu) erzeugen"
 
-#: ../bin/booh:4430
+#: ../bin/booh:4428
 msgid "View web-album with browser"
 msgstr "Öffne das Web-Album im Browser"
 
-#: ../bin/booh:4432
-msgid "Upload web-album"
-msgstr "Web-Album hochladen"
-
-#: ../bin/booh:4436
+#: ../bin/booh:4434
 msgid "View and modify properties of the web-album"
 msgstr "Eigenschaften des Web-Albums ansehen und verändern"
 
-#: ../bin/booh:4452
+#: ../bin/booh:4450
 msgid "Notice: flash videos normally don't play locally.\n"
 msgstr "Hinweis: Flash-Videos laufen normalerweiser nicht lokal.\n"
 
-#: ../bin/booh:4454
+#: ../bin/booh:4452
 msgid ""
 "Please wait while generating web-album...\n"
 "This may take a while, please be patient."
@@ -1140,7 +1244,7 @@ msgstr ""
 "Bitte warten während das Web-Album erzeugt wird...\n"
 "Dies kann eine Weile dauern, bitte haben Sie etwas Geduld."
 
-#: ../bin/booh:4457
+#: ../bin/booh:4455
 msgid ""
 "Your web-album is now ready in directory '%s'.\n"
 "As multi-languages is activated, you will not be able to view it\n"
@@ -1150,7 +1254,7 @@ msgstr ""
 "Da Mehrsprachigkeit aktiviert ist, können Sie es leider nicht\n"
 "lokal in Ihrem Browser betrachten."
 
-#: ../bin/booh:4460
+#: ../bin/booh:4458
 msgid ""
 "Your web-album is now ready in directory '%s'.\n"
 "%s\n"
@@ -1160,285 +1264,347 @@ msgstr ""
 "%s\n"
 "Klicken Sie um es im Browser zu öffnen:"
 
-#: ../bin/booh:4483
-#: ../bin/booh:4495
+#: ../bin/booh:4481 ../bin/booh:4493
 msgid "Seems like you should generate the web-album first."
 msgstr "Sie sollten zuerst das Web-Album erzeugen."
 
-#: ../bin/booh:4490
+#: ../bin/booh:4488
 msgid "The program 'lftp' is needed to upload web-albums. Please install it."
-msgstr "Das Programm 'lftp' wird benötigt um Web-Alben hochzuladen. Bitte installieren Sie es."
+msgstr ""
+"Das Programm 'lftp' wird benötigt um Web-Alben hochzuladen. Bitte "
+"installieren Sie es."
 
-#: ../bin/booh:4502
-#: ../bin/booh-classifier:1875
+#: ../bin/booh:4500 ../bin/booh-classifier:1900
 msgid "_Edit"
 msgstr "_Editieren"
 
-#: ../bin/booh:4507
+#: ../bin/booh:4505
 msgid "Sort by EXIF date"
 msgstr "Nach EXIF-Daten sortieren"
 
-#: ../bin/booh:4509
+#: ../bin/booh:4507
 msgid "Remove all captions in this sub-album"
 msgstr "Alle Unterschriften dieses Sub-Albums entfernen"
 
-#: ../bin/booh:4511
-msgid "Mainly useful when you don't want to type any caption, that will remove default captions made of filenames"
-msgstr "Hauptsächlich nützlich wenn Sie keine Unterschriften eingeben wollen, dies wird die Standard-Unterschriften basierend auf den Filenamen entfernen"
+#: ../bin/booh:4509
+msgid ""
+"Mainly useful when you don't want to type any caption, that will remove "
+"default captions made of filenames"
+msgstr ""
+"Hauptsächlich nützlich wenn Sie keine Unterschriften eingeben wollen, dies "
+"wird die Standard-Unterschriften basierend auf den Filenamen entfernen"
 
-#: ../bin/booh:4522
-#: ../bin/booh-classifier:1888
+#: ../bin/booh:4520 ../bin/booh-classifier:1913
 msgid "_Help"
 msgstr "_Hilfe"
 
-#: ../bin/booh:4524
+#: ../bin/booh:4522
 msgid "One-click tools"
 msgstr "Ein-Klick-Werkzeuge"
 
-#: ../bin/booh:4526
+#: ../bin/booh:4524
 msgid "Speedup: key shortcuts and mouse gestures"
 msgstr "Abkürzungen: Tastenkombinationen und Maus-Gesten"
 
-#: ../bin/booh:4528
-#: ../bin/booh-classifier:1893
+#: ../bin/booh:4526 ../bin/booh-classifier:1918
 msgid "Online tutorials (opens a web-browser)"
 msgstr "Online-Tutorial (öffnet einen Web-Browser)"
 
-#: ../bin/booh:4536
+#: ../bin/booh:4534
 msgid "One-Click tools are available in the toolbar."
 msgstr "Ein-Klick-Werkzeuge befinden sich in der Werkzeugleiste."
 
-#: ../bin/booh:4540
+#: ../bin/booh:4538
 msgid ""
 "<span size='large' weight='bold'>Key shortcuts:</span>\n"
 "\n"
-"<span foreground='darkblue'>Tab</span>: go to next image caption and select text (begin typing to erase current text!)\n"
+"<span foreground='darkblue'>Tab</span>: go to next image caption and select "
+"text (begin typing to erase current text!)\n"
 "<span foreground='darkblue'>Shift-Tab</span>: go to previous image caption\n"
-"<span foreground='darkblue'>Control-Left/Right/Up/Down</span>: go to specified direction's image caption\n"
-"<span foreground='darkblue'>Control-Enter</span>: for a photo, open larger view; for a video, launch player\n"
+"<span foreground='darkblue'>Control-Left/Right/Up/Down</span>: go to "
+"specified direction's image caption\n"
+"<span foreground='darkblue'>Control-Enter</span>: for a photo, open larger "
+"view; for a video, launch player\n"
 "<span foreground='darkblue'>Control-Delete</span>: delete image\n"
-"<span foreground='darkblue'>Shift-Left/Right/Up/Down</span>: move image left/right/up/down\n"
-"<span foreground='darkblue'>Alt-Left/Right</span>: rotate image clockwise/counter-clockwise\n"
+"<span foreground='darkblue'>Shift-Left/Right/Up/Down</span>: move image left/"
+"right/up/down\n"
+"<span foreground='darkblue'>Alt-Left/Right</span>: rotate image clockwise/"
+"counter-clockwise\n"
 "<span foreground='darkblue'>Control-z</span>: undo\n"
 "<span foreground='darkblue'>Control-r</span>: redo\n"
 "\n"
 "<span size='large' weight='bold'>Mouse gestures:</span>\n"
 "\n"
-"Mouse gestures are 'unusual' mouse movements triggering special actions, and are great\n"
-"for speeding up your editions. If bothered, you can disable them from Edit/Preferences.\n"
+"Mouse gestures are 'unusual' mouse movements triggering special actions, and "
+"are great\n"
+"for speeding up your editions. If bothered, you can disable them from Edit/"
+"Preferences.\n"
 "\n"
-"<span foreground='darkblue'>Left click, drag to the right, release</span>: rotate image clockwise\n"
-"<span foreground='darkblue'>Left click, drag to the left, release</span>: rotate image counter-clockwise\n"
-"<span foreground='darkblue'>Left click, drag to the bottom, release</span>: remove image\n"
-"<span foreground='darkblue'>Left click, hold left button, right click</span>: undo\n"
-"<span foreground='darkblue'>Right click, hold right button, left click</span>: redo\n"
+"<span foreground='darkblue'>Left click, drag to the right, release</span>: "
+"rotate image clockwise\n"
+"<span foreground='darkblue'>Left click, drag to the left, release</span>: "
+"rotate image counter-clockwise\n"
+"<span foreground='darkblue'>Left click, drag to the bottom, release</span>: "
+"remove image\n"
+"<span foreground='darkblue'>Left click, hold left button, right click</"
+"span>: undo\n"
+"<span foreground='darkblue'>Right click, hold right button, left click</"
+"span>: redo\n"
 msgstr ""
 "<span size='large' weight='bold'>Tastenkombinationen:</span>\n"
 "\n"
-"<span foreground='darkblue'>Tab</span>: zur nächsten Bildunterschrift bewegen und den Text auswählen (lostippen um den aktuellen Text zu löschen!)\n"
-"<span foreground='darkblue'>Umschalt-Tab</span>: zur vorherigen Bildunterschrift bewegen\n"
-"<span foreground='darkblue'>Strg-Links/Rechts/Oben/Unten</span>: zur entsprechenden Bildunterschrift bewegen\n"
-"<span foreground='darkblue'>Strg-Eingabe</span>: bei einem Bild, große Ansicht öffnen; bei einem Video, Wiedergabe starten\n"
+"<span foreground='darkblue'>Tab</span>: zur nächsten Bildunterschrift "
+"bewegen und den Text auswählen (lostippen um den aktuellen Text zu "
+"löschen!)\n"
+"<span foreground='darkblue'>Umschalt-Tab</span>: zur vorherigen "
+"Bildunterschrift bewegen\n"
+"<span foreground='darkblue'>Strg-Links/Rechts/Oben/Unten</span>: zur "
+"entsprechenden Bildunterschrift bewegen\n"
+"<span foreground='darkblue'>Strg-Eingabe</span>: bei einem Bild, große "
+"Ansicht öffnen; bei einem Video, Wiedergabe starten\n"
 "<span foreground='darkblue'>Strg-Entfernen</span>: Bild löschen\n"
-"<span foreground='darkblue'>Umschalt-Links/Rechts/Oben/Unten</span>: Bild nach links/rechts/oben/unten verschieben\n"
-"<span foreground='darkblue'>Alt-Links/Rechts</span>: Bild im/gegen Uhrzeigersinn drehen\n"
+"<span foreground='darkblue'>Umschalt-Links/Rechts/Oben/Unten</span>: Bild "
+"nach links/rechts/oben/unten verschieben\n"
+"<span foreground='darkblue'>Alt-Links/Rechts</span>: Bild im/gegen "
+"Uhrzeigersinn drehen\n"
 "<span foreground='darkblue'>Strg-z</span>: rückgängig\n"
 "<span foreground='darkblue'>Strg-r</span>: wiederholen\n"
 "\n"
 "<span size='large' weight='bold'>Maus-Gesten:</span>\n"
 "\n"
-"Maus-Gesten sind 'untypische' Maus-Bewegungen, die spezielle Aktionen auslösen, und eignen sich hervorragend,\n"
-"um die Bearbeitung zu beschleunigen. Wenn unerwünscht, lassen diese sich unter Editieren/Eigenschaften abschalten.\n"
+"Maus-Gesten sind 'untypische' Maus-Bewegungen, die spezielle Aktionen "
+"auslösen, und eignen sich hervorragend,\n"
+"um die Bearbeitung zu beschleunigen. Wenn unerwünscht, lassen diese sich "
+"unter Editieren/Eigenschaften abschalten.\n"
 "\n"
-"<span foreground='darkblue'>Links-Klick, nach rechts ziehen, loslassen</span>: Bild im Uhrzeigersinn drehen\n"
-"<span foreground='darkblue'>Links-Klick, nach links ziehen, loslassen</span>: Bild entgegen dem Uhrzeigersinn drehen\n"
-"<span foreground='darkblue'>Links-Klick, nach unten ziehen, loslassen</span>: Bild entfernen\n"
-"<span foreground='darkblue'>Links-Klick, linke Taste gedrückt halten, Rechts-Klick</span>: rückgängig\n"
-"<span foreground='darkblue'>Rechts-Klick, rechte Taste gedrückt halten, Links-Klick</span>: wiederholen\n"
+"<span foreground='darkblue'>Links-Klick, nach rechts ziehen, loslassen</"
+"span>: Bild im Uhrzeigersinn drehen\n"
+"<span foreground='darkblue'>Links-Klick, nach links ziehen, loslassen</"
+"span>: Bild entgegen dem Uhrzeigersinn drehen\n"
+"<span foreground='darkblue'>Links-Klick, nach unten ziehen, loslassen</"
+"span>: Bild entfernen\n"
+"<span foreground='darkblue'>Links-Klick, linke Taste gedrückt halten, Rechts-"
+"Klick</span>: rückgängig\n"
+"<span foreground='darkblue'>Rechts-Klick, rechte Taste gedrückt halten, "
+"Links-Klick</span>: wiederholen\n"
 
-#: ../bin/booh:4576
+#: ../bin/booh:4574
 msgid "Open"
 msgstr "Öffnen"
 
-#: ../bin/booh:4608
-#: ../bin/booh:4611
+#: ../bin/booh:4606 ../bin/booh:4609
 msgid "Rotate"
 msgstr "Drehen"
 
-#: ../bin/booh:4614
+#: ../bin/booh:4612
 msgid "Enhance"
 msgstr "Aufhellen"
 
-#: ../bin/booh:4616
+#: ../bin/booh:4614
 msgid "Delete"
 msgstr "Löschen"
 
-#: ../bin/booh:4619
+#: ../bin/booh:4617
 msgid "None"
 msgstr "Keine Auswahl"
 
-#: ../bin/booh:4634
+#: ../bin/booh:4632
 msgid "You have just clicked on a One-Click tool."
 msgstr "Sie haben ein Ein-Klick-Werkzeug gewählt."
 
-#: ../bin/booh:4743
+#: ../bin/booh:4741
 msgid "Password protect this sub-album"
 msgstr "Dieses Sub-Album mit einem Passwort schützen"
 
-#: ../bin/booh:4751
+#: ../bin/booh:4749
 msgid ""
-"You can choose to <b>password protect</b> the sub-album '%s' (only available\n"
-"if you plan to publish your web-album with an Apache web-server). This will use\n"
-"the .htaccess/.htpasswd feature of Apache (not so strongly crypted password, but\n"
-"generally ok for protecting web contents). Users will be prompted with a dialog\n"
+"You can choose to <b>password protect</b> the sub-album '%s' (only "
+"available\n"
+"if you plan to publish your web-album with an Apache web-server). This will "
+"use\n"
+"the .htaccess/.htpasswd feature of Apache (not so strongly crypted password, "
+"but\n"
+"generally ok for protecting web contents). Users will be prompted with a "
+"dialog\n"
 "asking for a username and a password, failure to give the correct pair will\n"
 "block access.\n"
 msgstr ""
-"Sie können das Sub-Album \"%s\" mit einem <b>Passwort schützen</b>(nur verfügbar\n"
-"wenn Sie das Web-Album mit einem Apache-Webserver veröffentlichen). Diese Funktion verwendet\n"
-" den .htaccess/.htpasswd-Mechanismus von Apache (keine starke Verschlüsselung, aber\n"
-"normalerweise ausreichend für Web-Inhalte). Benutzer werden in einem Dialog nach Usernamen und Passwort gefragt, inkorrekte Angaben erlauben keinen Zugriff.\n"
+"Sie können das Sub-Album \"%s\" mit einem <b>Passwort schützen</b>(nur "
+"verfügbar\n"
+"wenn Sie das Web-Album mit einem Apache-Webserver veröffentlichen). Diese "
+"Funktion verwendet\n"
+" den .htaccess/.htpasswd-Mechanismus von Apache (keine starke "
+"Verschlüsselung, aber\n"
+"normalerweise ausreichend für Web-Inhalte). Benutzer werden in einem Dialog "
+"nach Usernamen und Passwort gefragt, inkorrekte Angaben erlauben keinen "
+"Zugriff.\n"
 
-#: ../bin/booh:4759
+#: ../bin/booh:4757
 msgid "free access"
 msgstr "freier Zugriff"
 
-#: ../bin/booh:4760
+#: ../bin/booh:4758
 msgid "password protect with password file:"
 msgstr "Mit Password-Datei schützen:"
 
-#: ../bin/booh:4762
+#: ../bin/booh:4760
 msgid "help about password file"
 msgstr "Hilfe über Passwort-Datei"
 
-#: ../bin/booh:4764
+#: ../bin/booh:4762
 msgid "generate a password file"
 msgstr "Eine Passwort-Datei erzeugen"
 
-#: ../bin/booh:4776
+#: ../bin/booh:4774
 msgid ""
 "Password protection proposed here uses the .htaccess/.htpasswd features\n"
 "proposed by Apache. So first, be sure you will publish your web-album on an\n"
-"Apache web-server. Second, you will need to have a .htpasswd file accessible\n"
+"Apache web-server. Second, you will need to have a .htpasswd file "
+"accessible\n"
 "by Apache somewhere on the web-server disks. The password file you must\n"
-"provide in the dialog when choosing to password protect is the full absolute\n"
-"path to access this file <b>on the web-server</b> (not on your machine). Note\n"
+"provide in the dialog when choosing to password protect is the full "
+"absolute\n"
+"path to access this file <b>on the web-server</b> (not on your machine). "
+"Note\n"
 "that if you use a relative path, it will be considered relative to the\n"
 "Document Root of the Apache configuration."
 msgstr ""
-"Der hier vorgesehene Passwort-Schutz verwendet den .htaccess/.htpasswd-Mechanismus\n"
-"von Apache. Als erstes sollten sie die Veröffentlichung auf einem Apache-Web-Server sicherstellen. Zweitens sollte es eine .htpasswd auf den den Web-Server-Festplatten geben.\n"
-"Die Passwort-Datei, die beim Passwort-Schutz angegeben werden soll, ist der absolute Pfad zu dieser Datei <b>auf dem Web Server</b>. Wenn Sie einen relativen Pfad verwenden, wird dieser relativ zu \n"
+"Der hier vorgesehene Passwort-Schutz verwendet den .htaccess/.htpasswd-"
+"Mechanismus\n"
+"von Apache. Als erstes sollten sie die Veröffentlichung auf einem Apache-Web-"
+"Server sicherstellen. Zweitens sollte es eine .htpasswd auf den den Web-"
+"Server-Festplatten geben.\n"
+"Die Passwort-Datei, die beim Passwort-Schutz angegeben werden soll, ist der "
+"absolute Pfad zu dieser Datei <b>auf dem Web Server</b>. Wenn Sie einen "
+"relativen Pfad verwenden, wird dieser relativ zu \n"
 "Apaches Document Root verwendet."
 
-#: ../bin/booh:4787
+#: ../bin/booh:4785
 msgid "Generate a password file"
 msgstr "Passwort-Datei erzeugen"
 
-#: ../bin/booh:4795
+#: ../bin/booh:4793
 msgid ""
 "I can generate a password file (.htpasswd for Apache) for you. Just type\n"
 "the username and password you wish to put in it below and validate."
 msgstr ""
-"Ich kann eine Passwort-Datei (.htpasswd für Apache) für Sie erzeugen. Einfach unten\n"
+"Ich kann eine Passwort-Datei (.htpasswd für Apache) für Sie erzeugen. "
+"Einfach unten\n"
 "Username und Password eingeben und überprüfen."
 
-#: ../bin/booh:4798
+#: ../bin/booh:4796
 msgid "Username:"
 msgstr "Username:"
 
-#: ../bin/booh:4800
+#: ../bin/booh:4798
 msgid "Password:"
 msgstr "Passwort:"
 
-#: ../bin/booh:4819
+#: ../bin/booh:4817
 msgid ""
 "The file <b>%s</b> now contains the username and the crypted password. Now\n"
-"copy it to a suitable location on the machine hosting the Apache web-server (better not\n"
-"below the Document Root), and specify this location in the password protect dialog."
-msgstr "Die Datei <b>%s</b> enthält jetzt den Usernamen und das ge-cryptete Passwort. Kopieren Sie jetzt diese Datei auf den Web Server (am besten nicht in den Document Root), und geben sie diesen Ort im Passwort-Schutz-Dialog an."
+"copy it to a suitable location on the machine hosting the Apache web-server "
+"(better not\n"
+"below the Document Root), and specify this location in the password protect "
+"dialog."
+msgstr ""
+"Die Datei <b>%s</b> enthält jetzt den Usernamen und das ge-cryptete "
+"Passwort. Kopieren Sie jetzt diese Datei auf den Web Server (am besten nicht "
+"in den Document Root), und geben sie diesen Ort im Passwort-Schutz-Dialog an."
 
-#: ../bin/booh:4841
+#: ../bin/booh:4839
 msgid "set password protection for %s"
 msgstr "Password-Schutz für %s einrichten"
 
-#: ../bin/booh:4862
+#: ../bin/booh:4860
 msgid "Save modifications?"
 msgstr "Änderungen speichern?"
 
-#: ../bin/booh:4863
+#: ../bin/booh:4861
 msgid "You need to save or discard your changes before extending the album."
 msgstr "Sie müssen Ihre Änderungen vor dem Erweitern speichern oder verwerfen."
 
-#: ../bin/booh:4872
+#: ../bin/booh:4870
 msgid "Extend the album"
 msgstr "Das Album erweitern"
 
-#: ../bin/booh:4880
+#: ../bin/booh:4878
 msgid ""
 "If you want this album to be part of a larger album, you can choose to\n"
 "<b>extend</b> it. This album will become a sub-album of the larger album.\n"
 "A new directory will be created in source and destination directories with\n"
 "the specified name, and everything currently in there will be moved down.\n"
-"A typical use case is a ski album, with <span foreground='darkblue'>Tignes</span> and <span foreground='darkblue'>Courchevel</span> subalbums;\n"
+"A typical use case is a ski album, with <span foreground='darkblue'>Tignes</"
+"span> and <span foreground='darkblue'>Courchevel</span> subalbums;\n"
 "if you want to extend it to a vacations album, then you may input the\n"
-"name <span foreground='darkblue'>Ski</span>; after the album is extended, then you may create other\n"
-"directories at the same level as <span foreground='darkblue'>Ski</span> in the source directory, such as\n"
-"<span foreground='darkblue'>Summers</span> and <span foreground='darkblue'>Christmas</span> and arrange related photos/videos in there."
+"name <span foreground='darkblue'>Ski</span>; after the album is extended, "
+"then you may create other\n"
+"directories at the same level as <span foreground='darkblue'>Ski</span> in "
+"the source directory, such as\n"
+"<span foreground='darkblue'>Summers</span> and <span "
+"foreground='darkblue'>Christmas</span> and arrange related photos/videos in "
+"there."
 msgstr ""
 "Wenn Sie dieses Album als Teil eines größeren Albums verwenden wollen,\n"
 "können Sie dieses <b>erweitern</b>. Dieses Album wird ein Unteralbum des\n"
 "größeren Albums werden. Ein neues Verzeichnis wird sowohl in den Quell- als\n"
-"auch den Zielverzeichnissen erstellt, und alle bisherigen Inhalte werden eine Ebene\n"
-"nach unten verschoben. Ein typisches Beispiel ist ein Ski-Album mit den Unteralben <span foreground='darkblue'>Davos</span> and <span foreground='darkblue'>Kitzbühel</span>;\n"
-"Wenn Sie dieses zu einem Urlaubs-Album erweitern möchten, vergeben Sie den Namen <span foreground='darkblue'>Ski</span>;\n"
-"nach der Erweiterung können Sie andere Verzeichnisse in der selben Ebene wie <span foreground='darkblue'>Ski</span> im Quellverzeichnis erstellen; \n"
-"zum Beispiel <span foreground='darkblue'>Sommer</span> und <span foreground='darkblue'>Weihnachten</span>, denen Sie dann Bilder und Filme zuordnen."
+"auch den Zielverzeichnissen erstellt, und alle bisherigen Inhalte werden "
+"eine Ebene\n"
+"nach unten verschoben. Ein typisches Beispiel ist ein Ski-Album mit den "
+"Unteralben <span foreground='darkblue'>Davos</span> and <span "
+"foreground='darkblue'>Kitzbühel</span>;\n"
+"Wenn Sie dieses zu einem Urlaubs-Album erweitern möchten, vergeben Sie den "
+"Namen <span foreground='darkblue'>Ski</span>;\n"
+"nach der Erweiterung können Sie andere Verzeichnisse in der selben Ebene wie "
+"<span foreground='darkblue'>Ski</span> im Quellverzeichnis erstellen; \n"
+"zum Beispiel <span foreground='darkblue'>Sommer</span> und <span "
+"foreground='darkblue'>Weihnachten</span>, denen Sie dann Bilder und Filme "
+"zuordnen."
 
-#: ../bin/booh:4915
+#: ../bin/booh:4913
 msgid "New layout: "
 msgstr "Neues Layout:"
 
-#: ../bin/booh:4918
+#: ../bin/booh:4916
 msgid "Directory name:"
 msgstr "Verzeichnis-Name:"
 
-#: ../bin/booh:4933
-#: ../bin/booh-classifier:1329
-#: ../bin/booh-backend:823
-msgid "Source directory or sub-directories can't contain a single-quote character, sorry: %s"
-msgstr "Quell-Verzeichnis oder Unterverzeichnis darf kein Apostroph enthalten: %s"
+#: ../bin/booh:4931 ../bin/booh-classifier:1335 ../bin/booh-backend:827
+msgid ""
+"Source directory or sub-directories can't contain a single-quote character, "
+"sorry: %s"
+msgstr ""
+"Quell-Verzeichnis oder Unterverzeichnis darf kein Apostroph enthalten: %s"
 
-#: ../bin/booh:4940
-#: ../bin/booh:4948
+#: ../bin/booh:4938 ../bin/booh:4946
 msgid "%s already exists."
 msgstr "%s existiert bereits."
 
-#: ../bin/booh:4944
+#: ../bin/booh:4942
 msgid "No write access to '%s'."
 msgstr "Kein Schreibzugriff auf '%s'."
 
-#: ../bin/booh:4957
+#: ../bin/booh:4955
 msgid "Erroneous name."
 msgstr "Fehlerhafter Name."
 
-#: ../bin/booh:5021
+#: ../bin/booh:5019
 msgid "Password protect"
 msgstr "Passwort-Schutz"
 
-#: ../bin/booh:5024
+#: ../bin/booh:5022
 msgid "Restore deleted photos/videos/subalbums"
 msgstr "Entfernte Bilder/Videos/Sub-Alben wiederherstellen"
 
-#: ../bin/booh:5049
+#: ../bin/booh:5047
 msgid "Sub-albums page"
 msgstr "Sub-Album-Seite"
 
-#: ../bin/booh:5051
+#: ../bin/booh:5049
 msgid "Thumbnails page"
 msgstr "Vorschau-Seite"
 
-#: ../bin/booh:5116
+#: ../bin/booh:5114
 msgid "Ready."
 msgstr "Fertig."
 
@@ -1447,8 +1613,11 @@ msgid "Sort entries by EXIF date"
 msgstr "Nach EXIF-Datum sortieren"
 
 #: ../bin/booh-classifier:121
-msgid "Cache memory used: %s kB (reduced because cannot exceed 50%% of total memory)"
-msgstr "Verwendeter Cache-Speicher: %s kB (reduziert weil 50%% des Gesamtspeichers nicht überschritten werden können)"
+msgid ""
+"Cache memory used: %s kB (reduced because cannot exceed 50%% of total memory)"
+msgstr ""
+"Verwendeter Cache-Speicher: %s kB (reduziert weil 50%% des Gesamtspeichers "
+"nicht überschritten werden können)"
 
 #: ../bin/booh-classifier:123
 msgid "Cache memory used: %s kB"
@@ -1462,287 +1631,358 @@ msgstr "%s (%sx%s, %s KB)"
 msgid "Selected %s"
 msgstr "%s gewählt"
 
-#: ../bin/booh-classifier:1026
-msgid "Notice: no write access to '%s', permission will be denied at execute step."
-msgstr "Hinweis: kein Schreibzugriff auf '%s', es wird beim Ausführen einen Berechtigungs-Fehler geben."
+#: ../bin/booh-classifier:903
+msgid "Yes to all"
+msgstr ""
 
-#: ../bin/booh-classifier:1035
+#: ../bin/booh-classifier:1032
+msgid ""
+"Notice: no write access to '%s', permission will be denied at execute step."
+msgstr ""
+"Hinweis: kein Schreibzugriff auf '%s', es wird beim Ausführen einen "
+"Berechtigungs-Fehler geben."
+
+#: ../bin/booh-classifier:1041
 msgid "set for removal"
 msgstr "zu löschen"
 
-#: ../bin/booh-classifier:1059
+#: ../bin/booh-classifier:1065
 msgid "Cleared label"
 msgstr "Markierung gelöscht"
 
-#: ../bin/booh-classifier:1061
+#: ../bin/booh-classifier:1067
 msgid "Cleared set for removal"
 msgstr "Löschen-Markierung entfernt"
 
-#: ../bin/booh-classifier:1128
+#: ../bin/booh-classifier:1134
 msgid ""
 "You typed the text character '%s', which is not associated with a label.\n"
 "Type in the full name of the label below to create a new one."
 msgstr ""
-"Sie haben das Zeichen '%s' eingegeben, was nicht mit einer Markierung verknüpft ist.\n"
+"Sie haben das Zeichen '%s' eingegeben, was nicht mit einer Markierung "
+"verknüpft ist.\n"
 "Geben Sie den Namen der Markierung unten ein, um eine neue zu erzeugen."
 
-#: ../bin/booh-classifier:1160
+#: ../bin/booh-classifier:1166
 msgid "set label"
 msgstr "Markierung setzen"
 
-#: ../bin/booh-classifier:1233
+#: ../bin/booh-classifier:1239
 msgid "Loading images..."
 msgstr "Lade Bilder..."
 
-#: ../bin/booh-classifier:1235
-#: ../bin/booh-classifier:1287
-#: ../bin/booh-classifier:2004
+#: ../bin/booh-classifier:1241 ../bin/booh-classifier:1293
+#: ../bin/booh-classifier:2029
 msgid "Loading... %d%"
 msgstr "Laden... %d%"
 
-#: ../bin/booh-classifier:1300
+#: ../bin/booh-classifier:1306
 msgid "%d images of total %s kB loaded in %3.2f seconds."
 msgstr "%d Bilder mit insgesamt %s kB in %3.2f Sekunden geladen."
 
-#: ../bin/booh-classifier:1317
-#: ../bin/booh-classifier:1353
+#: ../bin/booh-classifier:1323 ../bin/booh-classifier:1359
 msgid "Scanning source directory... %s"
 msgstr "Lese Quell-Verzeichnis... %s"
 
-#: ../bin/booh-classifier:1334
+#: ../bin/booh-classifier:1340
 msgid "Videos can't contain a single quote character ('), sorry: %s"
-msgstr "Filme dürfen kein einfaches Anführungszeichen (') enthalten, Fehler: %s"
+msgstr ""
+"Filme dürfen kein einfaches Anführungszeichen (') enthalten, Fehler: %s"
 
-#: ../bin/booh-classifier:1345
-#: ../bin/booh-backend:836
-msgid "Ignoring directory %s, begins with a dot (indicating a hidden directory)"
-msgstr "Ignoriere Verzeichnis %s, welches mit einem Punkt beginnt (bedeutet verstecktes Verzeichnis)"
+#: ../bin/booh-classifier:1351 ../bin/booh-backend:840
+msgid ""
+"Ignoring directory %s, begins with a dot (indicating a hidden directory)"
+msgstr ""
+"Ignoriere Verzeichnis %s, welches mit einem Punkt beginnt (bedeutet "
+"verstecktes Verzeichnis)"
 
-#: ../bin/booh-classifier:1353
+#: ../bin/booh-classifier:1359
 msgid "%d entries found"
 msgstr "%d Einträge gefunden"
 
-#: ../bin/booh-classifier:1388
+#: ../bin/booh-classifier:1394
 msgid "Specify the directory to work with"
 msgstr "Geben Sie das Arbeitsverzeichnis an"
 
-#: ../bin/booh-classifier:1421
-msgid "You have not executed the classification. Are you sure you want to quit?"
-msgstr "Sie haben die Klassifizierung nicht durchgeführt. Wollen Sie wirklich beenden?"
+#: ../bin/booh-classifier:1427
+msgid ""
+"You have not executed the classification. Are you sure you want to quit?"
+msgstr ""
+"Sie haben die Klassifizierung nicht durchgeführt. Wollen Sie wirklich "
+"beenden?"
 
-#: ../bin/booh-classifier:1436
+#: ../bin/booh-classifier:1442
 msgid ""
 "You're about to <b>execute</b> actions on the marked images.\n"
 "Please confirm below the actions. You cannot undo this operation!"
 msgstr ""
 "Sie sind dabei, Aktionen auf die markierten Bilder <b>auszuführen</b>.\n"
-"Bitte bestätigen Sie die Aktionen. Sie können den Vorgang nicht rückgängig machen!"
+"Bitte bestätigen Sie die Aktionen. Sie können den Vorgang nicht rückgängig "
+"machen!"
 
-#: ../bin/booh-classifier:1444
+#: ../bin/booh-classifier:1450
 msgid "<b>Label name:</b>"
 msgstr "<b>Markierung:</b>"
 
-#: ../bin/booh-classifier:1445
+#: ../bin/booh-classifier:1451
 msgid "<b>Amount of pictures:</b>"
 msgstr "<b>Anzahl Bilder:</b>"
 
-#: ../bin/booh-classifier:1446
+#: ../bin/booh-classifier:1452
 msgid "<b>Pictures examples:</b>"
 msgstr "<b>Bilder Beispiele:</b>"
 
-#: ../bin/booh-classifier:1447
+#: ../bin/booh-classifier:1453
 msgid "<b>Action to perform:</b>"
 msgstr "<b>Auszuführende Aktion:</b>"
 
-#: ../bin/booh-classifier:1482
+#: ../bin/booh-classifier:1488
 msgid "Copy to:"
 msgstr "Kopieren nach:"
 
-#: ../bin/booh-classifier:1485
+#: ../bin/booh-classifier:1491
 msgid "Move to:"
 msgstr "Verschieben nach:"
 
-#: ../bin/booh-classifier:1488
+#: ../bin/booh-classifier:1494
 msgid "Permanently remove"
 msgstr "Dauerhaft löschen"
 
-#: ../bin/booh-classifier:1492
+#: ../bin/booh-classifier:1498
 msgid "Do nothing"
 msgstr "Ignorieren"
 
-#: ../bin/booh-classifier:1503
+#: ../bin/booh-classifier:1509
 msgid "<i>(unset)</i>"
 msgstr "<i>(auswählen)</i>"
 
-#: ../bin/booh-classifier:1505
+#: ../bin/booh-classifier:1511
 msgid "Specify the directory where to move the pictures to"
 msgstr "Verzeichnis angeben, wohin die Bilder verschoben werden sollen"
 
-#: ../bin/booh-classifier:1535
-#: ../bin/booh-classifier:1959
+#: ../bin/booh-classifier:1541 ../bin/booh-classifier:1984
 msgid "<i>to remove</i>"
 msgstr "<i>löschen</i>"
 
-#: ../bin/booh-classifier:1541
-msgid "I have noticed I am about to permanently remove the %d above mentioned pictures (total %s kB)."
-msgstr "Ich bin dabei, die oben angegebenen %d  Bilder dauerhaft zu löschen (insgesamt %s kB)."
+#: ../bin/booh-classifier:1547
+msgid ""
+"I have noticed I am about to permanently remove the %d above mentioned "
+"pictures (total %s kB)."
+msgstr ""
+"Ich bin dabei, die oben angegebenen %d  Bilder dauerhaft zu löschen "
+"(insgesamt %s kB)."
 
-#: ../bin/booh-classifier:1565
-msgid "You have not confirmed that you noticed the permanent removal of the pictures marked for deletion."
-msgstr "Sie haben die dauerhafte Entfernung der zu löschenden Bilder nicht bestätigt."
+#: ../bin/booh-classifier:1571
+msgid ""
+"You have not confirmed that you noticed the permanent removal of the "
+"pictures marked for deletion."
+msgstr ""
+"Sie haben die dauerhafte Entfernung der zu löschenden Bilder nicht bestätigt."
 
-#: ../bin/booh-classifier:1572
+#: ../bin/booh-classifier:1578
 msgid "Sorry, permission denied to remove '%s'."
 msgstr "Keine Berechtigung um '%s' zu entfernen."
 
-#: ../bin/booh-classifier:1586
+#: ../bin/booh-classifier:1592
 msgid "You have not selected a directory where to move/copy %s."
-msgstr "Sie haben kein Ziel-Verzeichnis zum Verschieben/Kopieren von %s angegeben."
+msgstr ""
+"Sie haben kein Ziel-Verzeichnis zum Verschieben/Kopieren von %s angegeben."
 
-#: ../bin/booh-classifier:1597
+#: ../bin/booh-classifier:1603
 msgid "Directory %s, where to move/copy %s, is not valid or not createable."
-msgstr "Ziel-Verzeichnis %s zum Verschieben/Kopieren von %s ist nicht gültig oder nicht erzeugbar."
+msgstr ""
+"Ziel-Verzeichnis %s zum Verschieben/Kopieren von %s ist nicht gültig oder "
+"nicht erzeugbar."
 
-#: ../bin/booh-classifier:1602
+#: ../bin/booh-classifier:1608
 msgid "Directory %s, where to move/copy %s, is not valid or not writable."
-msgstr "Ziel-Verzeichnis %s zum Verschieben/Kopieren von %s ist nicht gültig oder nicht beschreibbar."
+msgstr ""
+"Ziel-Verzeichnis %s zum Verschieben/Kopieren von %s ist nicht gültig oder "
+"nicht beschreibbar."
 
-#: ../bin/booh-classifier:1609
+#: ../bin/booh-classifier:1615
 msgid "Sorry, a file '%s' already exists in directory '%s'."
 msgstr "Eine Datei '%s' existiert bereits im Verzeichnis '%s'."
 
-#: ../bin/booh-classifier:1618
+#: ../bin/booh-classifier:1624
 msgid "Sorry, permission denied to move '%s'."
 msgstr "Keine Berechtigung um '%s' zu verschieben."
 
-#: ../bin/booh-classifier:1658
-msgid "Unexpected error: '%s'."
-msgstr "Unerwarteter Fehler: '%s'."
+#: ../bin/booh-classifier:1655
+msgid ""
+"Failure:\n"
+"\n"
+"%s\n"
+"Do you wish to continue?"
+msgstr ""
 
-#: ../bin/booh-classifier:1660
+#: ../bin/booh-classifier:1685
 msgid "Successfully moved %d files, copied %d file, and removed %d files."
-msgstr "Erfolgreich %d Dateien verschoben, %d Dateien kopiert und  %d Dateien entfernt."
+msgstr ""
+"Erfolgreich %d Dateien verschoben, %d Dateien kopiert und  %d Dateien "
+"entfernt."
 
-#: ../bin/booh-classifier:1771
+#: ../bin/booh-classifier:1796
 msgid "Thumbnails height: "
 msgstr "Vorschau-Höhe:"
 
-#: ../bin/booh-classifier:1775
-msgid "The desired height of the thumbnails in the thumbnails line of the bottom"
+#: ../bin/booh-classifier:1800
+msgid ""
+"The desired height of the thumbnails in the thumbnails line of the bottom"
 msgstr "Die gewünschte Höhe der Vorschaubilder in der Voransichtszeile unten"
 
-#: ../bin/booh-classifier:1778
+#: ../bin/booh-classifier:1803
 msgid "Preloading distance: "
 msgstr "Vorgeladen:"
 
-#: ../bin/booh-classifier:1782
+#: ../bin/booh-classifier:1807
 msgid "Amount of pictures preloaded left and right to the currently shown"
-msgstr "Anzahl Bilder, die zu den angezeigten links und rechts vorgeladen werden"
+msgstr ""
+"Anzahl Bilder, die zu den angezeigten links und rechts vorgeladen werden"
 
-#: ../bin/booh-classifier:1785
+#: ../bin/booh-classifier:1810
 msgid "Cache memory use: "
 msgstr "Cache Speicher verwendet:"
 
-#: ../bin/booh-classifier:1791
+#: ../bin/booh-classifier:1816
 msgid "% of free memory"
 msgstr "% freier Speicher"
 
-#: ../bin/booh-classifier:1793
+#: ../bin/booh-classifier:1818
 msgid "Percentage of free memory (+ buffers/cache) measured at startup"
 msgstr "Prozent freien Speichers (+Puffer/Cache) beim Start"
 
-#: ../bin/booh-classifier:1796
+#: ../bin/booh-classifier:1821
 msgid "MB"
 msgstr "MB"
 
-#: ../bin/booh-classifier:1807
+#: ../bin/booh-classifier:1832
 msgid "Amount of memory in megabytes"
 msgstr "Speicher in Megabytes"
 
-#: ../bin/booh-classifier:1891
+#: ../bin/booh-classifier:1916
 msgid "Speedup: key shortcuts"
 msgstr "Abkürzungen: Tastenkombinationen"
 
-#: ../bin/booh-classifier:1901
+#: ../bin/booh-classifier:1926
 msgid ""
 "<span size='large' weight='bold'>Help</span>\n"
 "\n"
-"1. Open a directory with <span foreground='darkblue'>File/Open</span>; the classifier will scan it (including subdirectories) and\n"
+"1. Open a directory with <span foreground='darkblue'>File/Open</span>; the "
+"classifier will scan it (including subdirectories) and\n"
 "show thumbnails for all photos and videos at the bottom.\n"
 "\n"
-"2. You can then navigate through images with the <span foreground='darkblue'>Left/Right</span> keyboard keys, or by <span foreground='darkblue'>clicking</span>\n"
+"2. You can then navigate through images with the <span "
+"foreground='darkblue'>Left/Right</span> keyboard keys, or by <span "
+"foreground='darkblue'>clicking</span>\n"
 "on thumbnails.\n"
 "\n"
-"3. You may associate a <span foreground='darkblue'>label</span> to each thumbnail. Either hit the <span foreground='darkblue'>Delete</span> key to associate\n"
-"the built-in <i>to remove</i> label, or hit any alphabetical key to associate a label you define.\n"
-"The first time you hit a key without any label associated, a popup will ask for the full\n"
-"name of this label, and what color you want. To clear the current label, hit the <span foreground='darkblue'>Space</span> key.\n"
+"3. You may associate a <span foreground='darkblue'>label</span> to each "
+"thumbnail. Either hit the <span foreground='darkblue'>Delete</span> key to "
+"associate\n"
+"the built-in <i>to remove</i> label, or hit any alphabetical key to "
+"associate a label you define.\n"
+"The first time you hit a key without any label associated, a popup will ask "
+"for the full\n"
+"name of this label, and what color you want. To clear the current label, hit "
+"the <span foreground='darkblue'>Space</span> key.\n"
 "\n"
-"4. To help you better view what thumbnails are associated to your labels, you may <span foreground='darkblue'>hide</span>\n"
+"4. To help you better view what thumbnails are associated to your labels, "
+"you may <span foreground='darkblue'>hide</span>\n"
 "some of them by unchecking the labels checkboxes on the left.\n"
 "\n"
-"5. Once you're finished reviewing all thumbnails, use <span foreground='darkblue'>File/Execute</span> to execute the desired\n"
-"actions according to associated labels. You can permanently remove (or not) images with\n"
-"the <i>to remove</i> label, and copy or move images with the labels you defined.\n"
+"5. Once you're finished reviewing all thumbnails, use <span "
+"foreground='darkblue'>File/Execute</span> to execute the desired\n"
+"actions according to associated labels. You can permanently remove (or not) "
+"images with\n"
+"the <i>to remove</i> label, and copy or move images with the labels you "
+"defined.\n"
 msgstr ""
 "<span size='large' weight='bold'>Hilfe</span>\n"
 "\n"
-"1. Öffnen Sie ein Verzeichnis mit <span foreground='darkblue'>Datei/Öffnen</span>; das Auswahltwerkzeug wird es durchsuchen (inklusive Unterverzeichnisse) und\n"
+"1. Öffnen Sie ein Verzeichnis mit <span foreground='darkblue'>Datei/Öffnen</"
+"span>; das Auswahltwerkzeug wird es durchsuchen (inklusive "
+"Unterverzeichnisse) und\n"
 "Vorschauen für alle Bilder und Filme anzeigen.\n"
 "\n"
-"2. Sie können dann durch die Bilder mit den <span foreground='darkblue'>Links/Rechts</span> Tasten navigieren, oder in dem Sie auf die Vorschauen <span foreground='darkblue'>klicken</span>.\n"
+"2. Sie können dann durch die Bilder mit den <span "
+"foreground='darkblue'>Links/Rechts</span> Tasten navigieren, oder in dem Sie "
+"auf die Vorschauen <span foreground='darkblue'>klicken</span>.\n"
 "\n"
-"3. Sie können eine <span foreground='darkblue'>Markierung</span> für jede Vorschau vergeben. Sie können dafür die <span foreground='darkblue'>Löschen</span> Taste verwenden, um die eingebaute\n"
-"<i>löschen</i>-Markierung zuzuweisen, oder eine beliebige alphabetische Taste mit einer benutzerdefinierten Markierung verknüpfen.\n"
-"Das erste Mal, wenn Sie eine Taste ohne damit verbundene Markierung verwenden, werden Sie in einem Fenster nach dem vollen Namen \n"
-"und der Farbe für diese Markierung gefragt. Um die aktuelle Markierung zu löschen, verwenden Sie die <span foreground='darkblue'>Leertaste</span>.\n"
+"3. Sie können eine <span foreground='darkblue'>Markierung</span> für jede "
+"Vorschau vergeben. Sie können dafür die <span foreground='darkblue'>Löschen</"
+"span> Taste verwenden, um die eingebaute\n"
+"<i>löschen</i>-Markierung zuzuweisen, oder eine beliebige alphabetische "
+"Taste mit einer benutzerdefinierten Markierung verknüpfen.\n"
+"Das erste Mal, wenn Sie eine Taste ohne damit verbundene Markierung "
+"verwenden, werden Sie in einem Fenster nach dem vollen Namen \n"
+"und der Farbe für diese Markierung gefragt. Um die aktuelle Markierung zu "
+"löschen, verwenden Sie die <span foreground='darkblue'>Leertaste</span>.\n"
 "\n"
-"4. Um eine bessere Übersicht zu erhalten, welche Markierungen mit welchen Vorschauen verknüpft sind, können Sie einige davon <span foreground='darkblue'>ausblenden</span>,\n"
+"4. Um eine bessere Übersicht zu erhalten, welche Markierungen mit welchen "
+"Vorschauen verknüpft sind, können Sie einige davon <span "
+"foreground='darkblue'>ausblenden</span>,\n"
 "in dem Sie die Markierung aus den Auwahlboxen rechts entfernen.\n"
 "\n"
-"5. Wenn Sie mit der Durchsicht der Vorschauen fertig sind, verwenden Sie <span foreground='darkblue'>Datei/Ausführen</span> um die gewünschten Aktionen,\n"
-"die mit den verknüpften Markierungen verbunden sind, auszuführen. Sie können dauerhaft (oder nicht dauerhaft) Bilder entfernen mit der Markierung\n"
-"<i>löschen</i>, und Bilder kopieren oder verschieben mit den anderen von Ihnen definierten Markierungen.\n"
+"5. Wenn Sie mit der Durchsicht der Vorschauen fertig sind, verwenden Sie "
+"<span foreground='darkblue'>Datei/Ausführen</span> um die gewünschten "
+"Aktionen,\n"
+"die mit den verknüpften Markierungen verbunden sind, auszuführen. Sie können "
+"dauerhaft (oder nicht dauerhaft) Bilder entfernen mit der Markierung\n"
+"<i>löschen</i>, und Bilder kopieren oder verschieben mit den anderen von "
+"Ihnen definierten Markierungen.\n"
 
-#: ../bin/booh-classifier:1923
+#: ../bin/booh-classifier:1948
 msgid ""
 "<span size='large' weight='bold'>Key shortcuts</span>\n"
 "\n"
-"<span foreground='darkblue'>Left/Right</span>: move left and right in images\n"
-"<span foreground='darkblue'>Enter</span>: 'view' current image: for images, display EXIF data; for videos, play it\n"
-"<span foreground='darkblue'>Alt-Left/Right</span>: rotate current image clockwise/counter-clockwise\n"
-"<span foreground='darkblue'>Delete</span>: assign the 'to remove' label on current image\n"
+"<span foreground='darkblue'>Left/Right</span>: move left and right in "
+"images\n"
+"<span foreground='darkblue'>Enter</span>: 'view' current image: for images, "
+"display EXIF data; for videos, play it\n"
+"<span foreground='darkblue'>Alt-Left/Right</span>: rotate current image "
+"clockwise/counter-clockwise\n"
+"<span foreground='darkblue'>Delete</span>: assign the 'to remove' label on "
+"current image\n"
 "<span foreground='darkblue'>Space</span>: clear any label on current image\n"
 "<span foreground='darkblue'>Control-z</span>: undo\n"
 "<span foreground='darkblue'>Control-r</span>: redo\n"
-"<span foreground='darkblue'>Control-Space</span>: recenter thumbnails on current item\n"
+"<span foreground='darkblue'>Control-Space</span>: recenter thumbnails on "
+"current item\n"
 "\n"
-"Any alphabetical key will assign (or popup for) the associated label on current image.\n"
+"Any alphabetical key will assign (or popup for) the associated label on "
+"current image.\n"
 msgstr ""
 "<span size='large' weight='bold'>Tastatur-Kürzel</span>\n"
 "\n"
-"<span foreground='darkblue'>Links/Rechts</span>: nach links oder rechts in Bildern navigieren\n"
-"<span foreground='darkblue'>Eingabe</span>: 'anzeigen' des aktuellen Bildes: für Bilder, EXIF-Daten anzeigen; bei Filmen, abspielen\n"
-"<span foreground='darkblue'>Alt-Links/Rechts</span>: aktuelles Bild im Uhrzeigersinn/gegen den Uhrzeigersinn drehen\n"
-"<span foreground='darkblue'>Entfernen</span>: die 'löschen'-Markierung mit dem aktuellen Bild verknüpfen\n"
-"<span foreground='darkblue'>Leertaste</span>: alle Markierungen des aktuellen Bildes löschen\n"
+"<span foreground='darkblue'>Links/Rechts</span>: nach links oder rechts in "
+"Bildern navigieren\n"
+"<span foreground='darkblue'>Eingabe</span>: 'anzeigen' des aktuellen Bildes: "
+"für Bilder, EXIF-Daten anzeigen; bei Filmen, abspielen\n"
+"<span foreground='darkblue'>Alt-Links/Rechts</span>: aktuelles Bild im "
+"Uhrzeigersinn/gegen den Uhrzeigersinn drehen\n"
+"<span foreground='darkblue'>Entfernen</span>: die 'löschen'-Markierung mit "
+"dem aktuellen Bild verknüpfen\n"
+"<span foreground='darkblue'>Leertaste</span>: alle Markierungen des "
+"aktuellen Bildes löschen\n"
 "<span foreground='darkblue'>Strg-z</span>: rückgängig\n"
 "<span foreground='darkblue'>Strg-r</span>: wiederholen\n"
-"<span foreground='darkblue'>Strg-Leertaste</span>: Vorschauen auf dem ausgewählten Objekt neu zentrieren\n"
+"<span foreground='darkblue'>Strg-Leertaste</span>: Vorschauen auf dem "
+"ausgewählten Objekt neu zentrieren\n"
 "\n"
-"Jede alphabetische Taste wird die verbundene Markierung mit dem ausgewählten Bild verknüpfen oder eine neue erzeugen.\n"
+"Jede alphabetische Taste wird die verbundene Markierung mit dem ausgewählten "
+"Bild verknüpfen oder eine neue erzeugen.\n"
 
-#: ../bin/booh-classifier:1950
+#: ../bin/booh-classifier:1975
 msgid "Labels list:"
 msgstr "Verfügbare Markierungen:"
 
-#: ../bin/booh-classifier:1953
+#: ../bin/booh-classifier:1978
 msgid "<i>unlabelled</i>"
 msgstr "<i>ohne Markierung</i>"
 
-#: ../lib/booh/html-merges.rb:54
-#: ../lib/booh/html-merges.rb:88
-#: ../bin/booh-backend:1301
+#: ../lib/booh/html-merges.rb:54 ../lib/booh/html-merges.rb:88
+#: ../bin/booh-backend:1310 ../bin/booh-backend:1312
 msgid "Run slideshow!"
 msgstr "Starte Dia-Show!"
 
@@ -1754,13 +1994,11 @@ msgstr "Stoppe Dia-Show!"
 msgid "<<- First"
 msgstr "<<-Erste"
 
-#: ../lib/booh/html-merges.rb:70
-#: ../bin/booh-backend:1296
+#: ../lib/booh/html-merges.rb:70 ../bin/booh-backend:1305
 msgid "<- Previous"
 msgstr "<- Vorherige"
 
-#: ../lib/booh/html-merges.rb:76
-#: ../bin/booh-backend:1298
+#: ../lib/booh/html-merges.rb:76 ../bin/booh-backend:1307
 msgid "Next ->"
 msgstr "Nächste ->"
 
@@ -1778,99 +2016,184 @@ msgstr "Sek."
 
 #: ../lib/booh/html-merges.rb:169
 msgid "<i>Hint: you can click on the images to open the albums!</i>"
-msgstr "<i>Hinweis: Sie können auf die Bilder klicken um das entsprechende Album zu öffnen!</i>"
+msgstr ""
+"<i>Hinweis: Sie können auf die Bilder klicken um das entsprechende Album zu "
+"öffnen!</i>"
 
 #: ../bin/booh-backend:48
 msgid "Directory which contains original photos/videos as files or subdirs"
-msgstr "Verzeichnis, das Orginal-Bilder und -Filme als Dateien oder in Sub-Verzeichnissen enthält"
+msgstr ""
+"Verzeichnis, das Orginal-Bilder und -Filme als Dateien oder in Sub-"
+"Verzeichnissen enthält"
 
 #: ../bin/booh-backend:49
-msgid "Directory which will contain the web-album; if it already exits, then all existing files and directories inside it will be removed!"
-msgstr "Verzeichnis mit Welb-Album; wenn es bereits existiert, werden alle enthaltenen Dateien und Verzeichnisse gelöscht!"
+msgid ""
+"Directory which will contain the web-album; if it already exits, then all "
+"existing files and directories inside it will be removed!"
+msgstr ""
+"Verzeichnis mit Welb-Album; wenn es bereits existiert, werden alle "
+"enthaltenen Dateien und Verzeichnisse gelöscht!"
 
 #: ../bin/booh-backend:51
 msgid "Select HTML theme to use"
 msgstr "HTML-Schema auswählen"
 
 #: ../bin/booh-backend:52
-msgid "File containing config listing photos and videos within directories with captions"
-msgstr "Datei mit Angaben über Bild- und Video-Listen in Verzeichnissen mit Unterschriften"
+msgid ""
+"File containing config listing photos and videos within directories with "
+"captions"
+msgstr ""
+"Datei mit Angaben über Bild- und Video-Listen in Verzeichnissen mit "
+"Unterschriften"
 
 #: ../bin/booh-backend:53
 msgid "Filename where the script will output a config skeleton"
-msgstr "Dateiname, in der das Skript ein Grundgerüst einer Konfigurationsdatei speichern soll"
+msgstr ""
+"Dateiname, in der das Skript ein Grundgerüst einer Konfigurationsdatei "
+"speichern soll"
 
 #: ../bin/booh-backend:54
-msgid "File containing config listing, where to merge new/removed photos/videos from --source, and change theme info"
-msgstr "Datei mit Konfigurationsoptionen, wohin neue/enfernte Bilder/Filme von --source zusammengeführt werden sollen sowie Informationen über Motiv-Änderungen"
+msgid ""
+"File containing config listing, where to merge new/removed photos/videos "
+"from --source, and change theme info"
+msgstr ""
+"Datei mit Konfigurationsoptionen, wohin neue/enfernte Bilder/Filme von --"
+"source zusammengeführt werden sollen sowie Informationen über Motiv-"
+"Änderungen"
 
 #: ../bin/booh-backend:55
-msgid "File containing config listing, for merging the subdir specified with --dir"
-msgstr "Datei mit Angaben über das Unterverzeichnis, was mit --dir bestimmt ist"
+msgid ""
+"File containing config listing, for merging the subdir specified with --dir"
+msgstr ""
+"Datei mit Angaben über das Unterverzeichnis, was mit --dir bestimmt ist"
 
 #: ../bin/booh-backend:56
-msgid "File containing config listing, for merging the new subdirs down the subdir specified with --dir"
-msgstr "Datei mit der konfigurierten Liste, um neue Unterverzeichnisse mit dem mit --dir bestimmten Unterverzeichnus zu vereinen"
+msgid ""
+"File containing config listing, for merging the new subdirs down the subdir "
+"specified with --dir"
+msgstr ""
+"Datei mit der konfigurierten Liste, um neue Unterverzeichnisse mit dem mit --"
+"dir bestimmten Unterverzeichnus zu vereinen"
 
 #: ../bin/booh-backend:57
-msgid "Directory for merge with --merge-config-onedir or --merge-config-subdirs"
-msgstr "Verzeichnis, welches mit --merge-config-onedir oder --merge-config-subdirs zusammengeführt werden soll"
+msgid ""
+"Directory for merge with --merge-config-onedir or --merge-config-subdirs"
+msgstr ""
+"Verzeichnis, welches mit --merge-config-onedir oder --merge-config-subdirs "
+"zusammengeführt werden soll"
 
 #: ../bin/booh-backend:58
 msgid "File containing config listing, where to change theme info"
 msgstr "Datei mit Angaben über Schema-Informationen"
 
 #: ../bin/booh-backend:59
-msgid "Force generation of album even if the GUI marked some directories as already generated"
-msgstr "Erzwinge die Erzeugung des Albums, auch wenn die GUI einige Verzeichnisse bereits als generiert markiert hat"
+msgid ""
+"Force generation of album even if the GUI marked some directories as already "
+"generated"
+msgstr ""
+"Erzwinge die Erzeugung des Albums, auch wenn die GUI einige Verzeichnisse "
+"bereits als generiert markiert hat"
 
 #: ../bin/booh-backend:61
-msgid "Specify the list of images sizes to use instead of all specified in the theme (this is a comma-separated list)"
-msgstr "Liste der zu erzeugenden Bild-Größen anstatt derer aus dem Schema (als Komma-getrennte Aufzählung)"
+msgid ""
+"Specify the list of images sizes to use instead of all specified in the "
+"theme (this is a comma-separated list)"
+msgstr ""
+"Liste der zu erzeugenden Bild-Größen anstatt derer aus dem Schema (als Komma-"
+"getrennte Aufzählung)"
 
 #: ../bin/booh-backend:62
-msgid "Specify the list of languages to support (uses Apache MultiViews); this is a comma-separated list of supported languages, with last element used as the fallback language; for example: 'fr,eo,en,en'; supported languages: %s"
-msgstr "Geben Sie die zu unterstützenden Sprachen an (verwendet Apache MultiViews); das ist eine Komma-separierte Liste mit den unterstützten Sprachen, wobei das letzte Element die Ersatz-Sprache angibt, zum Beispiel: 'fr,de,en,en'; unterstützte Sprachen: %s"
+msgid ""
+"Specify the list of languages to support (uses Apache MultiViews); this is a "
+"comma-separated list of supported languages, with last element used as the "
+"fallback language; for example: 'fr,eo,en,en'; supported languages: %s"
+msgstr ""
+"Geben Sie die zu unterstützenden Sprachen an (verwendet Apache MultiViews); "
+"das ist eine Komma-separierte Liste mit den unterstützten Sprachen, wobei "
+"das letzte Element die Ersatz-Sprache angibt, zum Beispiel: 'fr,de,en,en'; "
+"unterstützte Sprachen: %s"
 
 #: ../bin/booh-backend:63
-msgid "Specify the amount of thumbnails per row in the thumbnails page (if applicable in theme)"
-msgstr "Angabe der Vorschau-Bilder pro Zeile auf der Vorschau-Seite (fall im Schema verwendet)"
+msgid ""
+"Specify the amount of thumbnails per row in the thumbnails page (if "
+"applicable in theme)"
+msgstr ""
+"Angabe der Vorschau-Bilder pro Zeile auf der Vorschau-Seite (fall im Schema "
+"verwendet)"
 
 #: ../bin/booh-backend:64
-msgid "Specify the amount of thumbnails per page in the thumbnails page, after which split occurs"
-msgstr "Geben Sie die Anzahl der Vorschau-Bilder pro Seite auf den Vorschau-Seiten an, nach denen die Teilung stattfinden soll"
+msgid ""
+"Specify the amount of thumbnails per page in the thumbnails page, after "
+"which split occurs"
+msgstr ""
+"Geben Sie die Anzahl der Vorschau-Bilder pro Seite auf den Vorschau-Seiten "
+"an, nach denen die Teilung stattfinden soll"
 
 #: ../bin/booh-backend:66
-msgid "Transcode videos with given external program; %f is the placeholder for the input video, %o for the output video; before the external program, the output video extension should be given followed by a colon"
-msgstr "Umkonvertieren von Filmen mit einem externen Programm; %f ist der Platzhalter für das Eingangs-Video, %o für das Ausgabe-Video; vor dem externen Programm sollte das Ausgabe-Videoformat gefolgt von einem Doppelpunkt angegeben werden."
+msgid ""
+"Transcode videos with given external program; %f is the placeholder for the "
+"input video, %o for the output video; before the external program, the "
+"output video extension should be given followed by a colon"
+msgstr ""
+"Umkonvertieren von Filmen mit einem externen Programm; %f ist der "
+"Platzhalter für das Eingangs-Video, %o für das Ausgabe-Video; vor dem "
+"externen Programm sollte das Ausgabe-Videoformat gefolgt von einem "
+"Doppelpunkt angegeben werden."
 
 #: ../bin/booh-backend:67
-msgid "Use embedded flash player for videos (flowplayer) and use this .flv generator (%f is the placeholder for the input video, %o for the output video)"
-msgstr "Verwene den eingebetteten Flash Player für Videos (flowplayer) and verwende diesen .flv Generator (%f ist der Platzhalter für das Quellvideo, %o für das Zielvideo)"
+msgid ""
+"Use embedded flash player for videos (flowplayer) and use this .flv "
+"generator (%f is the placeholder for the input video, %o for the output "
+"video)"
+msgstr ""
+"Verwene den eingebetteten Flash Player für Videos (flowplayer) and verwende "
+"diesen .flv Generator (%f ist der Platzhalter für das Quellvideo, %o für das "
+"Zielvideo)"
 
 #: ../bin/booh-backend:68
-msgid "Specify the HTML markup to use on the bottom of pages for a small link returning to wherever you see fit in your website (or somewhere else)"
-msgstr "Geben Sie den HTML-Markup zur Verwendung am unteren Ende der Seiten für einen kleinen Link an, um eine geeignete Zurück-Seite zu verlinken (oder ein anderes Ziel)"
+msgid ""
+"Specify the HTML markup to use on the bottom of pages for a small link "
+"returning to wherever you see fit in your website (or somewhere else)"
+msgstr ""
+"Geben Sie den HTML-Markup zur Verwendung am unteren Ende der Seiten für "
+"einen kleinen Link an, um eine geeignete Zurück-Seite zu verlinken (oder ein "
+"anderes Ziel)"
 
 #: ../bin/booh-backend:70
-msgid "Specify the HTML markup to use on the bottom of pages for a small 'made with' message"
-msgstr "Geben Sie den HTML-Markup für das Seitenende ein für einen kurzen 'Erstellt-mit'-Hinweis"
+msgid ""
+"Specify the HTML markup to use on the bottom of pages for a small 'made "
+"with' message"
+msgstr ""
+"Geben Sie den HTML-Markup für das Seitenende ein für einen kurzen 'Erstellt-"
+"mit'-Hinweis"
 
 #: ../bin/booh-backend:72
-msgid "Specify comments format to use for images instead of only filename when creating new albums; use ImageMagick's format"
-msgstr "Geben Sie das Kommentar-Format für Bilder anstatt des Dateinamens für neue Alben an; verwenden Sie das Format von ImageMagick"
+msgid ""
+"Specify comments format to use for images instead of only filename when "
+"creating new albums; use ImageMagick's format"
+msgstr ""
+"Geben Sie das Kommentar-Format für Bilder anstatt des Dateinamens für neue "
+"Alben an; verwenden Sie das Format von ImageMagick"
 
 #: ../bin/booh-backend:74
 msgid "Specify the number of processors for multi-processors machines"
 msgstr "Anzahl der Prozessoren bei Multi-Prozessor-Computern"
 
 #: ../bin/booh-backend:76
-msgid "Do the minimum work to be able to see the album under the GUI (don't generate all thumbnails)"
-msgstr "Minimal-Arbeit um das Album mit der GUI zu sehen (nicht alle Vorschau-Bilder werden erzeugt)"
+msgid ""
+"Do the minimum work to be able to see the album under the GUI (don't "
+"generate all thumbnails)"
+msgstr ""
+"Minimal-Arbeit um das Album mit der GUI zu sehen (nicht alle Vorschau-Bilder "
+"werden erzeugt)"
 
 #: ../bin/booh-backend:79
-msgid "Name a file where to write information about what's going on (used by the GUI)"
-msgstr "Dateinamen der Datei, in der die Vorgänge aufgezeichnet werden sollen (Verwendung in der GUI)"
+msgid ""
+"Name a file where to write information about what's going on (used by the "
+"GUI)"
+msgstr ""
+"Dateinamen der Datei, in der die Vorgänge aufgezeichnet werden sollen "
+"(Verwendung in der GUI)"
 
 #: ../bin/booh-backend:119
 msgid "Argument to --source must be a directory"
@@ -1880,27 +2203,30 @@ msgstr "Das Argument für --source muss ein Verzeichnis sein"
 msgid "If --destination exists, it must be a directory"
 msgstr "Wenn --destination existiert, muss es ein Verzeichnis sein"
 
-#: ../bin/booh-backend:140
-#: ../bin/booh-backend:163
-#: ../bin/booh-backend:174
-#: ../bin/booh-backend:185
-#: ../bin/booh-backend:203
+#: ../bin/booh-backend:140 ../bin/booh-backend:163 ../bin/booh-backend:174
+#: ../bin/booh-backend:185 ../bin/booh-backend:203
 msgid "Config file does not exist or is unreadable."
 msgstr "Die Konfigurationsdatei existiert nicht oder ist nicht lesbar."
 
 #: ../bin/booh-backend:146
-msgid "Config skeleton file (%s) already exists and is a directory! Please change the filename."
-msgstr "Konfigurations-Gerüstdatei (%s) existiert bereits und ist ein Verzeichnis! Bitte ändern Sie den Dateinamen."
+msgid ""
+"Config skeleton file (%s) already exists and is a directory! Please change "
+"the filename."
+msgstr ""
+"Konfigurations-Gerüstdatei (%s) existiert bereits und ist ein Verzeichnis! "
+"Bitte ändern Sie den Dateinamen."
 
 #: ../bin/booh-backend:148
 msgid "Config skeleton file already exists, backuping to %s.backup"
-msgstr "Konfigurationsgerüstdatei existiert bereits, erstelle Sicherheitskopie in %s.backup"
+msgstr ""
+"Konfigurationsgerüstdatei existiert bereits, erstelle Sicherheitskopie in %s."
+"backup"
 
-#: ../bin/booh-backend:157
-#: ../bin/booh-backend:168
-#: ../bin/booh-backend:179
+#: ../bin/booh-backend:157 ../bin/booh-backend:168 ../bin/booh-backend:179
 msgid "Merge config notice: backuping current config file to %s.backup"
-msgstr "Zusammenführungs-Hinweis: aktuelle Konfigurations-Datei unter %s.backup gesichert"
+msgstr ""
+"Zusammenführungs-Hinweis: aktuelle Konfigurations-Datei unter %s.backup "
+"gesichert"
 
 #: ../bin/booh-backend:190
 msgid "Specified directory to merge with --dir is not readable"
@@ -1911,16 +2237,34 @@ msgid "Use config notice: backuping current config file to %s.backup"
 msgstr "Konfigurationshinweis: aktuelle Konfiguration in %s.backup gesichert."
 
 #: ../bin/booh-backend:212
-msgid "--multi-languages: argument must be a comma-separated list of supported languages, with last element used as the fallback language; for example: 'fr,eo,en,en'; supported languages: %s"
-msgstr "--multi-languages: das Argument muss eine Komma-separierte Liste mit den unterstützten Sprachen sein, wobei das letzte Element die Ersatz-Sprache angibt, zum Beispiel: 'fr,de,en,en'; unterstützte Sprachen: %s"
+msgid ""
+"--multi-languages: argument must be a comma-separated list of supported "
+"languages, with last element used as the fallback language; for example: 'fr,"
+"eo,en,en'; supported languages: %s"
+msgstr ""
+"--multi-languages: das Argument muss eine Komma-separierte Liste mit den "
+"unterstützten Sprachen sein, wobei das letzte Element die Ersatz-Sprache "
+"angibt, zum Beispiel: 'fr,de,en,en'; unterstützte Sprachen: %s"
 
 #: ../bin/booh-backend:228
-msgid "--transcode-videos: argument must be the external program for transcoding, and contain %f for the input video, %o for the output video, and before the external program, the output video extension should be given followed by a colon"
-msgstr "--transcode-videos: Argument mss das externe Programm zum umkonvertieren sein, und %f als Platzhalter für das Eingangs-Video und %o für das Ausgabe-Video enthalten; das Ausgabe-Videofomat sollte gefolgt von einem Doppelpunkt angegeben werden."
+msgid ""
+"--transcode-videos: argument must be the external program for transcoding, "
+"and contain %f for the input video, %o for the output video, and before the "
+"external program, the output video extension should be given followed by a "
+"colon"
+msgstr ""
+"--transcode-videos: Argument mss das externe Programm zum umkonvertieren "
+"sein, und %f als Platzhalter für das Eingangs-Video und %o für das Ausgabe-"
+"Video enthalten; das Ausgabe-Videofomat sollte gefolgt von einem Doppelpunkt "
+"angegeben werden."
 
 #: ../bin/booh-backend:234
-msgid "--flv-generator: argument must contain %f for the input video and %o for the output video"
-msgstr "--flv-generator: die Option muss %f für das Quellvideo und %o für das Zielvideo enthalten"
+msgid ""
+"--flv-generator: argument must contain %f for the input video and %o for the "
+"output video"
+msgstr ""
+"--flv-generator: die Option muss %f für das Quellvideo und %o für das "
+"Zielvideo enthalten"
 
 #: ../bin/booh-backend:299
 msgid "Missing --dir for --merge-config-onedir"
@@ -1944,119 +2288,135 @@ msgstr ""
 
 #: ../bin/booh-backend:454
 msgid ""
-"the program 'identify' is needed to get images sizes and EXIF data. Please install it.\n"
+"the program 'identify' is needed to get images sizes and EXIF data. Please "
+"install it.\n"
 "It is generally available with the 'ImageMagick' software package."
 msgstr ""
-"Das Programm 'identify' wird benötigt um Bild-Größen und EXIF-Daten zu ermitteln. Bitte installieren Sie es.\n"
+"Das Programm 'identify' wird benötigt um Bild-Größen und EXIF-Daten zu "
+"ermitteln. Bitte installieren Sie es.\n"
 "Es ist üblicherweise in dem 'ImageMagick'-Paket enthalten."
 
 #: ../bin/booh-backend:460
-msgid "the following program(s) are needed to handle videos: '%s'. Videos will be ignored."
-msgstr "Die folgenden Programme werden benötigt, um Videos zu verarbeiten: '%s'. Videos werden nicht verarbeitet."
+msgid ""
+"the following program(s) are needed to handle videos: '%s'. Videos will be "
+"ignored."
+msgstr ""
+"Die folgenden Programme werden benötigt, um Videos zu verarbeiten: '%s'. "
+"Videos werden nicht verarbeitet."
 
 #: ../bin/booh-backend:470
 msgid "No '%s' found for substitution"
 msgstr "Kein '%s' als Ersatz gefunden"
 
-#: ../bin/booh-backend:657
+#: ../bin/booh-backend:661
 msgid "Bookmark and Share"
 msgstr "Lesezeichen und Teilen"
 
-#: ../bin/booh-backend:813
-msgid "Merging config: removing directory %s from config, isn't on filesystem anymore"
-msgstr "Zusammenführen der Konfigurationen: entferne %s aus der Konfiguration, existiert nicht mehr auf Firewall."
+#: ../bin/booh-backend:817
+msgid ""
+"Merging config: removing directory %s from config, isn't on filesystem "
+"anymore"
+msgstr ""
+"Zusammenführen der Konfigurationen: entferne %s aus der Konfiguration, "
+"existiert nicht mehr auf Firewall."
 
-#: ../bin/booh-backend:828
+#: ../bin/booh-backend:832
 msgid "Files can't contain any of the characters ', \", [ or ], sorry: %s"
-msgstr "Die Dateien dürfen diese Zeichen nicht enthalten: ', \", [ oder ]. Fehler: %s"
+msgstr ""
+"Die Dateien dürfen diese Zeichen nicht enthalten: ', \", [ oder ]. Fehler: %s"
 
-#: ../bin/booh-backend:878
+#: ../bin/booh-backend:882
 msgid "Handling %s from config list..."
 msgstr "Verarbeite %s aus der Konfigurations-Liste..."
 
-#: ../bin/booh-backend:885
+#: ../bin/booh-backend:889
 msgid "Examining %s..."
 msgstr "Untersuche %s..."
 
-#: ../bin/booh-backend:890
+#: ../bin/booh-backend:894
 msgid "Ignoring %s, contains one of forbidden characters: '\"[]"
 msgstr "Ignoriere %s, enthält eines der nicht erlaubten Zeichen: '\"[]"
 
-#: ../bin/booh-backend:911
-msgid "Config merge: removing %s from config; use the backup file to retrieve caption info if this was a mistake"
-msgstr "Konfigurations-Zusammenführung: entferne %s aus der Liste, verwenden Sie die Sicherungs-Datei um Unterschriften wiederherzustellen, falls das ein Fehler war"
+#: ../bin/booh-backend:915
+msgid ""
+"Config merge: removing %s from config; use the backup file to retrieve "
+"caption info if this was a mistake"
+msgstr ""
+"Konfigurations-Zusammenführung: entferne %s aus der Liste, verwenden Sie die "
+"Sicherungs-Datei um Unterschriften wiederherzustellen, falls das ein Fehler "
+"war"
 
-#: ../bin/booh-backend:926
+#: ../bin/booh-backend:930
 msgid "\t%s photos"
 msgstr "\t%s Bilder"
 
-#: ../bin/booh-backend:928
+#: ../bin/booh-backend:932
 msgid "\t%s videos"
 msgstr "\t%s Videos"
 
-#: ../bin/booh-backend:999
+#: ../bin/booh-backend:1003
 msgid "Outputting in %s..."
 msgstr "Ausgabe in %s"
 
-#: ../bin/booh-backend:1019
+#: ../bin/booh-backend:1023
 msgid "\tcreating photos thumbnails..."
 msgstr "\terzeuge Bilder-Vorschauen..."
 
-#: ../bin/booh-backend:1063
+#: ../bin/booh-backend:1067
 msgid "\tcreating videos thumbnails..."
 msgstr "\terzeuge Video-Vorschauen..."
 
-#: ../bin/booh-backend:1163
+#: ../bin/booh-backend:1167
 msgid "\tgenerating HTML pages..."
 msgstr "\terzeuge HTML-Seiten..."
 
-#: ../bin/booh-backend:1224
+#: ../bin/booh-backend:1228
 msgid "(no preview)"
 msgstr "(keine Vorschau)"
 
-#: ../bin/booh-backend:1295
+#: ../bin/booh-backend:1304
 msgid "Pages: "
 msgstr "Seiten:"
 
-#: ../bin/booh-backend:1315
+#: ../bin/booh-backend:1326
 msgid "<i>Click on an image to view it larger</i>"
 msgstr "<i>Klicken Sie auf Bild um es größer zu sehen</i>"
 
-#: ../bin/booh-backend:1428
+#: ../bin/booh-backend:1444
 msgid "return to thumbnails"
 msgstr "zurück zu den Vorschauen"
 
-#: ../bin/booh-backend:1448
+#: ../bin/booh-backend:1469
 msgid "\tfixating configuration file..."
 msgstr "\tschliesse Konfigurations-Datei ab..."
 
-#: ../bin/booh-backend:1480
+#: ../bin/booh-backend:1501
 msgid "\t\tremoving %s, no element in it"
 msgstr "\t\tentferne %s, kein Element enthalten"
 
-#: ../bin/booh-backend:1513
+#: ../bin/booh-backend:1534
 msgid "completed necessary stuff for GUI, exiting."
 msgstr "benötigte Vorgänge für die GUI abgeschlossen, beende."
 
-#: ../bin/booh-backend:1519
+#: ../bin/booh-backend:1540
 msgid "\trescanning directories to generate all 'index.html' files..."
-msgstr "\terneutes Einlesen der Verzeichnisse, um alle 'index.html'-Dateien zu erzeugen..."
+msgstr ""
+"\terneutes Einlesen der Verzeichnisse, um alle 'index.html'-Dateien zu "
+"erzeugen..."
 
-#: ../bin/booh-backend:1609
+#: ../bin/booh-backend:1635
 msgid "return to albums"
 msgstr "zurück zu den Alben"
 
-#: ../bin/booh-backend:1610
-#: ../bin/booh-backend:1628
+#: ../bin/booh-backend:1636 ../bin/booh-backend:1654
 msgid "previous album"
 msgstr "vorheriges Album"
 
-#: ../bin/booh-backend:1611
-#: ../bin/booh-backend:1629
+#: ../bin/booh-backend:1637 ../bin/booh-backend:1655
 msgid "next album"
 msgstr "nächstes Album"
 
-#: ../bin/booh-backend:1640
+#: ../bin/booh-backend:1666
 msgid " all done."
 msgstr " alles abgeschlossen."
 
@@ -2132,11 +2492,15 @@ msgstr "Fortfahren nicht möglich, keine gültige Größe ausgewählt."
 msgid ","
 msgstr ","
 
-#: ../lib/booh/booh-lib.rb:364
-msgid "specified seektime too large? that may also be another probleme. try another value."
-msgstr "Angegebene Vorschau-Dauer zu groß? Das könnte ein weiteres Problem sein. Versuchen Sie einen anderen Wert."
+#: ../lib/booh/booh-lib.rb:366
+msgid ""
+"specified seektime too large? that may also be another probleme. try another "
+"value."
+msgstr ""
+"Angegebene Vorschau-Dauer zu groß? Das könnte ein weiteres Problem sein. "
+"Versuchen Sie einen anderen Wert."
 
-#: ../lib/booh/booh-lib.rb:563
+#: ../lib/booh/booh-lib.rb:583
 msgid ""
 "The configured browser seems to be unavailable.\n"
 "You should fix this in Edit/Preferences so that you can open URLs.\n"
@@ -2144,15 +2508,16 @@ msgid ""
 "Problem was: '%s' is not an executable file."
 msgstr ""
 "Der angegebene Browser scheint nicht verfügbar.\n"
-"Sie sollten das in Editieren/Eigenschaften beheben, damit URLs geöffnet werden können.\n"
+"Sie sollten das in Editieren/Eigenschaften beheben, damit URLs geöffnet "
+"werden können.\n"
 "\n"
 "Das Problem war: '%s' ist keine ausführbare Datei."
 
-#: ../lib/booh/booh-lib.rb:877
+#: ../lib/booh/booh-lib.rb:897
 msgid "''The Web-Album of choice for discriminating Linux users''"
 msgstr "\"Das Web-Album für anspruchsvolle Linux-Nutzer\""
 
-#: ../lib/booh/booh-lib.rb:878
+#: ../lib/booh/booh-lib.rb:898
 msgid ""
 "Esperanto: Stephane Fillod\n"
 "Japanese: Masao Mutoh\n"
@@ -2174,6 +2539,7 @@ msgstr "Wiederherstellen von %s."
 
 #: ../data/booh/themes/cardu/metadata/parameters.rb:32
 #: ../data/booh/themes/dark/metadata/parameters.rb:32
+#: ../data/booh/themes/gradient/metadata/parameters.rb:32
 #: ../data/booh/themes/sbs/metadata/parameters.rb:32
 #: ../data/booh/themes/simple/metadata/parameters.rb:32
 msgid "Sizes that should fit browsers in fullscreen for 800x600 screens"
@@ -2181,6 +2547,7 @@ msgstr "Größen, die zu Vollbild-Browsern mit 800x600-Bildschirmen passen"
 
 #: ../data/booh/themes/cardu/metadata/parameters.rb:40
 #: ../data/booh/themes/dark/metadata/parameters.rb:40
+#: ../data/booh/themes/gradient/metadata/parameters.rb:40
 #: ../data/booh/themes/sbs/metadata/parameters.rb:40
 #: ../data/booh/themes/simple/metadata/parameters.rb:40
 msgid "Sizes that should fit browsers in fullscreen for 1024x768 screens"
@@ -2188,6 +2555,7 @@ msgstr "Größen, die zu Vollbild-Browsern mit 1024x768-Bildschirmen passen"
 
 #: ../data/booh/themes/cardu/metadata/parameters.rb:48
 #: ../data/booh/themes/dark/metadata/parameters.rb:48
+#: ../data/booh/themes/gradient/metadata/parameters.rb:48
 #: ../data/booh/themes/sbs/metadata/parameters.rb:48
 #: ../data/booh/themes/simple/metadata/parameters.rb:48
 msgid "Sizes that should fit browsers in fullscreen for 1280x1024 screens"
@@ -2195,6 +2563,7 @@ msgstr "Größen, die zu Vollbild-Browsern mit 1280x1024-Bildschirmen passen"
 
 #: ../data/booh/themes/cardu/metadata/parameters.rb:55
 #: ../data/booh/themes/dark/metadata/parameters.rb:55
+#: ../data/booh/themes/gradient/metadata/parameters.rb:55
 #: ../data/booh/themes/sbs/metadata/parameters.rb:55
 #: ../data/booh/themes/simple/metadata/parameters.rb:55
 msgid "Sizes that should fit browsers in fullscreen for 1400x1050 screens"
@@ -2202,10 +2571,29 @@ msgstr "Größen, die zu Vollbild-Browsern mit 1400x1050-Bildschirmen passen"
 
 #: ../data/booh/themes/cardu/metadata/parameters.rb:63
 #: ../data/booh/themes/dark/metadata/parameters.rb:63
+#: ../data/booh/themes/gradient/metadata/parameters.rb:63
 #: ../data/booh/themes/sbs/metadata/parameters.rb:63
 #: ../data/booh/themes/simple/metadata/parameters.rb:63
 msgid "Sizes that should fit browsers in fullscreen for 1600x1200 screens"
 msgstr "Größen, die zu Vollbild-Browsern mit 1600x1200-Bildschirmen passen"
+
+#: ../data/booh/themes/cardu/metadata/parameters.rb:71
+#: ../data/booh/themes/dark/metadata/parameters.rb:71
+#: ../data/booh/themes/gradient/metadata/parameters.rb:71
+#: ../data/booh/themes/sbs/metadata/parameters.rb:71
+#: ../data/booh/themes/simple/metadata/parameters.rb:71
+#, fuzzy
+msgid "Sizes that should fit browsers in fullscreen for 1680x1050 screens"
+msgstr "Größen, die zu Vollbild-Browsern mit 1400x1050-Bildschirmen passen"
+
+#~ msgid ""
+#~ "There was something wrong, sorry:\n"
+#~ "\n"
+#~ "%s"
+#~ msgstr ""
+#~ "Es ist leider ein Fehler aufgetreten:\n"
+#~ "\n"
+#~ "%s"
 
 #~ msgid "Are you sure you want to quit?"
 #~ msgstr "Sind Sie sicher, dass Sie das Programm beenden wollen?"

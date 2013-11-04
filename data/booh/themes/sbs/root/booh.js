@@ -33,7 +33,7 @@ function load(i) {
 }
 
 function getparam(key) {
-    all_params = location.href.split("#")
+    all_params = location.href.split("#");
     if (all_params.length > 1) {
         params = all_params[1].split("&");
         for (i = 0; i < params.length; i++) {
@@ -249,12 +249,12 @@ function display_current() {
         main_img.innerHTML = '<div class="fullscreen_image"><img src="' + images[current] + '"/></div>';
     } else {
         main_img.innerHTML = '<a class="fullscreenvideolink" href="' + videos[current] + '" '
-                           + '   style="display:block;width:' + videos_widths[current] + 'px;height:' + (videos_heights[current] + 24) + 'px" id="player">'
+                           + '   style="display:block;width:' + widths[current] + 'px;height:' + (heights[current] + 24) + 'px" id="player">'
                            + '  <div class="fullscreen_video"><img src="' + images[current] + '"/></div>'
-                           + '  <img src="' + dbltilda_pathtobase + 'play_video.png" style="position:relative;top:-' + (videos_heights[current] + 48)/2 + 'px;border:0;background-color:transparent"/>'
+                           + '  <img src="' + dbltilda_pathtobase + 'play_video.png" style="position:relative;top:-' + (heights[current] + 48)/2 + 'px;border:0;background-color:transparent"/>'
                            + '</a>';
         if (dbltilda_flowplayer_active == 'true') {
-            flowplayer("player", dbltilda_pathtobase + "flowplayer-3.2.2.swf");
+            flowplayer("player", dbltilda_pathtobase + "flowplayer-3.2.16.swf");
         }
     }
     oldhref = browser_href();

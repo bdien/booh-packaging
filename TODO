@@ -11,3 +11,6 @@
 > as a caption
 
 properly detect ' in source directory names
+
+booh-classifier, allow to overwrite destination
+

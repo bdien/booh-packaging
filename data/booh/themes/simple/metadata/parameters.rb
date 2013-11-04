@@ -20,21 +20,11 @@
 
 bindtextdomain("booh")
 
-#- we often will want to have one size to nicely fit 800x600 screens,
-#- one for 1024x768 and one for 1280x1024
 #- it's necessary to fit according to the typical space taken by
 #- widgets defined in the skeleton of the theme
 #-
 #- ***IMPORTANT***: CHOOSE 4/3 ASPECT RATIO SIZES (for thumbnails)!
 $images_size = [
-    {
-        'name' => 'small',
-        'description' => _("Sizes that should fit browsers in fullscreen for 800x600 screens"),
-        'fullscreen' => '750x414',
-        'thumbnails' => '192x144',
-        'optimizedforwidth' => '800',
-        'optional' => true,
-    },
     {
         'name' => 'medium',
         'description' => _("Sizes that should fit browsers in fullscreen for 1024x768 screens"),
@@ -46,14 +36,15 @@ $images_size = [
     {
         'name' => 'large',
         'description' => _("Sizes that should fit browsers in fullscreen for 1280x1024 screens"),
-        'fullscreen' => '1200x660',
+        'fullscreen' => '1200x724',
         'thumbnails' => '300x225',
         'optimizedforwidth' => '1280',
+        'optional' => true,
     },
     {
         'name' => 'x-large',
         'description' => _("Sizes that should fit browsers in fullscreen for 1400x1050 screens"),
-        'fullscreen' => '1312x721',
+        'fullscreen' => '1312x750',
         'thumbnails' => '328x245',
         'optimizedforwidth' => '1400',
         'optional' => true,
@@ -61,11 +52,27 @@ $images_size = [
     {
         'name' => 'xx-large',
         'description' => _("Sizes that should fit browsers in fullscreen for 1600x1200 screens"),
-        'fullscreen' => '1500x825',
+        'fullscreen' => '1500x900',
         'thumbnails' => '375x281',
         'optimizedforwidth' => '1600',
         'optional' => true,
-    }
+    },
+    {
+        'name' => 'widescreen',
+        'description' => _("Sizes that should fit browsers in fullscreen for 1680x1050 screens"),
+        'fullscreen' => '1580x750',
+        'thumbnails' => '390x292',
+        'optimizedforwidth' => '1680',
+        'optional' => true,
+    },
+    {
+        'name' => 'fullhd',
+        'description' => _("Sizes that should fit browsers in fullscreen for 1920x1080 screens"),
+        'fullscreen' => '1820x780',
+        'thumbnails' => '445x333',
+        'optimizedforwidth' => '1920',
+        'optional' => true,
+    },
 ]
 
 $allowed_N_values = [ 3, 4, 5, 6, 8, 12 ]
